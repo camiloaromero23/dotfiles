@@ -5,21 +5,21 @@
 To check the files that are going to be linked:
 
 ``` bash
-./links.sh
+./setup.sh
 ```
 
-> Modify `links.sh` to remove any of the dotfiles to linking process
+> Modify `setup.sh` to remove any of the dotfiles to linking process
 
 ## Link files
 
 Make the script executable:
 
 ```bash
-chmod +x links.sh
+chmod +x setup.sh
 ```
 
 To link all the files:
 
 ``` bash
-./links.sh | bash
+./setup.sh | bash
 ```
