@@ -1,0 +1,16 @@
+# Prefix
+unbind C-b
+
+set -g prefix C-a
+bind C-a send-prefix
+
+# Reload
+bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
+
+# Index from 1
+set -g base-index 1
+set -g pane-base-index 1
+
+# Set default term to xterm
+set -g default-terminal xterm-256color
+
