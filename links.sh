@@ -20,7 +20,9 @@ locations+=( "zsh/zshconfig" )
 dotfiles+=( ".zshrc" )
 locations+=( "zsh/z.sh" )
 dotfiles+=( ".z.sh" )
-
+# Uncomment these if sens_conf needed
+# locations+=( "zsh/sens_conf" )
+# dotfiles+=( ".sens_conf" )
 
 for i in "${!dotfiles[@]}"
 do
