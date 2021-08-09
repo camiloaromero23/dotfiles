@@ -112,8 +112,8 @@ alias la="exa -a -l -h --git --icons"
 alias lai="exa -a -l -h --git --icons --git-ignore"
 alias ls="exa --icons"
 
-# Include on this file all the enterprise-related config aliases and variables
-# source ~/.sens_conf # Uncomment if needed
+# Source sens_conf file if exists
+[ -f ~/.sens_conf ] && source ~/.sens_conf
 
 export NVM_DIR="/Users/$USER/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
