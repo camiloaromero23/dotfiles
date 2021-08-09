@@ -1,8 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+BASE_PATH=$([ "$(uname)" = "Darwin" ] && echo "/Users" || echo "/home")
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/$USER/.oh-my-zsh"
+export ZSH="$BASE_PATH/$USER/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -115,7 +116,7 @@ alias ls="exa --icons"
 # Source sens_conf file if exists
 [ -f ~/.sens_conf ] && source ~/.sens_conf
 
-export NVM_DIR="/Users/$USER/.nvm"
+export NVM_DIR="$BASE_PATH/$USER/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
