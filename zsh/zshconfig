@@ -75,8 +75,6 @@ VI_MODE_SET_CURSOR=true
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
 
-export TERM=xterm-256color
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -122,3 +120,5 @@ export NVM_DIR="/Users/$USER/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export LC_CTYPE=en_US.UTF-8
