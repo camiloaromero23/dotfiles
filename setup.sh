@@ -20,6 +20,11 @@ locations+=( "zsh/zshconfig" )
 dotfiles+=( ".zshrc" )
 locations+=( "zsh/z.sh" )
 dotfiles+=( ".z.sh" )
+
+# Kitty terminal emulator
+locations+=( "kitty" )
+dotfiles+=( ".config/kitty" )
+
 # Uncomment these if sens_conf needed
 # locations+=( "zsh/sens_conf" )
 # dotfiles+=( ".sens_conf" )
