@@ -13,6 +13,14 @@
 >```bash
 >git clone
 >```
+>
+>### Load submodules
+>
+>To load submodules after cloning the repo:
+>
+>```bash
+>git submodule update --init --recursive
+>```
 
 ## Make the script executable
 
