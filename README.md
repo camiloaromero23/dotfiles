@@ -1,5 +1,19 @@
 # Dotfiles
 
+>## Clone repository
+>
+>To clone the repository including submodules:
+>
+>```bash
+>git clone --recurse-submodules -j8 <repository_location>
+>```
+>
+>Otherwise:
+>
+>```bash
+>git clone
+>```
+
 ## Make the script executable
 
 ```bash
