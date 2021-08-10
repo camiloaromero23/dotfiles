@@ -4,8 +4,8 @@ declare -a locations # Locations of the dotfiles to link
 declare -a dotfiles # Location of the link
 
 # Neovim
-locations+=( "nvim" )
-dotfiles+=( ".config/nvim" )
+# locations+=( "nvim" )
+# dotfiles+=( ".config/nvim" )
 
 # Lunarvim
 locations+=( "lunarvim/config.lua" )
