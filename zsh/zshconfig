@@ -105,8 +105,6 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=lvim
 
-alias vi="lvim"
-alias vim="lvim"
 alias sudoedit="sudo -e" # For mac
 alias updatezshconfig="vim ~/.zshrc && source ~/.zshrc"
 alias la="exa -a -l -h --git --icons"
