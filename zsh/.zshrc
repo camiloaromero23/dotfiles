@@ -1,6 +1,6 @@
 PATH=$PATH:$HOME/.scripts
 export PATH=~/.local/bin:$PATH
-export EDITOR='nvim'
+export EDITOR='lvim'
 # export TERMINAL='kitty'
 # export BROWSER='firefox'
 export MANPAGER='lvim +Man!'
