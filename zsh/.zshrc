@@ -6,6 +6,9 @@ export EDITOR='lvim'
 export MANPAGER='lvim +Man!'
 export TERM='xterm-256color'
 
+# Autocd
+setopt autocd
+
 # vi mode
 bindkey -v
 
