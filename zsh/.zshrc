@@ -20,13 +20,13 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-z}={A-Za-z}'
 
 # History
-HIST_STAMPS="%d/%m/%y %H:%M" #TODO: Fix history time-related info
+alias history="history -i"
 SAVEHIST=1000
 HISTSIZE=1000
 HISTFILESIZE=1000000000
 HISTFILE=$ZDOTDIR/.zsh_history
 
 setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
 
 source $ZDOTDIR/prompt.sh
