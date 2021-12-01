@@ -18,7 +18,7 @@ precmd () {
   vcs_info
 
   # Dashes
-  PS1='%F{237}'$(printf '-%.0s' {1..${COLUMNS}})'%f'
+  PS1='%F{237}'${(l:$COLUMNS::-:):-}'%f'
   # Actual prompt
   PS1+='%F{032}%~%f${vcs_info_msg_0_} %F{105}»%f '
   # Right prompt
