@@ -54,9 +54,11 @@ source $ZDOTDIR/prompt.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Plugins
-# z.sh directory jumping plugin
-source $ZDOTDIR/plugins/z.sh
 # sudo on double esc plugin
 source $ZDOTDIR/plugins/sudo.plugin.zsh
 # vi-mode plugin
 source $ZDOTDIR/plugins/vi-mode.plugin.zsh
+# zsh-autosuggestions
+source $ZDOTDIR/plugins/zsh-autosuggestions.plugin.zsh
+# z.sh directory jumping plugin
+source $ZDOTDIR/plugins/z.sh
