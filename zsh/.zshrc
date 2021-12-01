@@ -57,3 +57,5 @@ source $ZDOTDIR/plugins/z.sh
 # Fuzzy finder for searching previous commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+source $ZDOTDIR/plugins/sudo.plugin.zsh
+
