@@ -60,5 +60,7 @@ source $ZDOTDIR/plugins/sudo.plugin.zsh
 source $ZDOTDIR/plugins/vi-mode.plugin.zsh
 # zsh-autosuggestions
 source $ZDOTDIR/plugins/zsh-autosuggestions.plugin.zsh
+# zsh-syntax-highlighting
+source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 # z.sh directory jumping plugin
 source $ZDOTDIR/plugins/z.sh
