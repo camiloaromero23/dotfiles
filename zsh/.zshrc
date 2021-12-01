@@ -9,6 +9,11 @@ export MANPAGER='lvim +Man!'
 export TERMINAL='kitty'
 # export TERM='xterm-256color' # Uncomment if not using kitty terminal emulator
 
+# Aliases
+alias la="exa -a -l -h --git --icons"
+alias lai="exa -a -l -h --git --icons --git-ignore"
+alias ls="exa --icons"
+
 # Autocd
 setopt autocd
 
