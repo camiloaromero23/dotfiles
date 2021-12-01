@@ -14,8 +14,8 @@ setopt autocd
 
 # vi mode
 # Keybindings for vi normal mode
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey -M viins 'kj' vi-cmd-mode
+bindkey -M viins 'jk' vi-cmd-mode # Comment if you don't want vi-mode
+bindkey -M viins 'kj' vi-cmd-mode # Comment if you don't want vi-mode
 
 # Set cursor mode
 VI_MODE_SET_CURSOR=true
@@ -57,7 +57,7 @@ source $ZDOTDIR/prompt.sh
 # sudo on double esc plugin
 source $ZDOTDIR/plugins/sudo.plugin.zsh
 # vi-mode plugin
-source $ZDOTDIR/plugins/vi-mode.plugin.zsh
+source $ZDOTDIR/plugins/vi-mode.plugin.zsh # Comment if you don't want vi-mode
 # zsh-autosuggestions
 source $ZDOTDIR/plugins/zsh-autosuggestions.plugin.zsh
 # zsh-syntax-highlighting
