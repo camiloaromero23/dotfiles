@@ -49,7 +49,7 @@ bindkey "^[[B" history-beginning-search-forward-end
 source $ZDOTDIR/prompt.sh
 
 # Source z.sh directory jumping plugin
-source $ZDOTDIR/z.sh
+source $ZDOTDIR/plugins/z.sh
 
 # Source sens_conf file if exists
 [ -f ~/.sens_conf ] && source ~/.sens_conf
