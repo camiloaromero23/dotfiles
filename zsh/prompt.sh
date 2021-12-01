@@ -1,5 +1,3 @@
-#TODO: Fix dirty repo prompt
-
 #Prompt config
 setopt PROMPT_SUBST
 
@@ -41,10 +39,10 @@ TRAPWINCH () {
 }
 
 precmd () {
+  update_prompt
+
   vcs_info
 
   update_prompt
 }
-
-update_prompt
 
