@@ -1,4 +1,5 @@
 #TODO: Fix dirty repo prompt
+
 #Prompt config
 setopt PROMPT_SUBST
 
@@ -6,7 +7,22 @@ autoload colors && colors
 
 typeset +H return_code="%(?..%F{red}%?↵%f)"
 
+# Git configuration
+autoload -Uz vcs_info
 
+parse_git_dirty() {
+  [[ -n $(git status --porcelain --untracked-files=no 2> /dev/null) ]] && echo '%F{214}*%f'
+}
+
+update_git_prompt_info () {
+  git_prompt_info='%F{075}(%f%F{078}%b%f'
+  git_prompt_info+=$(parse_git_dirty)
+  git_prompt_info+='%F{075})%f'
+
+  zstyle ':vcs_info:git:*' formats ${git_prompt_info}
+}
+
+# Prompt configuration
 update_prompt () {
   update_git_prompt_info
 
@@ -18,13 +34,6 @@ update_prompt () {
   RPS1='${return_code}%F{237}%n@%m%f'
 }
 
-update_git_prompt_info () {
-  git_prompt_info='%F{075}(%f%F{078}%b%f'
-  git_prompt_info+=$(parse_git_dirty)
-  git_prompt_info+='%F{075})%f'
-
-  zstyle ':vcs_info:git:*' formats ${git_prompt_info}
-}
 
 # Reload prompt on window resize
 TRAPWINCH () {
@@ -37,12 +46,5 @@ precmd () {
   update_prompt
 }
 
-parse_git_dirty() {
-  [[ -n $(git status --porcelain --untracked-files=no 2> /dev/null) ]] && echo '%F{214}*%f'
-}
-
-# Git configuration
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn
 update_prompt
 
