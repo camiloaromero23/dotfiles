@@ -13,13 +13,12 @@ export TERMINAL='kitty'
 setopt autocd
 
 # vi mode
-bindkey -v # Uncomment if you want to use vi-mode
-
 # Keybindings for vi normal mode
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
 
-# TODO: Update cursor on mode change
+# Set cursor mode
+VI_MODE_SET_CURSOR=true
 
 # Autocompletion
 autoload -Uz compinit && compinit
@@ -48,14 +47,16 @@ bindkey "^[[B" history-beginning-search-forward-end
 # Source prompt info & theme
 source $ZDOTDIR/prompt.sh
 
-# Source z.sh directory jumping plugin
-source $ZDOTDIR/plugins/z.sh
-
 # Source sens_conf file if exists
 [ -f ~/.sens_conf ] && source ~/.sens_conf
 
 # Fuzzy finder for searching previous commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Plugins
+# z.sh directory jumping plugin
+source $ZDOTDIR/plugins/z.sh
+# sudo on double esc plugin
 source $ZDOTDIR/plugins/sudo.plugin.zsh
-
+# vi-mode plugin
+source $ZDOTDIR/plugins/vi-mode.plugin.zsh
