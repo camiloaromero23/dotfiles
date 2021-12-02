@@ -16,10 +16,8 @@ locations+=( "tmux/tmux_config" )
 dotfiles+=( ".tmux.conf" )
 
 # zsh
-locations+=( "zsh/zshconfig" )
-dotfiles+=( ".zshrc" )
-locations+=( "zsh/z.sh" )
-dotfiles+=( ".z.sh" )
+locations+=( "zsh" )
+dotfiles+=( ".config/zsh" )
 
 # Kitty terminal emulator
 locations+=( "kitty" )

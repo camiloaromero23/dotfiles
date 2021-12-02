@@ -1,5 +1,7 @@
 # Dotfiles
 
+**NOTE:** Clone this repo on your home folder for the setup script to run appropriately. Otherwise, update the link path to match the repo's location
+>
 >## Clone repository
 >
 >To clone the repository including submodules:
