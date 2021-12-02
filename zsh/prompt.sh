@@ -22,8 +22,6 @@ update_git_prompt_info () {
 
 # Prompt configuration
 update_prompt () {
-  update_git_prompt_info
-
   # Dashes
   PS1='%F{237}'${(l:$COLUMNS::-:):-}'%f'
   # Actual prompt
@@ -39,7 +37,7 @@ TRAPWINCH () {
 }
 
 precmd () {
-  update_prompt
+  update_git_prompt_info
 
   vcs_info
 
