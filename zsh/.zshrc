@@ -134,4 +134,8 @@ setopt HIST_FIND_NO_DUPS
 # Fuzzy finder for searching previous commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Source custom aliases
+[ -f $ZDOTDIR/plugins/cheatsheet.sh ] && source $ZDOTDIR/plugins/cheatsheet.sh
+[ -f $ZDOTDIR/plugins/notify.sh ] && source $ZDOTDIR/plugins/notify.sh
+
 eval "$(starship init zsh)"
