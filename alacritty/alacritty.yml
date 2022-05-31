@@ -47,12 +47,19 @@ font:
 
   offset:
     x: 0
-    y: 16
+    y: 20
  
   glyph_offset:
     x: 0
-    y: 8
+    y: 10
  
+colors:
+  primary:
+    background: '#202020'
+    foreground: '#d0d0d0'
+  cursor:
+    cursor: '#d0d0d0'
+
 window.opacity: 1.0
 
   
