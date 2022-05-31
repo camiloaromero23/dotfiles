@@ -23,6 +23,10 @@ dotfiles+=( ".config/zsh" )
 locations+=( "kitty" )
 dotfiles+=( ".config/kitty" )
 
+# zsh
+locations+=( "starship.toml" )
+dotfiles+=( ".config/starship.toml" )
+
 # Uncomment these if sens_conf needed
 # locations+=( "zsh/sens_conf" )
 # dotfiles+=( ".sens_conf" )
