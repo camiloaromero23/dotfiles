@@ -138,6 +138,7 @@ setopt HIST_FIND_NO_DUPS
 # Source custom aliases
 [ -f $ZDOTDIR/plugins/cheatsheet.sh ] && source $ZDOTDIR/plugins/cheatsheet.sh
 [ -f $ZDOTDIR/plugins/notify.sh ] && source $ZDOTDIR/plugins/notify.sh
+[ -f $ZDOTDIR/plugins/cdmk.sh ] && source $ZDOTDIR/plugins/cdmk.sh
 
 eval "$(starship init zsh)"
 
