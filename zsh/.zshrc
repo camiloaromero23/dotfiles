@@ -78,7 +78,7 @@ DISABLE_UPDATE_PROMPT="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # Plugins
-plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode)
+plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode git)
 
 # Set cursor mode
 VI_MODE_SET_CURSOR=true
