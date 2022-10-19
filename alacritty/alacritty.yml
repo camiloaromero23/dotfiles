@@ -86,6 +86,5 @@ window.opacity: 1.0
 key_bindings:
   # - { key: L,         mods: Control,       action: ClearLogNotice              }
   - { key: L,         mods: Control,       chars: "\x0c"                       }
-  - { key: L,         mods: Alt|Option,    chars: "ls\n"                       }
   - { key: J,        mods: Alt|Option,     chars: "\x1bj"                       }
   - { key: K,         mods: Alt|Option,    chars: "\x1bk"                       }
