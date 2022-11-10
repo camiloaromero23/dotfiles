@@ -3,6 +3,7 @@ export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk/
 PATH=$PATH:$HOME/.scripts
 PATH=~/.local/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
+PATH=~/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 
