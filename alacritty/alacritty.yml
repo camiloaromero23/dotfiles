@@ -33,12 +33,12 @@ font:
 
   italic:
 
-    family: Cascadia Code
+    family: CaskaydiaCove Nerd Font
     style: SemiLight Italic
 
   bold_italic:
 
-    family: Cascadia Code
+    family: CaskaydiaCove Nerd Font
     style: Italic
 
   size: 19
