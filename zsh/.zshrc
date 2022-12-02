@@ -80,9 +80,6 @@ DISABLE_UPDATE_PROMPT="true"
 # Plugins
 plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode)
 
-# z.sh directory jumping plugin
-source $ZDOTDIR/plugins/z.sh
-
 # Set cursor mode
 VI_MODE_SET_CURSOR=true
 
@@ -143,3 +140,6 @@ setopt HIST_FIND_NO_DUPS
 [ -f $ZDOTDIR/plugins/notify.sh ] && source $ZDOTDIR/plugins/notify.sh
 
 eval "$(starship init zsh)"
+
+# Directory jumping
+eval "$(zoxide init zsh)"
