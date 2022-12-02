@@ -23,22 +23,22 @@ live_config_reload: true
 font:
   normal:
 
-    family: DankMono Nerd Font
-    style: Regular
+    family: CaskaydiaCove Nerd Font
+    style: SemiLight
 
   bold:
 
-    family: DankMono Nerd Font
+    family: CaskaydiaCove Nerd Font
     style: Regular
 
   italic:
 
-    family: DankMono Nerd Font
-    style: Italic
+    family: Cascadia Code
+    style: SemiLight Italic
 
   bold_italic:
 
-    family: DankMono Nerd Font
+    family: Cascadia Code
     style: Italic
 
   size: 19
@@ -47,11 +47,11 @@ font:
 
   offset:
     x: 0
-    y: 20
+    y: 14
  
   glyph_offset:
     x: 0
-    y: 10
+    y: 8
  
 colors:
   primary:
