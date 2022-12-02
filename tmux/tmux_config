@@ -6,6 +6,7 @@ bind C-a send-prefix
 
 # Reload
 bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
+bind C-k kill-session
 
 # Create windows on pwd
 bind '"' split-window -c "#{pane_current_path}"
@@ -20,4 +21,25 @@ set -g pane-base-index 1
 set -g default-terminal xterm-256color
 
 # Needs this line also to overrides the default color
-# set-option -ga terminal-overrides ",xterm-256color:Tc"
+set-option -ga terminal-overrides ",xterm-256color:Tc"
+
+# Change update interval
+set -g status-interval 1
+
+# Mouse support
+set -g mouse on
+
+# Vim-style pane selection
+bind -r k select-pane -U
+bind -r j select-pane -D
+bind -r l select-pane -R
+bind -r h select-pane -L
+
+# NeoVim configs
+set-option -sg escape-time 10
+set-option -g focus-events on
+
+set-window-option -g mode-keys vi
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+
