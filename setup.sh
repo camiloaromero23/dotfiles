@@ -27,6 +27,12 @@ dotfiles+=( ".config/kitty" )
 locations+=( "starship.toml" )
 dotfiles+=( ".config/starship.toml" )
 
+# Git Config
+locations+=( "git/.gitconfig" )
+dotfiles+=( "" )
+locations+=( "git/.gitignore_global" )
+dotfiles+=( "" )
+
 # Uncomment these if sens_conf needed
 # locations+=( "zsh/sens_conf" )
 # dotfiles+=( ".sens_conf" )
