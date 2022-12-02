@@ -7,6 +7,11 @@ bind C-a send-prefix
 # Reload
 bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
 
+# Create windows on pwd
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
 # Index from 1
 set -g base-index 1
 set -g pane-base-index 1
@@ -14,3 +19,5 @@ set -g pane-base-index 1
 # Set default term to xterm
 set -g default-terminal xterm-256color
 
+# Needs this line also to overrides the default color
+# set-option -ga terminal-overrides ",xterm-256color:Tc"
