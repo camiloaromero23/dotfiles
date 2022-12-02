@@ -105,12 +105,10 @@ export LANG=en_US.UTF-8
 #
 # Example aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export EDITOR='lvim'
+export EDITOR='nvim'
 # export BROWSER='firefox'
 export LC_CTYPE=en_US.UTF-8
-export MANPAGER='lvim +Man!'
-export TERMINAL='kitty'
-# export TERM='xterm-256color' # Uncomment if not using kitty terminal emulator
+export MANPAGER='nvim +Man!'
 
 # Aliases
 alias la="exa -a -l -h --git --icons"
@@ -119,6 +117,10 @@ alias ls="exa --icons"
 alias cat="bat"
 alias lg="lazygit"
 alias ess="eslint_d stop"
+alias sourcezsh="source $ZDOTDIR/.zshrc"
+alias uninstallLvim="bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)"
+alias installLvim="bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)"
+alias installLvimRolling="LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)"
 
 # History
 SAVEHIST=1000
@@ -137,7 +139,7 @@ setopt HIST_FIND_NO_DUPS
 
 # Source custom aliases
 [ -f $ZDOTDIR/plugins/cheatsheet.sh ] && source $ZDOTDIR/plugins/cheatsheet.sh
-[ -f $ZDOTDIR/plugins/notify.sh ] && source $ZDOTDIR/plugins/notify.sh
+# [ -f $ZDOTDIR/plugins/notify.sh ] && source $ZDOTDIR/plugins/notify.sh
 [ -f $ZDOTDIR/plugins/cdmk.sh ] && source $ZDOTDIR/plugins/cdmk.sh
 
 eval "$(starship init zsh)"
