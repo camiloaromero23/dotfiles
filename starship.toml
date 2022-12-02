@@ -1,2 +1,11 @@
 [gcloud]
-disabled=true
+disabled = true
+[lua]
+symbol = " "
+style = "#51a0cf"
+[golang]
+symbol = " "
+style = "#519aba"
+[dart]
+symbol = " "
+style = "#03589C"
