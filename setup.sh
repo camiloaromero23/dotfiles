@@ -41,3 +41,4 @@ for i in "${!dotfiles[@]}"
 do
   echo "ln -s ~/dotfiles/${locations[$i]} ~/${dotfiles[$i]}"
 done
+echo "ln -s ~/dotfiles/warp ~/.warp"
