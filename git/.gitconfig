@@ -3,14 +3,31 @@
   name = Camilo Romero
   email = camiloaromero23@gmail.com
 [core]
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
+  pager = delta
 [url "git@bitbucket.org:"]
-	insteadOf = https://bitbucket.org/
+  insteadOf = https://bitbucket.org/
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [help]
-	autocorrect = immediate
+  autocorrect = immediate
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 [includeIf "gitdir:~/Documents/work/"]
   path = ~/.gitconfig_work
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  line-numbers = true
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  side-by-side = true
+  syntax-theme = OneHalfDark
+  features = decorations
+  file-modified-label = modified:
+  paging = always
+[merge]
+  conflictstyle = diff3
+[diff]
+  colorMoved = default
+
