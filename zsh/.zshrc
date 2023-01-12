@@ -5,6 +5,7 @@ PATH=~/.local/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 PATH=~/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+PATH=$PATH:$HOME/Library/Python/3.9/bin
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 
 # If you come from bash you might have to change your $PATH.
