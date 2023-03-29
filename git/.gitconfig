@@ -4,6 +4,7 @@
   email = camiloaromero23@gmail.com
 [core]
   excludesfile = ~/.gitignore_global
+	editor = nvim
   pager = delta
 [url "git@bitbucket.org:"]
   insteadOf = https://bitbucket.org/
