@@ -23,6 +23,10 @@ dotfiles+=( ".config/zsh" )
 locations+=( "kitty" )
 dotfiles+=( ".config/kitty" )
 
+# Weztterm terminal emulator
+locations+=( "wezterm" )
+dotfiles+=( ".config/wezterm" )
+
 # zsh
 locations+=( "starship.toml" )
 dotfiles+=( ".config/starship.toml" )
