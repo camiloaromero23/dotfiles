@@ -12,8 +12,8 @@ locations+=( "lunarvim/config.lua" )
 dotfiles+=( ".config/lvim" )
 
 # Tmux
-locations+=( "tmux/tmux_config" )
-dotfiles+=( ".tmux.conf" )
+locations+=( "tmux" )
+dotfiles+=( ".config/tmux" )
 
 # zsh
 locations+=( "zsh" )
