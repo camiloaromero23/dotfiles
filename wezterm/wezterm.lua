@@ -1,23 +1,15 @@
 local wezterm = require "wezterm"
 local hyperlink_rules = require "hyperlinks"
 local one_dark = require "onehalf_dark"
+local fonts = require "fonts"
+-- caskaydia_cove or sf_mono
+local font_name = "caskaydia_cove"
 
+-- === !== == != ++ -- => -> := :: www 0
 return {
-  font = wezterm.font {
-    family = "CaskaydiaCove Nerd Font",
-    -- weight = "Medium",
-  },
-  font_rules = {
-    {
-      intensity = "Half",
-      italic = false,
-      font = wezterm.font {
-        family = "CaskaydiaCove Nerd Font",
-        weight = "Regular",
-      },
-    },
-  },
-  font_size = 19.75,
+  font = fonts[font_name],
+  font_rules = fonts[font_name .. "_rules"],
+  font_size = fonts[font_name .. "_size"],
   -- color_scheme = "OneDark (base16)",
   colors = one_dark,
   audible_bell = "Disabled",
