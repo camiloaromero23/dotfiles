@@ -37,6 +37,10 @@ dotfiles+=( "" )
 locations+=( "git/.gitignore_global" )
 dotfiles+=( "" )
 
+# I3
+locations+=( "i3" )
+dotfiles+=( ".config/i3" )
+
 # Uncomment these if sens_conf needed
 # locations+=( "zsh/sens_conf" )
 # dotfiles+=( ".sens_conf" )
