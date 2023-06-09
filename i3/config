@@ -118,10 +118,13 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
 # start dmenu
 # bindsym $mod+shift+d exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
-bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=28'
+bindsym $mod+Shift+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#FFFFFF' -sb '#FFFFFF' -sf '#000000' -fn 'SFMonoNerdFontMono:semibold:pixelsize=38'
+
+## NOTE: $mod+d is used by cerebro
+exec --no-startup-id cerebro
 
 # start rofi
-# bindsym $mod+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh
+# bindsym $mod+Shift+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh
 
 # start xfce4-appfinder
 bindsym mod1+F2 exec --no-startup-id xfce4-appfinder --collapsed
@@ -255,10 +258,10 @@ bindsym $mod+a focus parent
 ################# resize  
 
 # Resizing by 1
-bindsym $mod+Mod1+Ctrl+Right resize shrink width 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Up resize grow height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Down resize shrink height 1 px or 1 ppt
-bindsym $mod+Mod1+Ctrl+Left resize grow width 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+$right resize shrink width 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+$up resize grow height 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+$down resize shrink height 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+$left resize grow width 1 px or 1 ppt
 
 # old resize keybindings
 # resize window (you can also use the mouse for that)
@@ -340,6 +343,9 @@ font pango:Fira Sans Book 13
 
 # USER APPLICATIONS TO START AT BOOT
 
+# Polybar
+exec_always --no-startup-id ~/.config/polybar/material/launch.sh
+
 # ArcoLinux Welcome App
 exec --no-startup-id dex $HOME/.config/autostart/arcolinux-welcome-app.desktop
 
@@ -382,7 +388,6 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id nm-applet
 
 # num lock activated
-exec_always --no-startup-id numlockx on
 
 # dropbox
 # exec --no-startup-id dropbox start
@@ -401,16 +406,14 @@ exec --no-startup-id volumeicon
 # exec --no-startup-id xfce4-clipman
 
 # Conky
-exec --no-startup-id conky -c ~/.config/i3/system-overview
+# exec --no-startup-id conky -c ~/.config/i3/system-overview
 
 # feh sets wallpaper
-exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
-exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
+# exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
+# exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
 # for other Arch Linux based distros
 # exec --no-startup-id feh --bg-fill /usr/share/archlinux-tweak-tool/data/wallpaper/wallpaper.png &
 
-# Polybar
-# exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
 ################# system applications       
 
@@ -557,6 +560,8 @@ for_window [class="Pavucontrol"] floating disable
 for_window [class="Peek"] floating enable
 for_window [class="^Skype$"] floating enable
 for_window [class="^Spotify$"] floating disable
+for_window [title="Cerebro"] floating enable
+for_window [title="Cerebro"] border disable
 for_window [class="System-config-printer.py"] floating enable
 for_window [class="Unetbootin.elf"] floating enable
 for_window [class="Usb-creator-gtk"] floating enable
@@ -588,35 +593,7 @@ for_window [class="Termite"] focus
 for_window [class="Terminator"] focus
 for_window [class="Urxvt"] focus
 for_window [class="Alacritty"] focus
-
-################# variety for wallpapers      
-
-# Variety keybindings mod1 = ALT
-# trash wallpaper
-bindsym mod1+t exec --no-startup-id variety -t
-# next wallpaper
-# bindsym mod1+n exec --no-startup-id variety -n
-bindsym mod1+Right exec --no-startup-id variety -n
-# previous wallpaper
-bindsym mod1+p exec --no-startup-id variety -p
-bindsym mod1+Left exec --no-startup-id variety -p
-# favorite wallpaper
-bindsym mod1+f exec --no-startup-id variety -f
-# pause wallpaper
-bindsym mod1+Up exec --no-startup-id variety --pause
-# resume wallpaper
-bindsym mod1+Down exec --no-startup-id variety --resume
-
-################# variety with pywal for your wallpapers/colour schemes
-
-# next wallpaper
-bindsym mod1+Shift+n exec --no-startup-id variety -n && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# previous wallpaper
-bindsym mod1+Shift+p exec --no-startup-id variety -p && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# trash wallpaper
-bindsym mod1+Shift+t exec --no-startup-id variety -t && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# Update Wallpaper
-bindsym mod1+Shift+u exec --no-startup-id wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)
+for_window [class="Wezterm"] focus
 
 ################# audio settings                   
 
@@ -729,74 +706,75 @@ bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
 
 ################# bar appearance                   
 
-bar {
-    height 45
-    workspace_buttons yes
-	font pango:Fira Sans Book 19
-	# position top
-    position top
+# bar {
+#     height 45
+#     workspace_buttons yes
+#     font pango:Fira Sans Book 14
+# 	# position top
+#     position top
 
-	# system icons
-    # tray_output none
-    # tray_output $firstMonitor
-    # tray_output $secondMonitor
+# 	# system icons
+#     # tray_output none
+#     # tray_output $firstMonitor
+#     # tray_output $secondMonitor
 
-    # OPTION 1 : i3status
+#     # OPTION 1 : i3status
 
-    # type status_command i3status without the config file and
-    # you will get the standard i3status bar
-    # Second one is the standard statusbar with my personal settings
+#     # type status_command i3status without the config file and
+#     # you will get the standard i3status bar
+#     # Second one is the standard statusbar with my personal settings
 
-	# status_command i3status
-    status_command i3status -c ~/.config/i3/i3status.conf
+# 	# status_command i3status
+#     # status_command i3status -c ~/.config/i3/i3status.conf
 
-    # OPTION 2 : i3blocks
+#     # OPTION 2 : i3blocks
 
-    # https://github.com/vivien/i3blocks
-    # another way to provide text in the statusbar
-    # put hastag in front if not installed
+#     # https://github.com/vivien/i3blocks
+#     # another way to provide text in the statusbar
+#     # put hastag in front if not installed
 
-    # status_command i3blocks
-    # status_command i3blocks -c ~/.config/i3/i3blocks.conf
-    # status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
-    # status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
-    # status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
+#     # status_command i3blocks
+#     # status_command i3blocks -c ~/.config/i3/i3blocks.conf
+#     # status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
+#     # status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
+#     # status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
 
 
-    # OPTION 3 : conky
+#     # OPTION 3 : conky
 
-    # You can also replace the istatus bar with a conky
-    # start-conky-i3statusbar.sh is started and conky will follow
-    # documentation : https://i3wm.org/docs/user-contributed/conky-i3bar.html
-    # conky configuration is in conky-i3statusbar
+#     # You can also replace the istatus bar with a conky
+#     # start-conky-i3statusbar.sh is started and conky will follow
+#     # documentation : https://i3wm.org/docs/user-contributed/conky-i3bar.html
+#     # conky configuration is in conky-i3statusbar
 
-	# status_command ~/.config/i3/start-conky-i3statusbar.sh
+# 	# status_command ~/.config/i3/start-conky-i3statusbar.sh
 
-    # OPTION 4 : polybar
+#     # OPTION 4 : polybar
 
-    # polybar is launched elsewhere - search for the word
-    # from the opening of the "bar {...}" till the end has to go or hashtagged out
-    # in order for the system trayicons to show up in polybar
+#     # polybar is launched elsewhere - search for the word
+#     # from the opening of the "bar {...}" till the end has to go or hashtagged out
+#     # in order for the system trayicons to show up in polybar
 
-    ##START THEMING BAR
-    # Theme name : ArcoLinux Default
+#     ##START THEMING BAR
+#     # Theme name : ArcoLinux Default
 
-    # i3 bar colors
-    # variable border background Text
+#     # i3 bar colors
+#     # variable border background Text
 
-    colors {
-        background #2F2F2F
-        statusline #eeeeee
-        separator  #666666
+#     colors {
+#         # background #2F2F2F
+#         background #000000
+#         statusline #eeeeee
+#         separator  #666666
 
-        # colorclass           border  backgr. text
-        focused_workspace     #a9a9a9 #5f676a #eeeeee
-        active_workspace      #a9a9a9 #5f676a #eeeeee
-        inactive_workspace    #a9a9a9 #222222 #a9a9a9
-        urgent_workspace      #a9a9a9 #d42121 #FFFFFF
-        }
+#         # colorclass           border  backgr. text
+#         focused_workspace     #a9a9a9 #5f676a #eeeeee
+#         active_workspace      #a9a9a9 #5f676a #eeeeee
+#         inactive_workspace    #a9a9a9 #222222 #a9a9a9
+#         urgent_workspace      #a9a9a9 #d42121 #FFFFFF
+#         }
 
-    }
+#     }
     ##STOP THEMING BAR
 
     ##START THEMING WM
@@ -804,7 +782,7 @@ bar {
 
     # Window color settings
     # class                 border  backgr. text    indicator
-    client.focused          #6790EB #6790EB #e5e5e5 #6790EB
+    client.focused          #AAAAAA #AAAAAA #ffffff #AAAAAA
     client.unfocused        #222222 #222222 #aaaaaa #222222
     client.focused_inactive #222222 #222222 #a9a9a9 #222222
     client.placeholder      #222222 #222222 #aaaaaa #222222
@@ -859,6 +837,5 @@ bar {
 # NOT USED
 
 # get the mouse out of the way with unclutter
-# exec --no-startup-id unclutter
 focus_follows_mouse no
 
