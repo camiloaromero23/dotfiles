@@ -137,7 +137,8 @@ setopt HIST_FIND_NO_DUPS
 [ -f ~/.sens_conf ] && source ~/.sens_conf
 
 # Fuzzy finder for searching previous commands
-if [ -x "$(command -v fzf)" ]
+[ "$(uname)" = "Darwin" ] && [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ "$(uname)" != "Darwin" ] && [ -x "$(command -v fzf)" ]
 then
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh

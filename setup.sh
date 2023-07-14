@@ -41,6 +41,10 @@ dotfiles+=( "" )
 locations+=( "i3/config" )
 dotfiles+=( ".config/i3/config" )
 
+# Fzf
+locations+=( "fzf/.fzf.zsh" )
+dotfiles+=( "" )
+
 # Uncomment these if sens_conf needed
 # locations+=( "zsh/sens_conf" )
 # dotfiles+=( ".sens_conf" )
