@@ -137,7 +137,11 @@ setopt HIST_FIND_NO_DUPS
 [ -f ~/.sens_conf ] && source ~/.sens_conf
 
 # Fuzzy finder for searching previous commands
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -x "$(command -v fzf)" ]
+then
+  source /usr/share/fzf/key-bindings.zsh
+  source /usr/share/fzf/completion.zsh
+fi
 
 # Source custom aliases
 [ -f $ZDOTDIR/plugins/cheatsheet.sh ] && source $ZDOTDIR/plugins/cheatsheet.sh

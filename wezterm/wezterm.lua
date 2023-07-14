@@ -2,11 +2,12 @@ local wezterm = require "wezterm"
 local hyperlink_rules = require "hyperlinks"
 local one_dark = require "onehalf_dark"
 local fonts = require "fonts"
--- caskaydia_cove or sf_mono
+-- [caskaydia_cove, sf_mono]
 local font_name = "caskaydia_cove"
 
 -- === !== == != ++ -- => -> := :: www 0
 return {
+  warn_about_missing_glyphs = false,
   font = fonts[font_name],
   font_rules = fonts[font_name .. "_rules"],
   font_size = fonts[font_name .. "_size"],

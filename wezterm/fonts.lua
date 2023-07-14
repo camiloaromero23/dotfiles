@@ -1,8 +1,11 @@
 local M = {}
 local wezterm = require "wezterm"
+local os = io.popen("uname"):read "l"
+
+local sf_mono_name = os == "Linux" and "SFMonoNerdFontMono" or "SFMono Nerd Font"
 
 M.sf_mono = wezterm.font {
-  family = "SFMono Nerd Font",
+  family = sf_mono_name,
   weight = "Medium",
 }
 M.sf_mono_rules = {
@@ -10,7 +13,7 @@ M.sf_mono_rules = {
     intensity = "Half",
     italic = false,
     font = wezterm.font {
-      family = "SFMono Nerd Font",
+      family = sf_mono_name,
       weight = "Regular",
     },
   },
@@ -34,6 +37,6 @@ M.caskaydia_cove_rules = {
   },
 }
 
-M.caskaydia_cove_size = 19.75
+M.caskaydia_cove_size = os == "Linux" and 15.5 or 19.75
 
 return M
