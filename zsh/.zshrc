@@ -3,6 +3,7 @@ export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk/
 PATH=$PATH:$HOME/.scripts
 PATH=~/.local/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
+PATH=/opt/local/bin:$PATH
 PATH=~/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 PATH=$PATH:$HOME/Library/Python/3.9/bin
@@ -137,11 +138,11 @@ setopt HIST_FIND_NO_DUPS
 [ -f ~/.sens_conf ] && source ~/.sens_conf
 
 # Fuzzy finder for searching previous commands
-[ "$(uname)" = "Darwin" ] && [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if [ "$(uname)" != "Darwin" ] && [ -x "$(command -v fzf)" ]
+if [ -x "$(command -v fzf)" ]
 then
-  source /usr/share/fzf/key-bindings.zsh
-  source /usr/share/fzf/completion.zsh
+  fzf_dir=$([ "$(uname)" = "Darwin" ] && echo "/opt/local/share/fzf/shell" || echo "/usr/share/fzf/")
+  source $fzf_dir/key-bindings.zsh
+  source $fzf_dir/completion.zsh
 fi
 
 # Source custom aliases
