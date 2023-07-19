@@ -157,3 +157,6 @@ eval "$(zoxide init zsh)"
 # FNM
 eval "$(fnm env --use-on-cd)"
 # eval "$(fnm env)"
+
+# tmux-session-manager
+bindkey -s '^s' 'tmux-session-manager\n'

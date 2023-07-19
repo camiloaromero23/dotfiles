@@ -3,3 +3,4 @@
 !.zshrc
 !git/*.*
 !fzf/*.*
+tmux/sessions/*
