@@ -1,6 +1,0 @@
-**/sens_conf
-.*
-!.zshrc
-!git/*.*
-!fzf/*.*
-tmux/sessions/*

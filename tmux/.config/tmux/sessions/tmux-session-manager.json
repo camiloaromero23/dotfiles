@@ -1,0 +1,14 @@
+{
+  "sessionDir": "~/Documents/personal/tmux-session-manager",
+  "sessionName": "adificial-frontend-nuxt",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
+

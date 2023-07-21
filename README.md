@@ -1,49 +1,15 @@
 # Dotfiles
 
-**NOTE:** Clone this repo on your home folder for the setup script to run appropriately. Otherwise, update the link path to match the repo's location
->
->## Clone repository
->
->To clone the repository including submodules:
->
->```bash
->git clone --recurse-submodules -j8 <repository_location>
->```
->
->Otherwise:
->
->```bash
->git clone
->```
->
->### Load submodules
->
->To load submodules after cloning the repo:
->
->```bash
->git submodule update --init --recursive
->```
+To include all the dotfiles, install git & gnu stow
 
-## Make the script executable
-
-```bash
-chmod +x setup.sh
-```
-
-## Check files to be linked
-
-To check the files that are going to be linked:
+To stow all the dotfiles run:
 
 ``` bash
-./setup.sh
+stow --target=$HOME */
 ```
 
-> Modify `setup.sh` to remove any of the dotfiles to linking process
-
-## Link files
-
-To link all the files:
+To stow only some configs run:
 
 ``` bash
-./setup.sh | bash
+stow --target=$HOME <folder_name>
 ```
