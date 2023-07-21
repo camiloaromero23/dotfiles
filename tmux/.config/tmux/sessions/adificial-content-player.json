@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/Documents/work/devsu/adificial/adificial-content-player",
+  "sessionName": "adificial-content-player",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "npm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

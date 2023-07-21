@@ -1,0 +1,14 @@
+{
+  "sessionDir": "~/.config/nvim",
+  "sessionName": "nvim",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
+

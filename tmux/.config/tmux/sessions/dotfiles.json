@@ -1,0 +1,14 @@
+{
+  "sessionDir": "~/dotfiles",
+  "sessionName": "dotfiles",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
+
