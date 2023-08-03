@@ -2,6 +2,7 @@
 [user]
   name = Camilo Romero
   email = camiloaromero23@gmail.com
+	signingkey = 3989A52EB5C0971567D5268F45BD352F937E8369
 [core]
   excludesfile = ~/.gitignore_global
 	editor = nvim
@@ -34,3 +35,5 @@
 [diff]
   colorMoved = default
 
+[commit]
+	gpgsign = true

@@ -8,7 +8,7 @@ PATH=~/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 PATH=$PATH:$HOME/Library/Python/3.9/bin
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-
+export GPG_TTY=$(tty)
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 BASE_PATH=$([ "$(uname)" = "Darwin" ] && echo "/Users" || echo "/home")
@@ -81,7 +81,7 @@ DISABLE_UPDATE_PROMPT="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # Plugins
-plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode git)
+plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode git pass)
 
 # Set cursor mode
 VI_MODE_SET_CURSOR=true
@@ -161,3 +161,4 @@ eval "$(fnm env --use-on-cd)"
 
 # tmux-session-manager
 bindkey -s '^s' 'tmux-session-manager\n'
+bindkey -s '^k' 'tmux-session-manager -k\n'
