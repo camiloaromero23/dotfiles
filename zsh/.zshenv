@@ -6,5 +6,5 @@ export QT_STYLE_OVERRIDE=adwaita-dark
 
 eval "$(ssh-agent -s)" > /dev/null 2>&1
 ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
-ssh-add ~/.ssh/id_ed25519devsu > /dev/null 2>&1
-# ssh-add ~/.ssh/id_ed25519andes > /dev/null 2>&1
+ssh-add ~/.ssh/id_ed25519_devsu > /dev/null 2>&1
+ssh-add ~/.ssh/id_ed25519_andes > /dev/null 2>&1
