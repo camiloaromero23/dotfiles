@@ -20,3 +20,8 @@ To re-generate installed ports from macports run:
 port installed requested | tail -n+2 | awk '{print $1;}' > installed_ports
 ```
 
+To re-generate installed crates from cargo run:
+
+```bash
+cat ~/.cargo/.crates2.json | jq -r '.installs | keys[] | split(" ")[0]' > installed_crates
+```
