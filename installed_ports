@@ -6,6 +6,7 @@ fzf
 git
 git-delta
 go
+jq
 kitty
 lazygit
 lua-luarocks
