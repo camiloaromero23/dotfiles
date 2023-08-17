@@ -117,29 +117,7 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 ################# menu's in arcolinux
 
 # start dmenu
-# bindsym $mod+shift+d exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
-bindsym $mod+Shift+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#FFFFFF' -sb '#FFFFFF' -sf '#000000' -fn 'SFMonoNerdFontMono:semibold:pixelsize=38'
-
-## NOTE: $mod+d is used by cerebro
-exec --no-startup-id cerebro
-
-# start rofi
-# bindsym $mod+Shift+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh
-
-# start xfce4-appfinder
-bindsym mod1+F2 exec --no-startup-id xfce4-appfinder --collapsed
-
-# start xfce-appfinder
-bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
-
-# start xlunch app launcher
-# bindsym mod1+F5 exec --no-startup-id xlunch --config ~/.config/xlunch/default.conf --input ~/.config/xlunch/entries.dsv
-
-# start rofi full
-bindsym $mod+F11 exec --no-startup-id "rofi -font 'Noto Sans 13' -theme-str 'window {width: 100%;height: 100%;}' -show drun"
-
-# start rofi small
-bindsym $mod+F12 exec --no-startup-id rofi -show drun -font "Noto Sans 13"
+bindsym $mod+d exec --no-startup-id dmenu_run -i -nb '#000000' -nf '#FFFFFF' -sb '#FFFFFF' -sf '#000000' -fn 'SFMonoNerdFontMono:semibold:pixelsize=38'
 
 ################# how to exit, logoff, suspend, ...
 
@@ -346,29 +324,8 @@ font pango:Fira Sans Book 13
 # Polybar
 exec_always --no-startup-id ~/.config/polybar/material/launch.sh
 
-# ArcoLinux Welcome App
-exec --no-startup-id dex $HOME/.config/autostart/arcolinux-welcome-app.desktop
-
 # Autotiling
 exec_always --no-startup-id autotiling
-
-# Browser
-# exec --no-startup-id vivaldi-stable
-for_window [class="Vivaldi-stable"] focus
-
-# Text-editor
-# exec --no-startup-id geany
-# exec --no-startup-id atom
-
-# File manager
-# exec --no-startup-id thunar
-
-# Mail clients
-# exec --no-startup-id evolution
-
-# Music
-# exec --no-startup-id spotify
-for_window [class="Spotify"] focus
 
 # TRAY APPLICATIONS
 
@@ -378,27 +335,8 @@ for_window [class="Spotify"] focus
 # Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# Updater
-exec --no-startup-id pamac-tray
-
-# bluetooth
-# exec --no-startup-id blueberry-tray
-
-# network
-exec --no-startup-id nm-applet
-
-# num lock activated
-
-# dropbox
-# exec --no-startup-id dropbox start
-
-# insync
-# exec --no-startup-id insync start
-
-# volume
-# exec --no-startup-id pasystray
-exec --no-startup-id volumeicon
-
+exec --no-startup-id xsetroot -solid '#000000'
+exec --no-startup-id sleep 1; xset r rate 300 30
 # variety
 # exec --no-startup-id variety
 
@@ -560,8 +498,6 @@ for_window [class="Pavucontrol"] floating disable
 for_window [class="Peek"] floating enable
 for_window [class="^Skype$"] floating enable
 for_window [class="^Spotify$"] floating disable
-for_window [title="Cerebro"] floating enable
-for_window [title="Cerebro"] border disable
 for_window [class="System-config-printer.py"] floating enable
 for_window [class="Unetbootin.elf"] floating enable
 for_window [class="Usb-creator-gtk"] floating enable

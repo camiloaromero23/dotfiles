@@ -4,6 +4,7 @@ PATH=$PATH:$HOME/.scripts
 PATH=~/.local/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 PATH=/opt/local/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
 PATH=~/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 PATH=$PATH:$HOME/Library/Python/3.9/bin
