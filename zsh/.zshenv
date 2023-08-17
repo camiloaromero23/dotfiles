@@ -1,4 +1,4 @@
-ZDOTDIR=~/.config/zsh
+ZDOTDIR=$HOME/.config/zsh
 . "$HOME/.cargo/bin"
 export GTK_THEME=Adwaita:dark
 export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc

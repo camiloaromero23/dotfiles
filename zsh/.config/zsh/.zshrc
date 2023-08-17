@@ -1,11 +1,11 @@
 # Append local binaries to path
 export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk/
 PATH=$PATH:$HOME/.scripts
-PATH=~/.local/bin:$PATH
+PATH=$HOME/.local/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 PATH=/opt/local/bin:$PATH
 PATH=$HOME/.cargo/bin:$PATH
-PATH=~/.fnm:$PATH
+PATH=$HOME/.fnm:$PATH
 PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 PATH=$PATH:$HOME/Library/Python/3.9/bin
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
@@ -136,7 +136,7 @@ setopt INC_APPEND_HISTORY
 setopt HIST_FIND_NO_DUPS
 
 # Source sens_conf file if exists
-[ -f ~/.sens_conf ] && source ~/.sens_conf
+[ -f $HOME/.sens_conf ] && source $HOME/.sens_conf
 
 # Fuzzy finder for searching previous commands
 if [ -x "$(command -v fzf)" ]
