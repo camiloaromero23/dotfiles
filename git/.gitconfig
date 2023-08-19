@@ -1,8 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
-  name = Camilo Romero
-  email = camiloaromero23@gmail.com
-	signingkey = 3989A52EB5C0971567D5268F45BD352F937E8369
+  name = Sergio David Romero Maldonado
+  email = sromero@hugeinc.com
 [core]
   excludesfile = ~/.gitignore_global
 	editor = nvim
@@ -36,7 +35,7 @@
 [diff]
   colorMoved = default
 [commit]
-	gpgsign = true
+  gpgsign = false
 [includeIf "gitdir:~/Documents/work/"]
   path = ~/.gitconfig_work
 [includeIf "gitdir:~/Documents/uniAndes/"]
