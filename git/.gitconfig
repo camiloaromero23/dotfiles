@@ -15,10 +15,6 @@
   autocorrect = immediate
 [push]
   autoSetupRemote = true
-[includeIf "gitdir:~/Documents/work/"]
-  path = ~/.gitconfig_work
-[includeIf "gitdir:~/Documents/uniAndes/"]
-  path = ~/.gitconfig_uniandes
 [interactive]
   diffFilter = delta --color-only
 [delta]
@@ -34,6 +30,9 @@
   conflictstyle = diff3
 [diff]
   colorMoved = default
-
 [commit]
 	gpgsign = true
+[includeIf "gitdir:~/Documents/work/"]
+  path = ~/.gitconfig_work
+[includeIf "gitdir:~/Documents/uniAndes/"]
+  path = ~/.gitconfig_uniandes
