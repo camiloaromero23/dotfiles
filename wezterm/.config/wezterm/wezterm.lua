@@ -13,30 +13,36 @@ local font_name = "geist_mono"
 
 local font = fonts[font_name]
 -- === !== == != ++ -- => -> := :: www 0
-
-local line_height = font.line_height
-
-config.warn_about_missing_glyphs = false
-config.font = font.font
-config.font_rules = font.rules
-config.font_size = font.size
-config.color_scheme = "Catppuccin Mocha"
--- config.colors = colorscheme
-config.audible_bell = "Disabled"
-config.line_height = line_height or 1.3
-config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
-config.hyperlink_rules = hyperlink_rules
-config.window_padding = {
-  left = 4,
-  right = 0,
-  top = 7,
-  bottom = 0,
-}
-config.keys = {
-  {
-    key = "w",
-    mods = "CMD",
-    action = wezterm.action.CloseCurrentTab { confirm = true },
+return {
+  warn_about_missing_glyphs = false,
+  font = font.font,
+  font_rules = font.rules,
+  font_size = font.size,
+  -- color_scheme = "OneDark (base16)",
+  
+  colors = colorscheme,
+  font = fonts[font_name],
+  font_rules = fonts[font_name .. "_rules"],
+  font_size = fonts[font_name .. "_size"],
+  color_scheme = "Catppuccin Mocha",
+  -- colors = one_dark,
+  
+  audible_bell = "Disabled",
+  line_height = font.line_height or 1.3,
+  hide_tab_bar_if_only_one_tab = true,
+  window_decorations = "RESIZE",
+  hyperlink_rules = hyperlink_rules,
+  window_padding = {
+    left = 4,
+    right = 0,
+    top = 7,
+    bottom = 0,
+  },
+  keys = {
+    {
+      key = "w",
+      mods = "CMD",
+      action = wezterm.action.CloseCurrentTab { confirm = true },
+    },
   },
 }
