@@ -28,6 +28,8 @@
   ; syntax-theme = OneHalfDark
   ; features = decorations
   features = catppuccin-mocha decorations
+  syntax-theme = Catppuccin-mocha   # Remember to Install Captuccin Theme for Bat
+  features = decorations
   file-modified-label = modified:
   paging = always
 [merge]
