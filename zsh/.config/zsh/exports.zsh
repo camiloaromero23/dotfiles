@@ -22,3 +22,8 @@ export MANPAGER='nvim +Man!'
 
 # Set vi-mode cursor mode
 VI_MODE_SET_CURSOR=true
+
+# Load oh-my-zsh plugins
+fpath=($ZDOTDIR/ohmyzsh_plugins/ $fpath)
+
+export ZSH_CACHE_DIR=$ZDOTDIR/.cache

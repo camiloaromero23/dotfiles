@@ -5,3 +5,9 @@ alias ls="exa --icons"
 alias cat="bat"
 alias lg="lazygit"
 alias sourcezsh="source $ZDOTDIR/.zshrc"
+
+# Directories
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
