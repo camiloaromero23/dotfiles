@@ -1,0 +1,13 @@
+{
+  "sessionDir": "~/Documents/huge/hugeinc-website",
+  "windows": [
+    {
+      "windowName": "Hugeinc Neovim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "Hugeinc Server",
+      "command": "yarn dev"
+    }
+  ]
+}

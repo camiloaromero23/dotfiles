@@ -1,0 +1,9 @@
+{
+  "sessionDir": "~/dotfiles/",
+  "windows": [
+    {
+      "windowName": "Dotfiles Neovim",
+      "command": "nvim"
+    }
+  ]
+}
