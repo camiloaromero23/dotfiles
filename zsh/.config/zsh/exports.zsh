@@ -27,3 +27,5 @@ VI_MODE_SET_CURSOR=true
 fpath=($ZDOTDIR/ohmyzsh_plugins/ $fpath)
 
 export ZSH_CACHE_DIR=$ZDOTDIR/.cache
+
+export AUTO_NOTIFY_IGNORE=(vim nvim less more man tig watch git commit top htop btop ssh nano pass tmux-session-manager lazygit lg)

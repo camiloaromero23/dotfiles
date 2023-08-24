@@ -9,9 +9,6 @@ plug "$ZDOTDIR/history.zsh"
 # Source sens_conf file if exists
 [ -f $HOME/.sens_conf ] && plug $HOME/.sens_conf
 
-# Aliases
-plug "$ZDOTDIR/aliases.zsh"
-
 # Keybindings
 plug "$ZDOTDIR/keybindings.zsh"
 # Source custom commands
@@ -26,11 +23,16 @@ plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zsh-users/zsh-completions"
 plug "zap-zsh/sudo"
+plug "MichaelAquilina/zsh-you-should-use"
+plug "MichaelAquilina/zsh-auto-notify"
 
 # Oh-my-zsh plugins
 plug "$ZDOTDIR/ohmyzsh_plugins/vi-mode.plugin.zsh"
-plug "$ZDOTDIR/ohmyzsh_plugins/git.plugin.zsh"
+# plug "$ZDOTDIR/ohmyzsh_plugins/git.plugin.zsh"
 plug "$ZDOTDIR/ohmyzsh_plugins/completions.zsh"
+
+# Aliases
+plug "$ZDOTDIR/aliases.zsh"
 
 #WARN: Do not move this lines to the top of the file, it will break the keybindings
 # Keybindings
