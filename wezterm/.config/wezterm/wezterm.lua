@@ -2,7 +2,7 @@ local wezterm = require "wezterm"
 local hyperlink_rules = require "hyperlinks"
 local one_dark = require "onehalf_dark"
 local fonts = require "fonts"
--- [caskaydia_cove, sf_mono]
+-- [caskaydia_cove, sf_mono, dm_mono, jetbrains_mono]
 local font_name = "caskaydia_cove"
 
 -- === !== == != ++ -- => -> := :: www 0
@@ -14,7 +14,7 @@ return {
   -- color_scheme = "OneDark (base16)",
   colors = one_dark,
   audible_bell = "Disabled",
-  line_height = 1.3,
+  line_height = fonts[font_name .. "_line_height"] or 1.3,
   hide_tab_bar_if_only_one_tab = true,
   window_decorations = "RESIZE",
   hyperlink_rules = hyperlink_rules,

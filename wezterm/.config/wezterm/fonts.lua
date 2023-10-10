@@ -39,4 +39,24 @@ M.caskaydia_cove_rules = {
 
 M.caskaydia_cove_size = os == "Linux" and 15.5 or 19.75
 
+M.jetbrains_mono_size = 19.5
+
+M.jetbrains_mono = wezterm.font {
+  family = "JetBrains Mono",
+  weight = "Medium",
+}
+
+M.jetbrains_mono_rules = {}
+M.jetbrains_mono_line_height = 1.15
+
+M.dm_mono_size = 19.75
+
+M.dm_mono = wezterm.font {
+  family = "DM Mono",
+  weight = "Medium",
+}
+
+M.dm_mono_rules = {}
+M.dm_mono_line_height = 1.15
+
 return M
