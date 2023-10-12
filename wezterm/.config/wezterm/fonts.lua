@@ -52,7 +52,7 @@ local fonts = {
 
   jetbrains_mono = {
     font = wezterm.font {
-      family = "JetBrains Mono",
+      family = "JetBrainsMono Nerd Font",
       weight = "Medium",
     },
     rules = {},
