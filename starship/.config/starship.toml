@@ -1,3 +1,5 @@
+[git_branch]
+symbol = " "
 [gcloud]
 disabled = true
 [lua]
