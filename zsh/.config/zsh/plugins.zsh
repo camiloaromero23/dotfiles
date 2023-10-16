@@ -8,3 +8,5 @@ eval "$(zoxide init zsh)"
 eval "$(fnm env --use-on-cd)"
 # eval "$(fnm env)"
 
+# bun completions
+[ -s "$BASE_PATH/$USER/.bun/_bun" ] && source "$BASE_PATH/$USER/.bun/_bun"

@@ -22,3 +22,7 @@ export MANPAGER='nvim +Man!'
 
 # Set vi-mode cursor mode
 VI_MODE_SET_CURSOR=true
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
