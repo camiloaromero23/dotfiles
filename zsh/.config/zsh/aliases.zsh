@@ -5,3 +5,7 @@ alias ls="eza --icons"
 alias cat="bat"
 alias lg="lazygit"
 alias sourcezsh="source $ZDOTDIR/.zshrc"
+
+# Git
+alias grpo="git remote prune origin"
+alias grpod="git remote prune origin --dry-run"
