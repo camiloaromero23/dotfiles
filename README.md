@@ -17,7 +17,7 @@ stow --target=$HOME <folder_name>
 To re-generate installed ports from macports run:
 
 ```bash
-port installed requested | tail -n+2 | awk '{print $1;}' > installed_ports
+port installed requested | tail -n+2 | awk '{print $1;}' | uniq > installed_ports
 ```
 
 To re-generate installed crates from cargo run:
