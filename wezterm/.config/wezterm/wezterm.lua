@@ -2,7 +2,7 @@ local wezterm = require "wezterm"
 local hyperlink_rules = require "hyperlinks"
 local one_dark = require "onehalf_dark"
 local fonts = require "fonts"
--- [caskaydia_cove, sf_mono, dm_mono, jetbrains_mono]
+-- [caskaydia_cove, jetbrains_mono]
 local font_name = "caskaydia_cove"
 
 local font = fonts[font_name]
