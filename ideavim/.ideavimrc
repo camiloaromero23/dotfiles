@@ -1,0 +1,68 @@
+let mapleader = " "
+
+" Options
+set showmode
+set incsearch
+set nu
+set rnu
+set whichwrap=<,>,h,l,[,]
+set clipboard^=unnamedplus,unnamed
+set iskeyowrd^=-
+set timeoutlen=250
+set ignorecase
+set smartcase
+set smartindent
+set scrolloff=8
+set sidescrolloff=8
+set visualbell
+set noerrorbells
+
+" Plugins
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+set highlightedyank
+" Trying the new syntax
+"Plug 'machakann/vim-highlightedyank'
+
+" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" Keymappings
+inoremap jk <Esc>
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+"inoremap , ,<c-g>u
+"inoremap . .<c-g>u
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap N Nzz
+nnoremap n nzz
+nnoremap J mzJ`z
+nnoremap <leader>w :w!<CR>
+nnoremap Y y$
+
+vnoremap < <gv
+vnoremap > >gv
+vnoremap K :move '<-2<CR>gv=gv
+vnoremap J :move '>+1<CR>gv=gv
+xnoremap <A-j> :m '>+1<CR>gv=gv
+xnoremap <A-k> :m '<-2<CR>gv=gv
+
+map <leader>lf <Action>(ReformatCode)
+map L <Action>(NextTab)
+map H <Action>(PreviousTab)
+map st <Action>(SearchEverywhere)
+map sf <Action>(GotoFile)
+map <leader>e <Action>(ActivateProjectToolWindow)
+map <leader>c <Action>(CloseEditor)
+inoremap kk <Action>(copilot.applyInlays)
+nmap <leader>gj <Action>(VcsShowNextChangeMarker)
+nmap <leader>gk <Action>(VcsShowPrevChangeMarker)
