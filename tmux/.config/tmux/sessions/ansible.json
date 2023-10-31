@@ -1,0 +1,13 @@
+{
+  "sessionDir": "~/ansible",
+  "sessionName": "ansible",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
