@@ -127,6 +127,11 @@ bindsym $mod+Shift+w exec --no-startup-id ~/.local/share/applications/passmenuot
 
 ################# how to exit, logoff, suspend, ...
 
+# Start screenkey
+bindsym $mod+Ctrl+k exec --no-startup-id screenkey -s large -p bottom --geometry 610x400+6612+1450
+# Stop screenkey
+bindsym $mod+Ctrl+n exec --no-startup-id pkill -f screenkey
+
 # Backup exit
 # Press ctrl+alt+x - check toolbar for next choices
 bindsym control+mod1+X mode "$mode_system"
