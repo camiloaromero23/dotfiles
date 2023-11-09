@@ -16,7 +16,7 @@ export GPG_TTY=$(tty)
 export LANG=en_US.UTF-8
 
 export EDITOR='nvim'
-# export BROWSER='firefox'
+export BROWSER='google-chrome-stable'
 export LC_CTYPE=en_US.UTF-8
 export MANPAGER='nvim +Man!'
 
