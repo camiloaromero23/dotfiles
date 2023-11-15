@@ -1,6 +1,21 @@
 local wezterm = require "wezterm"
 local os = io.popen("uname"):read "l"
 
+local function font_with_nerd_fonts(font)
+  local family = font.family
+  local weight = font.weight
+
+  return wezterm.font_with_fallback {
+    {
+      family = family,
+      weight = weight,
+    },
+    {
+      family = "Symbols Nerd Font",
+    },
+  }
+end
+
 local fonts = {
   caskaydia_cove = {
     font = wezterm.font {
@@ -20,11 +35,26 @@ local fonts = {
     size = os == "Linux" and 15.5 or 19.75,
   },
 
+  ibm = {
+    font = font_with_nerd_fonts {
+      family = "IBM Plex Mono",
+      weight = "Medium",
+    },
+    size = 20,
+    line_height = 1.15,
+  },
+  monaspace = {
+    font = font_with_nerd_fonts {
+      family = "Monaspace neon",
+      weight = "Medium",
+    },
+    size = 19.75,
+    line_height = 1.25,
+  },
   geist_mono = {
-    font = wezterm.font {
+    font = font_with_nerd_fonts {
       family = "Geist Mono",
       weight = "DemiBold",
-      harfbuzz_features = { "ss09=1" },
     },
     rules = {},
     size = 19.5,
