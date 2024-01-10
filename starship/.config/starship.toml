@@ -2,6 +2,8 @@
 symbol = " "
 [gcloud]
 disabled = true
+[docker_context]
+disabled = true
 [lua]
 symbol = " "
 style = "#51a0cf"
