@@ -51,6 +51,15 @@ local fonts = {
     size = 19.75,
     line_height = 1.25,
   },
+  commit_mono = {
+    font = font_with_nerd_fonts {
+      family = "CommitMono",
+      weight = "Regular",
+    },
+    rules = {},
+    size = 19.75,
+    line_height = 1.375,
+  },
   geist_mono = {
     font = font_with_nerd_fonts {
       family = "Geist Mono",
