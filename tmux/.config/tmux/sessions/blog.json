@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/personal/blog",
+  "sessionName": "blog",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "bun --bunx astro dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
