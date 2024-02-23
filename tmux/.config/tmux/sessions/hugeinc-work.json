@@ -1,5 +1,5 @@
 {
-  "sessionDir": "~/Documents/huge/hugeinc-website",
+  "sessionDir": "~/Documents/hugeinc/hugeinc-website",
   "windows": [
     {
       "windowName": "Hugeinc Neovim",
@@ -8,6 +8,10 @@
     {
       "windowName": "Hugeinc Server",
       "command": "yarn dev"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
     }
   ]
 }
