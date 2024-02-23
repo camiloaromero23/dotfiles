@@ -1,0 +1,13 @@
+{
+  "sessionDir": "~/Documents/personal/udemy-nextjs",
+  "windows": [
+    {
+      "windowName": "Neovim Udemy",
+      "command": "nvim"
+    },
+    {
+      "windowName": "Terminal Udemy",
+      "command": ""
+    }
+  ]
+}
