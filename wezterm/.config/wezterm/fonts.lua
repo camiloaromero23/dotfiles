@@ -57,8 +57,8 @@ local fonts = {
       weight = "Regular",
     },
     rules = {},
-    size = 19.75,
-    line_height = 1.375,
+    size = os == "Linux" and 15.75 or 19.75,
+    line_height = os == "Linux" and 1.35 or 1.375,
   },
   geist_mono = {
     font = font_with_nerd_fonts {
