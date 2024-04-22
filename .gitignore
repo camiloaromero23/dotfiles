@@ -4,3 +4,7 @@
 lazygit/.config/lazygit/state.yml
 gpg/.gnupg/*
 !gpg/gpg*
+zed/.config/zed/.tmp*
+zed/.config/zed/conversations
+zed/.config/zed/embeddings
+zed/.config/zed/themes
