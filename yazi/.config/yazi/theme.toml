@@ -1,0 +1,4 @@
+[icon]
+prepend_rules = [
+  { name = "*.astro", text = "", fg = "#FFFFFF"},
+]
