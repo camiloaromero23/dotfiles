@@ -1,0 +1,28 @@
+return {
+  foreground = "#dcdfe4",
+  background = "#1d1f21",
+  selection_fg = "#000000",
+  selection_bg = "#FFFACD",
+  ansi = {
+    "#282c34",
+    "#cc6666",
+    "#b3bd5a",
+    "#de935f",
+    "#7aa6da",
+    "#b294bb",
+    "#70c0b1",
+    "#dcdfe4",
+  },
+  brights = {
+    "#5d677a",
+    "#cc6666",
+    "#b3bd5a",
+    "#de935f",
+    "#7aa6da",
+    "#b294bb",
+    "#70c0b1",
+    "#dcdfe4",
+  },
+  cursor_bg = "#cccccc",
+  cursor_border = "#cccccc",
+}
