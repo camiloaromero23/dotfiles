@@ -22,5 +22,6 @@
   },
   "cursor_blink": false,
   "scrollbar": { "show": "never" },
-  "vertical_scroll_margin": 8
+  "vertical_scroll_margin": 8,
+  "format_on_save": "off"
 }
