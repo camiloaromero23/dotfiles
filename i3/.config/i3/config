@@ -347,7 +347,9 @@ exec_always --no-startup-id autotiling
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 exec --no-startup-id xsetroot -solid '#000000'
-exec --no-startup-id sleep 1; xset r rate 300 30
+exec --no-startup-id sleep 1; xset r rate 250 30
+exec --no-startup-id sleep 1; setxkbmap -layout us -variant mac
+
 # variety
 # exec --no-startup-id variety
 
@@ -380,7 +382,7 @@ exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 bindsym control+mod1+w exec --no-startup-id arcolinux-welcome-app
 
 # ArchLinux Tweak Tool
-bindsym control+mod1+e exec --no-startup-id archlinux-tweak-tool
+# bindsym control+mod1+e exec --no-startup-id archlinux-tweak-tool
 
 # conky
 bindsym $mod+c exec --no-startup-id conky-toggle
@@ -394,7 +396,6 @@ bindsym $mod+KP_Enter exec --no-startup-id wezterm;focus
 bindsym control+mod1+t exec --no-startup-id wezterm; focus
 bindsym control+mod1+Return exec --no-startup-id wezterm; focus
 bindsym control+mod1+KP_Enter exec --no-startup-id wezterm; focus
-bindsym F12 exec --no-startup-id xfce4-terminal --drop-down; focus
 
 # System monitor
 bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager;focus
