@@ -19,16 +19,8 @@ return {
   font_rules = font.rules,
   font_size = font.size,
   -- color_scheme = "OneDark (base16)",
-  
-  colors = colorscheme,
-  font = fonts[font_name],
-  font_rules = fonts[font_name .. "_rules"],
-  font_size = fonts[font_name .. "_size"],
-  color_scheme = "Catppuccin Mocha",
-  -- color_scheme = "Catppuccin Mocha",
+  -- colors = colorscheme,
   color_scheme = 'Tokyo Night',
-  -- colors = one_dark,
-  
   audible_bell = "Disabled",
   line_height = font.line_height or 1.3,
   hide_tab_bar_if_only_one_tab = true,
