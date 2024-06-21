@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/apex/rei-credit-card-banner",
+  "windows": [
+    {
+      "windowName": "Apex Server",
+      "command": ""
+    },
+    {
+      "windowName": "Apex Neovim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}

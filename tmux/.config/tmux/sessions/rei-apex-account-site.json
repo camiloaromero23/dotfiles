@@ -1,0 +1,21 @@
+{
+  "sessionDir": "~/code/apex/account-site/",
+  "windows": [
+    {
+      "windowName": "Account Site Root",
+      "command": ""
+    },
+    {
+      "windowName": "Account Site Vue",
+      "command": "cd account-site"
+    },
+    {
+      "windowName": "Nvim",
+      "command": "cd account-site && nvim"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}

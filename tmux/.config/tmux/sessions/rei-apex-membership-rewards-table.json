@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/apex/membership-rewards-table/",
+  "windows": [
+    {
+      "windowName": "Membership Rewards Table",
+      "command": ""
+    },
+    {
+      "windowName": "Membership Rewards Table Nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}

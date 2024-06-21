@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/apex/account-flyout/",
+  "windows": [
+    {
+      "windowName": "Account Flyout Base",
+      "command": ""
+    },
+    {
+      "windowName": "Account Flyout Fe",
+      "command": "cd account-flyout"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}

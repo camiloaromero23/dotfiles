@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/OPW/order-processing-web/",
+  "windows": [
+    {
+      "windowName": "Order Processing Web Base",
+      "command": "fnm use 10.15.1 && sdk use java 11.0.21-amzn"
+    },
+    {
+      "windowName": "Web Project",
+      "command": "fnm use 10.15.1 && sdk use java 11.0.21-amzn && cd order-processing-web"
+    },
+    {
+      "windowName": "Web Project Nvim",
+      "command": "fnm use 10.15.1 && sdk use java 11.0.21-amzn && cd order-processing-web && nvim"
+    }
+  ]
+}
