@@ -25,6 +25,8 @@ return {
   font_rules = fonts[font_name .. "_rules"],
   font_size = fonts[font_name .. "_size"],
   color_scheme = "Catppuccin Mocha",
+  -- color_scheme = "Catppuccin Mocha",
+  color_scheme = 'Tokyo Night',
   -- colors = one_dark,
   
   audible_bell = "Disabled",
