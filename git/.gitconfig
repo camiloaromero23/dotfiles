@@ -29,6 +29,7 @@
   ; features = decorations
   features = catppuccin-mocha decorations
   syntax-theme = Catppuccin-mocha   # Remember to Install Captuccin Theme for Bat
+  syntax-theme = Catppuccin-mocha   # Remember to Install Captuccin Theme for Bat
   features = decorations
   file-modified-label = modified:
   paging = always
@@ -40,5 +41,7 @@
   gpgsign = false
 [includeIf "gitdir:~/Documents/hugeinc/"]
   path = ~/.gitconfig_work
+[includeIf "gitdir:~/code/"]
+  path = ~/.gitconfig_rei
 [includeIf "gitdir:~/Documents/uniAndes/"]
   path = ~/.gitconfig_uniandes
