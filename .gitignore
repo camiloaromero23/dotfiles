@@ -7,5 +7,5 @@ gpg/.gnupg/*
 zed/.config/zed/*
 !zed/.config/zed/keymap.json
 !zed/.config/zed/settings.json
-karabiner/assets/
-karabiner/automatic_backups/
+karabiner/.config/karabiner/assets/
+karabiner/.config/karabiner/automatic_backups/
