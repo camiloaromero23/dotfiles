@@ -7,15 +7,18 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "theme": "One Dark Pro",
+  "theme": "Catppuccin Mocha",
   "auto_update_extensions": {
     "one-dark-pro": true
+  },
+  "experimental.theme_overrides": {
+    // "hint": "#FF0000"
   },
   "base_keymap": "SublimeText",
   "vim_mode": true,
   "ui_font_size": 19,
   "buffer_font_size": 19,
-  "buffer_font_family": "CommitMono",
+  "buffer_font_family": "Geist Mono",
   "relative_line_numbers": true,
   "vim": {
     "use_system_clipboard": "always"
@@ -23,5 +26,15 @@
   "cursor_blink": false,
   "scrollbar": { "show": "never" },
   "vertical_scroll_margin": 8,
-  "format_on_save": "off"
+  "format_on_save": "off",
+  "inlay_hints": {
+    "enabled": true
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "classAttributes": ["class", "className", "cva", "cn", "clsx"]
+      }
+    }
+  }
 }
