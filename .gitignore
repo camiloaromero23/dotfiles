@@ -4,9 +4,8 @@
 lazygit/.config/lazygit/state.yml
 gpg/.gnupg/*
 !gpg/gpg*
-zed/.config/zed/.tmp*
-zed/.config/zed/conversations
-zed/.config/zed/embeddings
-zed/.config/zed/themes
+zed/.config/zed/*
+!zed/.config/zed/keymap.json
+!zed/.config/zed/settings.json
 karabiner/assets/
 karabiner/automatic_backups/
