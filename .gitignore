@@ -8,3 +8,5 @@ zed/.config/zed/.tmp*
 zed/.config/zed/conversations
 zed/.config/zed/embeddings
 zed/.config/zed/themes
+karabiner/assets/
+karabiner/automatic_backups/
