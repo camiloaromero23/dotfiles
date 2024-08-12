@@ -1,0 +1,13 @@
+{
+  "sessionDir": "~/documents/Obsidian/Work",
+  "sessionName": "obsidian",
+  "windows": [
+    {
+      "windowName": "obsidian",
+      "command": "nvim"
+    },
+    {
+      "command": ""
+    }
+  ]
+}
