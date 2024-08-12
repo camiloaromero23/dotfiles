@@ -63,7 +63,7 @@ local fonts = {
   geist_mono = {
     font = font_with_nerd_fonts {
       family = "Geist Mono",
-      weight = "DemiBold",
+      weight = "Medium",
     },
     rules = {},
     size = 19.5,

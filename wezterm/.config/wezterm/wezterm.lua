@@ -5,7 +5,7 @@ local hybrid = require "hybrid"
 
 local fonts = require "fonts"
 -- [caskaydia_cove, jetbrains_mono, geist_mono, monaspace, ibm, commit_mono]
-local font_name = "commit_mono"
+local font_name = "geist_mono"
 
 local font = fonts[font_name]
 
