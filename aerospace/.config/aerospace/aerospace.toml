@@ -158,6 +158,8 @@ alt-shift-r = 'mode resize'
 cmd-h = [] # Disable "hide application"
 cmd-alt-h = [] # Disable "hide others"
 
+# See: https://nikitabobko.github.io/AeroSpace/commands#close
+cmd-q = 'close --quit-if-last-window'
 
 [mode.resize.binding]
 h = 'resize width -50'
