@@ -12,6 +12,7 @@ export PATH=$ANDROID_SDK_ROOT/emulator:$PATH
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
 export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
 export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/Library/pnpm:$PATH
 
 # Set up GPG
 export GPG_TTY=$(tty)
@@ -36,3 +37,6 @@ VI_MODE_SET_CURSOR=true
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
