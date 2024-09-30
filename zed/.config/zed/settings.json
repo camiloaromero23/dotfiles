@@ -33,7 +33,25 @@
   "lsp": {
     "tailwindcss-language-server": {
       "settings": {
-        "classAttributes": ["class", "className", "cva", "cn", "clsx"]
+        "classAttributes": [
+          "class",
+          "class:list",
+          "className",
+          "clsx",
+          "cn",
+          "contentClassName",
+          "cva",
+          "iconClassName",
+          "nameClassName",
+          "ngClass"
+        ],
+        "experimental": {
+          "classRegex": [
+            ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+            ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+            ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+          ]
+        }
       }
     }
   }
