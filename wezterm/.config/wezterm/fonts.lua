@@ -63,11 +63,11 @@ local fonts = {
   geist_mono = {
     font = font_with_nerd_fonts {
       family = "Geist Mono",
-      weight = "Medium",
+      weight = "DemiBold",
     },
     rules = {},
     size = 19.5,
-    line_height = 1.225,
+    line_height = 1.25,
   },
   jetbrains_mono = {
     font = wezterm.font {

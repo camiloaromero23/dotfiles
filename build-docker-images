@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-docker rmi -f ubuntu > /dev/null 2>&1
-docker build . -t ubuntu
