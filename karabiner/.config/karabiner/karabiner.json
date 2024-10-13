@@ -10,6 +10,24 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Change right_option to <C-a>",
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Change caps_lock to option+shift",
                                 "from": {
                                     "key_code": "caps_lock",
@@ -97,7 +115,10 @@
             ],
             "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": { "indicate_sticky_modifier_keys_state": false }
+            "virtual_hid_keyboard": {
+                "indicate_sticky_modifier_keys_state": false,
+                "keyboard_type_v2": "ansi"
+            }
         }
     ]
 }
