@@ -12,15 +12,11 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = ['exec-and-forget sketchybar']
+after-startup-command = []
 
 
 # Notify Sketchybar about workspace change
-exec-on-workspace-change = [
-  '/bin/bash',
-  '-c',
-  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
-]
+exec-on-workspace-change = []
 
 
 # Start AeroSpace at login
@@ -66,8 +62,8 @@ inner.horizontal = 0
 inner.vertical = 0
 outer.left = 0
 outer.bottom = 0
-outer.top = [{ monitor.'^built-in retina display$' = 0 }, 32] # For sketchybar
-# outer.top = 0
+outer.top = 0
+# outer.top = [{ monitor.'^built-in retina display$' = 0 }, 32] # For sketchybar
 outer.right = 0
 
 # 'main' binding mode declaration
@@ -95,6 +91,7 @@ outer.right = 0
 # alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-shift-enter = 'exec-and-forget /Applications/WezTerm.app/Contents/MacOS/wezterm'
 alt-shift-space = 'layout tiles horizontal vertical'
 alt-shift-comma = 'layout accordion horizontal vertical'
 alt-shift-z = 'layout floating tiling'
@@ -165,7 +162,7 @@ alt-shift-semicolon = 'mode service'
 
 alt-shift-r = 'mode resize'
 
-cmd-h = [] # Disable "hide application"
+cmd-h = []     # Disable "hide application"
 cmd-alt-h = [] # Disable "hide others"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#close
@@ -192,7 +189,10 @@ esc = 'mode main'
 esc = ['reload-config', 'mode main']
 # r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
 # backspace = ['close-all-windows-but-current', 'mode main']
 alt-shift-h = ['join-with left', 'mode main']
 
@@ -200,10 +200,51 @@ alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
-# [[on-window-detected]]
-# if.app-id = 'com.github.wez.wezterm'
-# run = "move-node-to-workspace T"
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = "move-node-to-workspace 1"
 
-# [[on-window-detected]]
-# if.app-id = 'com.google.Chrome'
-# run = "move-node-to-workspace B"
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = "move-node-to-workspace 4"
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = "move-node-to-workspace 9"
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = "move-node-to-workspace 5"
+
+[[on-window-detected]]
+if.app-id = 'app.responsively'
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = "move-node-to-workspace 6"
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = "move-node-to-workspace 7"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Music'
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
+if.app-id = 'notion.id'
+run = "move-node-to-workspace 10"
+
+# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+# [workspace-to-monitor-force-assignment]
+# 1 = ['main', 'secondary']
+# 2 = ['main', 'secondary']
+# 3 = ['main', 'secondary']
+# 4 = ['main', 'secondary']
+# 5 = ['secondary', 'main']
+# 6 = ['secondary', 'main']
+# 7 = ['secondary', 'main']
+# 8 = ['secondary', 'main']
+# 9 = ['main', 'secondary']
+# 10 = ['main', 'secondary']
