@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/apex/wishlist-site/",
+  "windows": [
+    {
+      "windowName": "Apex Server",
+      "command": ""
+    },
+    {
+      "windowName": "Apex Neovim",
+      "command": "cd wishlist-site"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}

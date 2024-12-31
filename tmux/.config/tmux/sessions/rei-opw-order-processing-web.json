@@ -3,7 +3,8 @@
   "windows": [
     {
       "windowName": "Order Processing Web Base",
-      "command": "fnm use 10.15.1 && sdk use java 11.0.21-amzn"
+      "command": "fnm use 10.15.1 && sdk use java 11.0.21-amzn",
+      "command": "fnm use 10.15.1"
     },
     {
       "windowName": "Web Project",

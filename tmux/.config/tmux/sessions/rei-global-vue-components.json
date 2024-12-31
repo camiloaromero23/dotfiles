@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/code/NAV/global-vue-components/",
+  "windows": [
+    {
+      "windowName": "Global Vue Components Server",
+      "command": ""
+    },
+    {
+      "windowName": "Neovim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "Command Line",
+      "command": ""
+    }
+  ]
+}
