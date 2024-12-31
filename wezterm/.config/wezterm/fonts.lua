@@ -67,7 +67,7 @@ local fonts = {
     },
     rules = {},
     size = 19.5,
-    line_height = 1.2525,
+    line_height = 1.26,
   },
   jetbrains_mono = {
     font = wezterm.font {
