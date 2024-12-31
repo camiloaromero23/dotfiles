@@ -7,6 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
   "theme": "Catppuccin Mocha",
   "auto_update_extensions": {
     "one-dark-pro": true
@@ -49,7 +53,11 @@
           "classRegex": [
             ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
             ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-            ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+            ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+            ["\\b\\w+[cC]lassName\\s*=\\s*[\"']([^\"']*)[\"']"],
+            ["\\b\\w+[cC]lassName\\s*=\\s*`([^`]*)`"],
+            ["[\\w]+[cC]lassName[\"']?\\s*:\\s*[\"']([^\"']*)[\"']"],
+            ["[\\w]+[cC]lassName[\"']?\\s*:\\s*`([^`]*)`"]
           ]
         }
       }
