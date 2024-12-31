@@ -5,6 +5,8 @@ BASE_PATH=$([ "$(uname)" = "Darwin" ] && echo "/Users" || echo "/home")
 # Path to your oh-my-zsh installation.
 export ZSH="$BASE_PATH/$USER/.oh-my-zsh"
 
+: ${ZSH_CUSTOM:="$HOME/.oh-my-zsh/custom"}
+
 # Uncomment the following line to automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
 
@@ -15,6 +17,8 @@ DISABLE_UPDATE_PROMPT="true"
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
  DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+source $ZDOTDIR/nix_config.zsh
 
 # Plugins
 plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode git pass)
