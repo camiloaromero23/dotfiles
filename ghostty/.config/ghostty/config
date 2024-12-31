@@ -1,0 +1,16 @@
+font-family = Geist Mono
+font-size = 19
+theme = catppuccin-mocha
+adjust-cell-height = 28%
+adjust-cursor-thickness = 2
+adjust-cursor-height = 14
+cursor-color = #f5e0dc
+window-padding-x = 2,0
+window-padding-y = 4,0
+macos-titlebar-style = hidden
+macos-icon = custom-style
+macos-icon-frame = plastic
+macos-icon-ghost-color = #cba6f7
+macos-icon-screen-color = #1e1e2e
+macos-option-as-alt = left
+window-colorspace = "display-p3"
