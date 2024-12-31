@@ -29,8 +29,7 @@
   ; features = decorations
   features = catppuccin-mocha decorations
   syntax-theme = Catppuccin-mocha   # Remember to Install Captuccin Theme for Bat
-  syntax-theme = Catppuccin-mocha   # Remember to Install Captuccin Theme for Bat
-  features = decorations
+  syntax-theme = Catppuccin Mocha   # Remember to Install Captuccin Theme for Bat
   file-modified-label = modified:
   paging = always
 [merge]
