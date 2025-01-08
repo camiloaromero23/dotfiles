@@ -82,6 +82,7 @@
             "starship"
             "gnupg"
             "borders"
+            "sqlcmd"
           ];
           casks = [
             "aerospace"
