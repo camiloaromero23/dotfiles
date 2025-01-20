@@ -47,9 +47,7 @@
             pkgs.pinentry_mac
             pkgs.ripgrep
             pkgs.rustup
-            pkgs.shortcat
             pkgs.silicon
-            pkgs.stats
             pkgs.stow
             pkgs.tmux
             pkgs.vscode
@@ -87,16 +85,18 @@
           casks = [
             "aerospace"
             "arc"
-            "discord"
             "firefox"
             "ghostty"
+            "homerow"
             "jetbrains-toolbox"
             "keycastr"
+            "legcord"
             "logi-options+"
             "microsoft-teams"
             "raycast"
-            "slack"
             "shottr"
+            "slack"
+            "stats"
             "wezterm"
             "whatsapp"
             "zed"
