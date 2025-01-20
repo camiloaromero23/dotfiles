@@ -53,6 +53,7 @@
             pkgs.vscode
             pkgs.yazi
             pkgs.zbar
+            pkgs.zoom-us
             pkgs.zoxide
             pkgs.zsh-autosuggestions
             pkgs.zsh-syntax-highlighting
