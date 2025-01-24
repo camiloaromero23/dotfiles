@@ -171,6 +171,14 @@
                     type = "standard";
                   };
                 };
+                # Cycle through windows of the same app
+                "27" = {
+                  enabled = true;
+                  value = {
+                    parameters = [ 99 8 655360 ];
+                    type = "standard";
+                  };
+                };
                 # Screenshot - Entire Screen
                 "28" = {
                   enabled = false;
