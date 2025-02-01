@@ -40,3 +40,5 @@ config.keys = {
     action = wezterm.action.CloseCurrentTab { confirm = true },
   },
 }
+
+return config
