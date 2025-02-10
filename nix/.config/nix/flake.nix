@@ -76,12 +76,12 @@
         homebrew = {
           enable = true;
           brews = [
+            "borders"
             "eza"
             "git"
-            "starship"
             "gnupg"
-            "borders"
             "sqlcmd"
+            "starship"
           ];
           casks = [
             "aerospace"
@@ -94,6 +94,7 @@
             "legcord"
             "logi-options+"
             "microsoft-teams"
+            "orbstack"
             "raycast"
             "shottr"
             "slack"
@@ -175,7 +176,7 @@
                 "27" = {
                   enabled = true;
                   value = {
-                    parameters = [ 99 8 655360 ];
+                    parameters = [ 99 8 1966080 ];
                     type = "standard";
                   };
                 };
