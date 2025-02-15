@@ -78,8 +78,10 @@
           brews = [
             "borders"
             "eza"
+            "ghostscript"
             "git"
             "gnupg"
+            "imagemagick"
             "sqlcmd"
             "starship"
           ];
