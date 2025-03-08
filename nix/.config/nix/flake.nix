@@ -26,6 +26,7 @@
             pkgs.alacritty
             pkgs.bat
             pkgs.btop
+            pkgs.bun
             pkgs.delta
             pkgs.fd
             pkgs.fnm
@@ -37,9 +38,9 @@
             pkgs.karabiner-elements
             pkgs.kitty
             pkgs.lazygit
+            pkgs.lazydocker
             pkgs.lua
             pkgs.mkalias
-            pkgs.obsidian
             pkgs.passExtensions.pass-otp
             pkgs.passExtensions.pass-update
             (pkgs.pass.withExtensions (ext: with ext; [pass-otp pass-update]))
@@ -50,6 +51,7 @@
             pkgs.silicon
             pkgs.stow
             pkgs.tmux
+            pkgs.uv
             pkgs.vscode
             pkgs.yazi
             pkgs.zbar
@@ -61,15 +63,11 @@
           ];
 
         fonts.packages = [
-          (pkgs.nerdfonts.override { 
-            fonts = [
-              "CascadiaCode" 
-              "GeistMono"
-              "JetBrainsMono" 
-              "NerdFontsSymbolsOnly"
-              "ZedMono"
-            ];
-          })
+          pkgs.nerd-fonts.caskaydia-cove
+          pkgs.nerd-fonts.geist-mono
+          pkgs.nerd-fonts.jetbrains-mono
+          pkgs.nerd-fonts.symbols-only
+          pkgs.nerd-fonts.zed-mono
           pkgs.geist-font
         ];
 
@@ -96,6 +94,8 @@
             "legcord"
             "logi-options+"
             "microsoft-teams"
+            "monitorcontrol"
+            "obsidian"
             "orbstack"
             "raycast"
             "shottr"
@@ -142,7 +142,7 @@
         system.defaults = {
           dock = {
             autohide = true;
-            expose-group-by-app = true;
+            expose-group-apps = true;
             persistent-apps = [];
             static-only = true;
             tilesize = 64;
@@ -151,6 +151,7 @@
           menuExtraClock.Show24Hour = true;
           controlcenter.BatteryShowPercentage = true;
           NSGlobalDomain = {
+            ApplePressAndHoldEnabled = false;
             AppleICUForce24HourTime = true;
             AppleKeyboardUIMode = 3;
             AppleInterfaceStyle = "Dark";
@@ -260,8 +261,9 @@
         };
 
         # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
+        # services.nix-daemon.enable = true;
         # nix.package = pkgs.nix;
+        nix.enable = true;
 
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
