@@ -1,7 +1,9 @@
-font-family = Geist Mono
-font-size = 19
+font-family = Dank Mono
+font-size = 20
 theme = catppuccin-mocha
-adjust-cell-height = 28%
+adjust-cell-width = -3%
+font-thicken = 1
+adjust-cell-height = 53%
 adjust-cursor-thickness = 2
 adjust-cursor-height = 14
 cursor-color = #f5e0dc
@@ -14,3 +16,8 @@ macos-icon-frame = plastic
 macos-icon-ghost-color = #cba6f7
 macos-icon-screen-color = #1e1e2e
 window-colorspace = "display-p3"
+
+
+# font-family = Geist Mono
+# font-size = 19
+# adjust-cell-height = 28%
