@@ -33,9 +33,9 @@
             pkgs.fzf
             pkgs.geist-font
             pkgs.go
+            pkgs.google-cloud-sdk
             pkgs.htop
             pkgs.jq
-            pkgs.karabiner-elements
             pkgs.kitty
             pkgs.lazygit
             pkgs.lazydocker
@@ -55,7 +55,6 @@
             pkgs.vscode
             pkgs.yazi
             pkgs.zbar
-            pkgs.zoom-us
             pkgs.zoxide
             pkgs.zsh-autosuggestions
             pkgs.zsh-syntax-highlighting
@@ -77,6 +76,8 @@
             "borders"
             "eza"
             "ghostscript"
+            "azure-cli"
+            "Azure/kubelogin/kubelogin"
             "git"
             "gnupg"
             "imagemagick"
@@ -85,26 +86,35 @@
           ];
           casks = [
             "aerospace"
+            "anydesk"
             "arc"
             "firefox"
             "ghostty"
             "homerow"
             "jetbrains-toolbox"
+            "karabiner-elements"
             "keycastr"
             "legcord"
             "logi-options+"
+            "microsoft-powerpoint"
             "microsoft-teams"
+            "microsoft-word"
             "monitorcontrol"
             "obsidian"
             "orbstack"
+            "postman"
             "raycast"
+            "responsively"
             "shottr"
             "slack"
             "stats"
             "wezterm"
             "whatsapp"
+            "vivaldi"
+            "yaak"
             "zed"
             "zen-browser"
+            "zoom"
           ];
           taps = [
             "nikitabobko/tap"
@@ -134,11 +144,12 @@
             ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
             done
           '';
+        system.primaryUser = "camilo";
 
-        system.activationScripts.postUserActivation.text = ''
-        # Following line should allow us to avoid a logout/login cycle
-        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-        '';
+        # system.activationScripts.postUserActivation.text = ''
+        # # Following line should allow us to avoid a logout/login cycle
+        # /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+        # '';
         system.defaults = {
           dock = {
             autohide = true;
