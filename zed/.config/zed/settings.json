@@ -7,7 +7,18 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "icon_theme": "Catppuccin Mocha",
+  "agent": {
+    "model_parameters": [],
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-3.7-sonnet"
+    },
+    "version": "2"
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "icon_theme": "Material Icon Theme",
   "telemetry": {
     "metrics": false,
     "diagnostics": false
@@ -22,8 +33,16 @@
   "base_keymap": "SublimeText",
   "vim_mode": true,
   "ui_font_size": 19,
+  "ui_font_family": "Dank Mono",
+  "buffer_font_weight": 900,
+  "terminal": {
+    "font_fallbacks": ["Symbols Nerd Font"]
+  },
+  "tabs": {
+    "file_icons": true
+  },
   "buffer_font_size": 19,
-  "buffer_font_family": "GeistMono Nerd Font",
+  "buffer_font_family": "Dank Mono",
   "relative_line_numbers": true,
   "vim": {
     "use_system_clipboard": "always"
@@ -31,6 +50,16 @@
   "cursor_blink": false,
   "scrollbar": { "show": "never" },
   "vertical_scroll_margin": 8,
+  "diagnostics": {
+    "include_warnings": true,
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 150,
+      "padding": 4,
+      "min_column": 0,
+      "max_severity": null
+    }
+  },
   "format_on_save": "off",
   "inlay_hints": {
     "enabled": true
@@ -38,23 +67,10 @@
   "lsp": {
     "tailwindcss-language-server": {
       "settings": {
-        "classAttributes": [
-          "class",
-          "class:list",
-          "className",
-          "clsx",
-          "cn",
-          "contentClassName",
-          "cva",
-          "iconClassName",
-          "nameClassName",
-          "ngClass"
-        ],
+        "classAttributes": ["class", "className", "ngClass", "class:list"],
+        "classFunctions": ["cv", "cx", "cn", "cva"],
         "experimental": {
           "classRegex": [
-            ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-            ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-            ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
             ["\\b\\w+[cC]lassName\\s*=\\s*[\"']([^\"']*)[\"']"],
             ["\\b\\w+[cC]lassName\\s*=\\s*`([^`]*)`"],
             ["[\\w]+[cC]lassName[\"']?\\s*:\\s*[\"']([^\"']*)[\"']"],
