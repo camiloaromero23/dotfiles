@@ -109,7 +109,7 @@
             "whatsapp"
             "yaak"
             "zed"
-            "zen-browser"
+            "zen"
             "zoom"
           ];
           taps = [
