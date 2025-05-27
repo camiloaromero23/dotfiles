@@ -45,7 +45,6 @@
             pkgs.passExtensions.pass-update
             (pkgs.pass.withExtensions (ext: with ext; [pass-otp pass-update]))
             pkgs.pass
-            pkgs.pinentry_mac
             pkgs.ripgrep
             pkgs.rustup
             pkgs.silicon
@@ -73,14 +72,15 @@
         homebrew = {
           enable = true;
           brews = [
+            "Azure/kubelogin/kubelogin"
+            "azure-cli"
             "borders"
             "eza"
             "ghostscript"
-            "azure-cli"
-            "Azure/kubelogin/kubelogin"
             "git"
             "gnupg"
             "imagemagick"
+            "pinentry-mac"
             "sqlcmd"
             "starship"
           ];
