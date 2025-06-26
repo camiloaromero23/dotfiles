@@ -80,6 +80,7 @@
             "git"
             "gnupg"
             "imagemagick"
+            "opencode"
             "pinentry-mac"
             "sqlcmd"
             "starship"
@@ -113,8 +114,9 @@
             "zoom"
           ];
           taps = [
-            "nikitabobko/tap"
             "FelixKratz/formulae"
+            "nikitabobko/tap"
+            "sst/tap"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
