@@ -11,7 +11,7 @@
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-3.7-sonnet"
+      "model": "claude-sonnet-4"
     },
     "version": "2"
   },
@@ -64,6 +64,7 @@
   "inlay_hints": {
     "enabled": true
   },
+  "lsp_document_colors": "background",
   "lsp": {
     "tailwindcss-language-server": {
       "settings": {
