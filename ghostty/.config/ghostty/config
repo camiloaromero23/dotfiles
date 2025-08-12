@@ -17,6 +17,7 @@ macos-icon-ghost-color = #cba6f7
 macos-icon-screen-color = #1e1e2e
 window-colorspace = "display-p3"
 
+keybind = cmd+s=toggle_secure_input
 
 # font-family = Geist Mono
 # font-size = 19
