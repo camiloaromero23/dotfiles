@@ -7,13 +7,6 @@
     }
   },
   {
-    "context": "Editor && (showing_code_actions || showing_completions)",
-    "bindings": {
-      "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-j": "editor::ContextMenuNext"
-    }
-  },
-  {
     "bindings": {
       "ctrl-j": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrevious"

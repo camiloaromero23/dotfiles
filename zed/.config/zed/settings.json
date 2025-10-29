@@ -8,14 +8,23 @@
 // from the command palette or from `Zed` application menu.
 {
   "agent": {
-    "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
+      "model": "claude-sonnet-4.5"
     }
   },
+  "agent_servers": {
+    "OpenCode": {
+      "command": "opencode",
+      "args": ["acp"]
+    }
+  },
+  "disable_ai": false,
+  "project_panel": {
+    "dock": "left"
+  },
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": null
   },
   "icon_theme": "Material Icon Theme",
   "telemetry": {
@@ -23,9 +32,6 @@
     "diagnostics": false
   },
   "theme": "Catppuccin Mocha",
-  "auto_update_extensions": {
-    "one-dark-pro": true
-  },
   "experimental.theme_overrides": {
     // "hint": "#FF0000"
   },
@@ -62,6 +68,24 @@
   "format_on_save": "off",
   "inlay_hints": {
     "enabled": true
+  },
+  "languages": {
+    "HTML": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "CSS": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
   },
   "lsp_document_colors": "background",
   "lsp": {
