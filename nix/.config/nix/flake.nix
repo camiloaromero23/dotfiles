@@ -21,15 +21,19 @@
           LC_ALL = "en_US.UTF-8";
           LANG = "en_US.UTF-8";
         };
+
+        # Link vendor fish snippets (e.g., nix-darwin PATH hooks)
+        environment.pathsToLink = [ "/share/fish" ];
+
         environment.systemPackages =
-          [ 
+          [
             pkgs.alacritty
             pkgs.bat
             pkgs.btop
-            pkgs.bun
             pkgs.delta
             pkgs.fd
             pkgs.fnm
+            pkgs.fish
             pkgs.fzf
             pkgs.geist-font
             pkgs.go
@@ -43,7 +47,7 @@
             pkgs.mkalias
             pkgs.passExtensions.pass-otp
             pkgs.passExtensions.pass-update
-            (pkgs.pass.withExtensions (ext: with ext; [pass-otp pass-update]))
+            (pkgs.pass.withExtensions (ext: with ext; [ pass-otp pass-update ]))
             pkgs.pass
             pkgs.ripgrep
             pkgs.rustup
@@ -53,11 +57,10 @@
             pkgs.uv
             pkgs.vscode
             pkgs.yazi
-            pkgs.zbar
             pkgs.zoxide
             pkgs.zsh-autosuggestions
             pkgs.zsh-syntax-highlighting
-            neovim-nightly-overlay.packages.${pkgs.system}.default
+            neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
         fonts.packages = [
@@ -73,38 +76,54 @@
           enable = true;
           brews = [
             "Azure/kubelogin/kubelogin"
+            "atuin"
             "azure-cli"
             "borders"
+            "bun"
+            "cmatrix"
+            "difftastic"
             "eza"
+            "ffmpeg"
+            "fish"
+            "gh"
             "ghostscript"
             "git"
             "gnupg"
             "imagemagick"
-            "opencode"
             "pinentry-mac"
+            "postgresql"
             "sqlcmd"
             "starship"
+            "zbar"
           ];
           casks = [
             "aerospace"
             "arc"
+            "brave-browser"
+            "chatgpt-atlas"
+            "drawio"
             "ghostty"
+            "google-chrome"
             "homerow"
             "jetbrains-toolbox"
             "karabiner-elements"
             "keycastr"
             "legcord"
+            "microsoft-auto-update"
             "microsoft-powerpoint"
             "microsoft-teams"
             "microsoft-word"
+            "microsoft-excel"
             "monitorcontrol"
             "obsidian"
             "orbstack"
             "postman"
             "raycast"
             "responsively"
+            "requestly"
             "shottr"
             "slack"
+            "spotify"
             "stats"
             "wezterm"
             "whatsapp"
@@ -117,30 +136,35 @@
             "FelixKratz/formulae"
             "nikitabobko/tap"
             "sst/tap"
+            "oven-sh/bun"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
           onActivation.upgrade = true;
         };
 
-        system.activationScripts.applications.text = let
-          env = pkgs.buildEnv {
-            name = "system-applications";
-            paths = config.environment.systemPackages;
-            pathsToLink = "/Applications";
-          };
-        in
+        system.activationScripts.applications.text =
+          let
+            env = pkgs.buildEnv {
+              name = "system-applications";
+              paths = config.environment.systemPackages;
+              pathsToLink = [
+                "/Applications"
+                "/share/fish"
+              ];
+            };
+          in
           pkgs.lib.mkForce ''
-        # Set up applications.
-        echo "setting up /Applications..." >&2
-        rm -rf /Applications/Nix\ Apps
-        mkdir -p /Applications/Nix\ Apps
-        find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-        while read -r src; do
-          app_name=$(basename "$src")
-            echo "copying $src" >&2
-            ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-            done
+            # Set up applications.
+            echo "setting up /Applications..." >&2
+            rm -rf /Applications/Nix\ Apps
+            mkdir -p /Applications/Nix\ Apps
+            find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+            while read -r src; do
+              app_name=$(basename "$src")
+                echo "copying $src" >&2
+                ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+                done
           '';
         system.primaryUser = "camilo";
 
@@ -152,7 +176,7 @@
           dock = {
             autohide = true;
             expose-group-apps = true;
-            persistent-apps = [];
+            persistent-apps = [ ];
             static-only = true;
             tilesize = 64;
           };
@@ -196,7 +220,7 @@
                 "64" = {
                   enabled = true;
                   value = {
-                    parameters = [ 32 49 1572864 ];  # 49 = space key, 524288 = Option modifier
+                    parameters = [ 32 49 1572864 ]; # 49 = space key, 524288 = Option modifier
                     type = "standard";
                   };
                 };
@@ -278,8 +302,25 @@
         nix.settings.experimental-features = "nix-command flakes";
 
         # Create /etc/zshrc that loads the nix-darwin environment.
-        programs.zsh.enable = true;  # default shell on catalina
-        # programs.fish.enable = true;
+        programs.zsh.enable = true; # default shell on catalina
+        programs.fish = {
+          enable = true;
+          shellInit = ''
+            for p in $HOME/.nix-profile /etc/profiles/per-user/$USER /run/current-system/sw /nix/var/nix/profiles/default
+              if test -d "$p/bin"
+                fish_add_path "$p/bin"
+              end
+            end
+          '';
+        };
+
+        # Ensure login shells get Nix paths too (zsh, bash, etc.)
+        environment.loginShellInit = ''
+          for p in "$HOME/.nix-profile" "/etc/profiles/per-user/$USER" "/run/current-system/sw" "/nix/var/nix/profiles/default"
+          do
+            [ -d "$p/bin" ] && export PATH="$p/bin:$PATH"
+          done
+        '';
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -292,11 +333,11 @@
         nixpkgs.hostPlatform = "aarch64-darwin";
       };
     in
-      {
+    {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#simple
       darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
-        modules = [ 
+        modules = [
           configuration
           nix-homebrew.darwinModules.nix-homebrew
           {

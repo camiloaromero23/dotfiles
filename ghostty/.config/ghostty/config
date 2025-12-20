@@ -19,6 +19,10 @@ window-colorspace = "display-p3"
 
 keybind = cmd+s=toggle_secure_input
 
+# command = /opt/homebrew/bin/fish --login --interactive
+command = /opt/homebrew/bin/fish --login --interactive
+
+
 # font-family = Geist Mono
 # font-size = 19
 # adjust-cell-height = 28%
