@@ -7,6 +7,8 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "on_last_window_closed": "quit_app",
+  "colorize_brackets": true,
   "agent": {
     "default_model": {
       "provider": "copilot_chat",
@@ -15,6 +17,7 @@
   },
   "agent_servers": {
     "OpenCode": {
+      "type": "custom",
       "command": "opencode",
       "args": ["acp"]
     }
@@ -48,7 +51,7 @@
   },
   "buffer_font_size": 19,
   "buffer_font_family": "Dank Mono",
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "vim": {
     "use_system_clipboard": "always"
   },
