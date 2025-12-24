@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/work/ultracom/API-FinAIPro",
+  "sessionName": "api-finaipro",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": ""
+    },
+    {
+      "command": ""
+    }
+  ]
+}

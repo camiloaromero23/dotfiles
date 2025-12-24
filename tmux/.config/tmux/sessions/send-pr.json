@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/personal/raycast/extensions/send-pr",
+  "sessionName": "send-pr",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "npm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

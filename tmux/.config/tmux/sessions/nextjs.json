@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/personal/courses/nextJS/admin-todos",
+  "sessionName": "nextjs",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "bun --bun run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

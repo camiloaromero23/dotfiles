@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/work/ultracom/conectea-web/",
+  "sessionName": "conectea-web",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "pnpm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

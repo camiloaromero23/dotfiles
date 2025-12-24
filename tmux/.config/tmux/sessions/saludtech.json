@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/andes/saludtechalpes-data-processor-service",
+  "sessionName": "saludtech",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": ""
+    },
+    {
+      "command": ""
+    }
+  ]
+}

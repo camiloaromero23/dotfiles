@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/work/ultracom/finaipro-tech",
+  "sessionName": "finaipro",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "pnpm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

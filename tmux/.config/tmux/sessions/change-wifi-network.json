@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/personal/raycast/extensions/change-wi-fi-network",
+  "sessionName": "change-wi-fi-network",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "npm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

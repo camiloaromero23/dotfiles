@@ -1,0 +1,14 @@
+{
+  "sessionDir": "~/documents/notes/notes/",
+  "sessionName": "notes",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "nvim",
+      "command": ""
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/Documents/work/ultracom/conectea-media-stream",
+  "sessionName": "finaipro",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": ""
+    },
+    {
+      "command": ""
+    }
+  ]
+}

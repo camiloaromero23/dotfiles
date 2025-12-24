@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/documents/work/ultracom/conectea-web-scraping/",
+  "sessionName": "conectea-web-scraping",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": ""
+    },
+    {
+      "command": ""
+    }
+  ]
+}

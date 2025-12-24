@@ -1,0 +1,17 @@
+{
+  "sessionDir": "~/Documents/personal/mym",
+  "sessionName": "mym",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    },
+    {
+      "windowName": "server",
+      "command": "pnpm run dev"
+    },
+    {
+      "command": ""
+    }
+  ]
+}

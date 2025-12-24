@@ -1,0 +1,10 @@
+{
+  "sessionDir": "~/Documents/work/ultracom/SQLDB-parameters-FinAIPro/",
+  "sessionName": "sql-finaipro",
+  "windows": [
+    {
+      "windowName": "nvim",
+      "command": "nvim"
+    }
+  ]
+}
