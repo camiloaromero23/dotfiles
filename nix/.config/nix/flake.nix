@@ -76,6 +76,7 @@
           enable = true;
           brews = [
             "Azure/kubelogin/kubelogin"
+            "mole"
             "atuin"
             "azure-cli"
             "borders"
@@ -137,6 +138,7 @@
             "nikitabobko/tap"
             "sst/tap"
             "oven-sh/bun"
+            "tw93/tap"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
