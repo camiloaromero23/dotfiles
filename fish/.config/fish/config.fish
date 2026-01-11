@@ -47,9 +47,9 @@ set -gx ATUIN_NOBIND "true"
 atuin init fish | source
 
 bind \cr --sets-mode insert _atuin_search
-bind up --sets-mode insert _atuin_bind_up
+# bind up --sets-mode insert _atuin_bind_up
 bind --mode insert --sets-mode insert \cr _atuin_search
-bind --mode insert --sets-mode insert up _atuin_bind_up
+# bind --mode insert --sets-mode insert up _atuin_bind_up
 bind --mode default k _atuin_bind_up
 
 # Set up fzf
