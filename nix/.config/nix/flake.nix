@@ -76,7 +76,6 @@
           enable = true;
           brews = [
             "Azure/kubelogin/kubelogin"
-            "mole"
             "atuin"
             "azure-cli"
             "borders"
@@ -91,6 +90,7 @@
             "git"
             "gnupg"
             "imagemagick"
+            "mole"
             "pinentry-mac"
             "postgresql"
             "sqlcmd"
@@ -104,7 +104,7 @@
             "chatgpt-atlas"
             "drawio"
             "ghostty"
-            "google-chrome"
+            "google-chrome@beta"
             "homerow"
             "jetbrains-toolbox"
             "karabiner-elements"
@@ -136,8 +136,8 @@
           taps = [
             "FelixKratz/formulae"
             "nikitabobko/tap"
-            "sst/tap"
             "oven-sh/bun"
+            "sst/tap"
             "tw93/tap"
           ];
           onActivation.cleanup = "zap";
