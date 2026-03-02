@@ -7,6 +7,7 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "edit_predictions": {},
   "on_last_window_closed": "quit_app",
   "colorize_brackets": true,
   "agent": {
@@ -16,18 +17,10 @@
     }
   },
   "agent_servers": {
-    "OpenCode": {
-      "type": "custom",
-      "command": "opencode",
-      "args": ["acp"]
-    }
   },
   "disable_ai": false,
   "project_panel": {
     "dock": "left"
-  },
-  "features": {
-    "edit_prediction_provider": null
   },
   "icon_theme": "Material Icon Theme",
   "telemetry": {
