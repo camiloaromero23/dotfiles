@@ -9,4 +9,4 @@ SETUVAR LC_CTYPE:en_US\x2eUTF\x2d8
 SETUVAR TERM:xterm\x2d256color
 SETUVAR XDG_CONFIG_HOME:/Users/camilo/\x2econfig
 SETUVAR __fish_initialized:4300
-SETUVAR fish_user_paths:/Users/camilo/\x2ebun/bin\x1e/nix/var/nix/profiles/default/bin\x1e/run/current\x2dsystem/sw/bin\x1e/Users/camilo/Library/pnpm\x1e/Users/camilo/go/bin\x1e/Users/camilo/\x2ecargo/bin\x1e/Users/camilo/\x2elocal/bin\x1e/opt/homebrew/bin
+SETUVAR fish_user_paths:/Users/camilo/\x2elocal/share/bob/nvim\x2dbin\x1e/Users/camilo/\x2elocal/share/bob\x1e/Users/camilo/\x2ebun/bin\x1e/nix/var/nix/profiles/default/bin\x1e/run/current\x2dsystem/sw/bin\x1e/Users/camilo/Library/pnpm\x1e/Users/camilo/go/bin\x1e/Users/camilo/\x2ecargo/bin\x1e/Users/camilo/\x2elocal/bin\x1e/opt/homebrew/bin

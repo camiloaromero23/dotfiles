@@ -17,6 +17,7 @@ end
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/local/bin
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.local/share/bob/nvim-bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.fnm
 fish_add_path $HOME/go/bin
@@ -90,3 +91,7 @@ set fish_pager_color_progress 6c7086
 set fish_pager_color_prefix f5c2e7
 set fish_pager_color_completion cdd6f4
 set fish_pager_color_description 6c7086
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
