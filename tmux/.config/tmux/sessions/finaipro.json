@@ -1,5 +1,5 @@
 {
-  "sessionDir": "~/documents/work/ultracom/front-finaipro",
+  "sessionDir": "~/documents/work/ultracom/Web-Finaipro",
   "sessionName": "finaipro",
   "windows": [
     {
@@ -8,10 +8,11 @@
     },
     {
       "windowName": "server",
-      "command": "pnpm run dev"
+      "command": "bun run dev:local"
     },
     {
-      "command": ""
+      "windowName": "opencode",
+      "command": "opencode"
     }
   ]
 }
