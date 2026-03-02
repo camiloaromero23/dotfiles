@@ -1,9 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
-  "keybinds": {
-    "leader": "ctrl+space"
-  },
 }
