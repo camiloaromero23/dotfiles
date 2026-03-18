@@ -6,10 +6,9 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, neovim-nightly-overlay }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
       configuration = { pkgs, config, lib, ... }: {
         # List packages installed in system profile. To search by name, run:
@@ -27,7 +26,6 @@
 
         environment.systemPackages =
           [
-            pkgs.alacritty
             pkgs.bat
             pkgs.btop
             pkgs.delta
@@ -40,7 +38,6 @@
             pkgs.google-cloud-sdk
             pkgs.htop
             pkgs.jq
-            pkgs.kitty
             pkgs.lazygit
             pkgs.lazydocker
             pkgs.lua
@@ -60,7 +57,6 @@
             pkgs.zoxide
             pkgs.zsh-autosuggestions
             pkgs.zsh-syntax-highlighting
-            neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
         fonts.packages = [
@@ -78,19 +74,23 @@
             "Azure/kubelogin/kubelogin"
             "atuin"
             "azure-cli"
-            "borders"
+            "bob"
             "bun"
+            "cmake"
             "cmatrix"
-            "difftastic"
+            "curl"
             "eza"
             "ffmpeg"
             "fish"
+            "gettext"
             "gh"
             "ghostscript"
             "git"
             "gnupg"
+            "hyperfine"
             "imagemagick"
             "mole"
+            "ninja"
             "pinentry-mac"
             "postgresql"
             "sqlcmd"
@@ -99,46 +99,38 @@
           ];
           casks = [
             "aerospace"
-            "arc"
-            "brave-browser"
-            "chatgpt-atlas"
+            "brave-browser@nightly"
             "drawio"
             "ghostty"
             "google-chrome@beta"
             "homerow"
-            "jetbrains-toolbox"
             "karabiner-elements"
             "keycastr"
             "legcord"
             "microsoft-auto-update"
+            "microsoft-excel"
             "microsoft-powerpoint"
             "microsoft-teams"
             "microsoft-word"
-            "microsoft-excel"
             "monitorcontrol"
             "obsidian"
             "orbstack"
+            "pcsx2"
             "postman"
             "raycast"
             "responsively"
-            "requestly"
             "shottr"
             "slack"
             "spotify"
             "stats"
-            "wezterm"
             "whatsapp"
             "yaak"
             "zed"
-            "zen"
-            "zoom"
+            "zen@twilight"
           ];
           taps = [
-            "FelixKratz/formulae"
             "nikitabobko/tap"
             "oven-sh/bun"
-            "sst/tap"
-            "tw93/tap"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
