@@ -93,6 +93,7 @@
             "ninja"
             "pinentry-mac"
             "postgresql"
+            "rift"
             "sqlcmd"
             "starship"
             "zbar"
@@ -131,6 +132,7 @@
           taps = [
             "nikitabobko/tap"
             "oven-sh/bun"
+            "acsandmann/tap"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
