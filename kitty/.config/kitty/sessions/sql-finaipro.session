@@ -1,0 +1,3 @@
+new_tab nvim
+cd ~/Documents/work/ultracom/SQLDB-parameters-FinAIPro/
+launch --title "nvim" fish -ic 'nvim; exec fish'

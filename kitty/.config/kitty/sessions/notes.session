@@ -1,0 +1,7 @@
+new_tab nvim
+cd ~/documents/notes/notes/
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab nvim
+cd ~/documents/notes/notes/
+launch --title "nvim"

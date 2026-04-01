@@ -1,0 +1,11 @@
+new_tab nvim
+cd ~/Documents/personal/mym
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab server
+cd ~/Documents/personal/mym
+launch --title "server" fish -ic 'pnpm run dev; exec fish'
+
+new_tab shell
+cd ~/Documents/personal/mym
+launch --title "shell"

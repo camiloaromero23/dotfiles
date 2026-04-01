@@ -1,0 +1,7 @@
+new_tab nvim
+cd ~/dotfiles
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab
+cd ~/dotfiles
+launch

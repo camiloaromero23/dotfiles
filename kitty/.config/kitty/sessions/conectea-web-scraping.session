@@ -1,0 +1,11 @@
+new_tab nvim
+cd ~/documents/work/ultracom/conectea-web-scraping/
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab server
+cd ~/documents/work/ultracom/conectea-web-scraping/
+launch --title "server"
+
+new_tab shell
+cd ~/documents/work/ultracom/conectea-web-scraping/
+launch --title "shell"

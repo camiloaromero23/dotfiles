@@ -1,0 +1,11 @@
+new_tab nvim
+cd ~/documents/personal/sergio
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab server
+cd ~/documents/personal/sergio
+launch --title "server" fish -ic 'bun run dev; exec fish'
+
+new_tab opencode
+cd ~/documents/personal/sergio
+launch --title "opencode" fish -ic 'opencode; exec fish'

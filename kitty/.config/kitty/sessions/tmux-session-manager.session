@@ -1,0 +1,7 @@
+new_tab nvim
+cd ~/Documents/personal/tmux-session-manager
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab shell
+cd ~/Documents/personal/tmux-session-manager
+launch --title "shell"

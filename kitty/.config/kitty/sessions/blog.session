@@ -1,0 +1,11 @@
+new_tab nvim
+cd ~/documents/personal/blog
+launch --title "nvim" fish -ic 'nvim; exec fish'
+
+new_tab server
+cd ~/documents/personal/blog
+launch --title "server" fish -ic 'bun --bunx astro dev; exec fish'
+
+new_tab shell
+cd ~/documents/personal/blog
+launch --title "shell"
