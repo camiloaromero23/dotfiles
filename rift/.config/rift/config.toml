@@ -269,6 +269,7 @@ app_rules = [
   { app_id = "company.thebrowser.Browser", workspace = 0 },
   { app_id = "app.zen-browser.zen", workspace = 0 },
   { app_id = "com.mitchellh.ghostty", workspace = 2 },
+  { app_id = "net.kovidgoyal.kitty", workspace = 2 },
   { app_id = "net.whatsapp.WhatsApp", workspace = 3 },
   { app_id = "com.tinyspeck.slackmacgap", workspace = 8 },
   { app_id = "com.microsoft.teams2", workspace = 4 },
