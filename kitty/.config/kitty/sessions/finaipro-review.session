@@ -1,11 +1,11 @@
 new_tab nvim
-cd ~/documents/work/ultracom/APP-FinAIPro
+cd ~/documents/work/finaipro/APP-FinAIPro
 launch --title "nvim" fish -ic 'nvim; exec fish'
 
 new_tab server
-cd ~/documents/work/ultracom/APP-FinAIPro
+cd ~/documents/work/finaipro/APP-FinAIPro
 launch --title "server" fish -ic 'pnpm run dev; exec fish'
 
 new_tab shell
-cd ~/documents/work/ultracom/APP-FinAIPro
+cd ~/documents/work/finaipro/APP-FinAIPro
 launch --title "shell"

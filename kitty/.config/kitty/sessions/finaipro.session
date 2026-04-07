@@ -1,11 +1,11 @@
 new_tab nvim
-cd ~/documents/work/ultracom/Web-Finaipro
+cd ~/documents/work/finaipro/Web-Finaipro
 launch --title "nvim" fish -ic 'nvim; exec fish'
 
 new_tab server
-cd ~/documents/work/ultracom/Web-Finaipro
+cd ~/documents/work/finaipro/Web-Finaipro
 launch --title "server" fish -ic 'bun run dev:local; exec fish'
 
 new_tab opencode
-cd ~/documents/work/ultracom/Web-Finaipro
+cd ~/documents/work/finaipro/Web-Finaipro
 launch --title "opencode" fish -ic 'opencode; exec fish'
