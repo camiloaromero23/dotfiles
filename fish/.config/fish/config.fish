@@ -30,7 +30,7 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 
 set -gx EDITOR nvim
 
-set -gx SHELL /opt/homebrew/bin/fish
+set -gx SHELL (command -s fish)
 
 # Keybinds retained for future additions
 bind --mode insert --sets-mode default j,k cancel repaint-mode
