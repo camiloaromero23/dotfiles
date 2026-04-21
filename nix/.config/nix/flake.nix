@@ -104,6 +104,7 @@
           casks = [
             "aerospace"
             "brave-browser@nightly"
+            "codex"
             "drawio"
             "ghostty"
             "google-chrome@beta"
@@ -111,6 +112,7 @@
             "keycastr"
             "kitty"
             "legcord"
+            "logi-options+"
             "microsoft-auto-update"
             "microsoft-excel"
             "microsoft-powerpoint"
