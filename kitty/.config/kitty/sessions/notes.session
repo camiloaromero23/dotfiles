@@ -1,7 +1,7 @@
 new_tab nvim
-cd ~/documents/notes/notes/
+cd ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes
 launch --title "nvim" fish -ic 'nvim; exec fish'
 
 new_tab nvim
-cd ~/documents/notes/notes/
+cd ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes
 launch --title "nvim"
