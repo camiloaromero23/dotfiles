@@ -7,25 +7,34 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "code_lens": "menu",
   "edit_predictions": {},
   "on_last_window_closed": "quit_app",
   "colorize_brackets": true,
   "agent": {
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5"
-    }
+      "effort": "medium",
+      "enable_thinking": true,
+      "provider": "zed.dev",
+      "model": "gpt-5.4",
+    },
   },
   "agent_servers": {
+    "codex-acp": {
+      "type": "registry",
+    },
+    "github-copilot-cli": {
+      "type": "registry",
+    },
   },
   "disable_ai": false,
   "project_panel": {
-    "dock": "left"
+    "dock": "right",
   },
   "icon_theme": "Material Icon Theme",
   "telemetry": {
     "metrics": false,
-    "diagnostics": false
+    "diagnostics": false,
   },
   "theme": "Catppuccin Mocha",
   "experimental.theme_overrides": {
@@ -37,20 +46,28 @@
   "ui_font_family": "Dank Mono",
   "buffer_font_weight": 900,
   "terminal": {
-    "font_fallbacks": ["Symbols Nerd Font"]
+    "shell": {
+      "with_arguments": {
+        "program": "/run/current-system/sw/bin/fish",
+        "args": ["-l"],
+      },
+    },
+    "font_fallbacks": ["Symbols Nerd Font"],
+    // "line_height": "comfortable",
   },
   "tabs": {
-    "file_icons": true
+    "file_icons": true,
   },
   "buffer_font_size": 19,
   "buffer_font_family": "Dank Mono",
   "relative_line_numbers": "enabled",
   "vim": {
-    "use_system_clipboard": "always"
+    "use_system_clipboard": "always",
   },
   "cursor_blink": false,
   "scrollbar": { "show": "never" },
   "vertical_scroll_margin": 8,
+  "horizontal_scroll_margin": 8,
   "diagnostics": {
     "include_warnings": true,
     "inline": {
@@ -58,33 +75,50 @@
       "update_debounce_ms": 150,
       "padding": 4,
       "min_column": 0,
-      "max_severity": null
-    }
+      "max_severity": null,
+    },
   },
   "format_on_save": "off",
   "inlay_hints": {
-    "enabled": true
+    "enabled": true,
   },
-  "languages": {
-    "HTML": {
-      "formatter": {
-        "external": {
-          "command": "prettier",
-          "arguments": ["--stdin-filepath", "{buffer_path}"]
-        }
-      }
-    },
-    "CSS": {
-      "formatter": {
-        "external": {
-          "command": "prettier",
-          "arguments": ["--stdin-filepath", "{buffer_path}"]
-        }
-      }
-    }
-  },
+  "languages": {},
   "lsp_document_colors": "background",
   "lsp": {
+    "vtsls": {
+      "settings": {
+        "maxInlayHintLength": 30,
+        "completion": {
+          "enableServerSideFuzzyMatch": true,
+        },
+        "experimental": {
+          "maxInlayHintLength": 30,
+          "completion": {
+            "enableServerSideFuzzyMatch": true,
+          },
+        },
+        "javascript": {
+          "inlayHints": {
+            "enumMemberValues": { "enabled": true },
+            "functionLikeReturnTypes": { "enabled": true },
+            "parameterNames": { "enabled": "all" },
+            "parameterTypes": { "enabled": true },
+            "propertyDeclarationTypes": { "enabled": true },
+            "variableTypes": { "enabled": true },
+          },
+        },
+        "typescript": {
+          "inlayHints": {
+            "enumMemberValues": { "enabled": true },
+            "functionLikeReturnTypes": { "enabled": true },
+            "parameterNames": { "enabled": "all" },
+            "parameterTypes": { "enabled": true },
+            "propertyDeclarationTypes": { "enabled": true },
+            "variableTypes": { "enabled": true },
+          },
+        },
+      },
+    },
     "tailwindcss-language-server": {
       "settings": {
         "classAttributes": ["class", "className", "ngClass", "class:list"],
@@ -94,10 +128,10 @@
             ["\\b\\w+[cC]lassName\\s*=\\s*[\"']([^\"']*)[\"']"],
             ["\\b\\w+[cC]lassName\\s*=\\s*`([^`]*)`"],
             ["[\\w]+[cC]lassName[\"']?\\s*:\\s*[\"']([^\"']*)[\"']"],
-            ["[\\w]+[cC]lassName[\"']?\\s*:\\s*`([^`]*)`"]
-          ]
-        }
-      }
-    }
-  }
+            ["[\\w]+[cC]lassName[\"']?\\s*:\\s*`([^`]*)`"],
+          ],
+        },
+      },
+    },
+  },
 }
