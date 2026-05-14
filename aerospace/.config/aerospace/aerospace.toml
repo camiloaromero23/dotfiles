@@ -243,6 +243,10 @@ if.app-id = 'com.raycast.macos'
 run = ["layout floating"]
 
 [[on-window-detected]]
+if.app-id = 'com.supercmd.app'
+run = ["layout floating"]
+
+[[on-window-detected]]
 if.app-id = 'com.apple.mail'
 run = "move-node-to-workspace 6"
 

@@ -16,6 +16,7 @@ end
 
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/local/bin
+fish_add_path /usr/local/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/bob/nvim-bin
 fish_add_path $HOME/.cargo/bin

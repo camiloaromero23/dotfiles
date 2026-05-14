@@ -104,11 +104,15 @@
           casks = [
             "aerospace"
             "brave-browser@nightly"
+            "chatgpt"
+            "claude"
+            "claude-code"
             "codex"
             "drawio"
             "ghostty"
             "google-chrome@beta"
             "homerow"
+            "httpmon"
             "keycastr"
             "kitty"
             "legcord"
@@ -129,15 +133,18 @@
             "slack"
             "spotify"
             "stats"
+            # "supercmd"
             "whatsapp"
             "yaak"
             "zed"
             "zen@twilight"
           ];
           taps = [
+            "acsandmann/tap"
+            "kostyay/tap"
             "nikitabobko/tap"
             "oven-sh/bun"
-            "acsandmann/tap"
+            # "supercmdlabs/supercmd"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
@@ -357,4 +364,3 @@
       darwinPackages = self.darwinConfigurations."mac".pkgs;
     };
 }
-
