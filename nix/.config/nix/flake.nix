@@ -133,7 +133,7 @@
             "slack"
             "spotify"
             "stats"
-            # "supercmd"
+            "supercmd"
             "whatsapp"
             "yaak"
             "zed"
@@ -144,7 +144,7 @@
             "kostyay/tap"
             "nikitabobko/tap"
             "oven-sh/bun"
-            # "supercmdlabs/supercmd"
+            "supercmdlabs/supercmd"
           ];
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
