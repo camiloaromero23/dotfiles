@@ -18,12 +18,13 @@ DISABLE_UPDATE_PROMPT="true"
 # much, much faster.
  DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-source $ZDOTDIR/nix_config.zsh
-
 # Plugins
-plugins=(zsh-autosuggestions sudo zsh-syntax-highlighting vi-mode git pass)
+plugins=(sudo vi-mode git pass)
 
 source $ZSH/oh-my-zsh.sh
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Aliases
 source $ZDOTDIR/aliases.zsh

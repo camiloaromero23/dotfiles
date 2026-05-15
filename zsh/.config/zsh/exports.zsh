@@ -40,5 +40,9 @@ VI_MODE_SET_CURSOR=true
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# Keep the nix-homebrew launcher ahead of the architecture-specific prefixes.
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=/run/current-system/sw/bin:$PATH
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"

@@ -14,9 +14,8 @@ for p in $HOME/.nix-profile /etc/profiles/per-user/$USER /run/current-system/sw 
     end
 end
 
-fish_add_path /opt/homebrew/bin
 fish_add_path /opt/local/bin
-fish_add_path /usr/local/bin
+fish_add_path --move --append /usr/local/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/bob/nvim-bin
 fish_add_path $HOME/.cargo/bin
@@ -26,6 +25,10 @@ fish_add_path $HOME/Library/pnpm
 fish_add_path $HOME/.cargo/bin
 set -gx BUN_INSTALL $HOME/.bun
 fish_add_path $BUN_INSTALL/bin
+
+# Keep the nix-homebrew launcher ahead of the architecture-specific prefixes.
+fish_add_path --move --prepend /opt/homebrew/bin
+fish_add_path --move --prepend /run/current-system/sw/bin
 
 set -gx XDG_CONFIG_HOME $HOME/.config
 
@@ -92,6 +95,8 @@ set fish_pager_color_progress 6c7086
 set fish_pager_color_prefix f5c2e7
 set fish_pager_color_completion cdd6f4
 set fish_pager_color_description 6c7086
+
+set --export BAT_THEME "Catppuccin Mocha"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

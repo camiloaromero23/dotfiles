@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-kitty_bin="/opt/homebrew/bin/kitty"
-fzf_bin="${FZF_BIN:-/run/current-system/sw/bin/fzf}"
-jq_bin="${JQ_BIN:-/run/current-system/sw/bin/jq}"
+kitty_bin="${KITTY_BIN:-$(command -v kitty 2>/dev/null || printf '%s' /opt/homebrew/bin/kitty)}"
+fzf_bin="${FZF_BIN:-$(command -v fzf 2>/dev/null || printf '%s' /opt/homebrew/bin/fzf)}"
+jq_bin="${JQ_BIN:-$(command -v jq 2>/dev/null || printf '%s' /opt/homebrew/bin/jq)}"
 sessions_dir="$HOME/.config/kitty/sessions"
 log_file="${TMPDIR:-/tmp}/kitty-active-sessions.log"
 

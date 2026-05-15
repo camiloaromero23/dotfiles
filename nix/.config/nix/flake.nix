@@ -22,51 +22,9 @@
         };
 
         # Link vendor fish snippets (e.g., nix-darwin PATH hooks)
-        environment.pathsToLink = [ "/share/fish" ];
+        # environment.pathsToLink = [ "/share/fish" ];
 
-        environment.systemPackages =
-          [
-            pkgs.bat
-            pkgs.btop
-            pkgs.delta
-            pkgs.fd
-            pkgs.fnm
-            pkgs.fish
-            pkgs.fzf
-            pkgs.geist-font
-            pkgs.go
-            pkgs.google-cloud-sdk
-            pkgs.htop
-            pkgs.jq
-            pkgs.lazygit
-            pkgs.lazydocker
-            pkgs.lua
-            pkgs.mkalias
-            pkgs.passExtensions.pass-otp
-            pkgs.passExtensions.pass-update
-            (pkgs.pass.withExtensions (ext: with ext; [ pass-otp pass-update ]))
-            pkgs.pass
-            pkgs.ripgrep
-            pkgs.rustup
-            pkgs.silicon
-            pkgs.stow
-            pkgs.tmux
-            pkgs.uv
-            pkgs.vscode
-            pkgs.yazi
-            pkgs.zoxide
-            pkgs.zsh-autosuggestions
-            pkgs.zsh-syntax-highlighting
-          ];
-
-        fonts.packages = [
-          pkgs.nerd-fonts.caskaydia-cove
-          pkgs.nerd-fonts.geist-mono
-          pkgs.nerd-fonts.jetbrains-mono
-          pkgs.nerd-fonts.symbols-only
-          pkgs.nerd-fonts.zed-mono
-          pkgs.geist-font
-        ];
+        # environment.systemPackages = [ pkgs.fish ];
 
         homebrew = {
           enable = true;
@@ -74,31 +32,57 @@
             "Azure/kubelogin/kubelogin"
             "atuin"
             "azure-cli"
+            "bat"
             "bob"
+            "btop"
             "bun"
             "cmake"
             "cmatrix"
             "csvlens"
             "curl"
+            "delta"
             "eza"
+            "fd"
             "ffmpeg"
             "fish"
+            "fnm"
+            "fzf"
             "gettext"
             "gh"
             "ghostscript"
             "git"
+            "gnu-getopt"
             "gnupg"
+            "go"
             "gromgit/brewtils/taproom"
+            "htop"
             "hyperfine"
+            "jq"
             "imagemagick"
             "kanata"
+            "lazygit"
+            "lazydocker"
+            "lua"
             "mole"
             "ninja"
+            "pass"
+            "pass-otp"
+            "pass-update"
             "pinentry-mac"
             "postgresql"
+            "ripgrep"
+            "rustup"
             "rift"
+            "silicon"
             "sqlcmd"
             "starship"
+            "stow"
+            "tmux"
+            "uv"
+            "yazi"
+            "zoxide"
+            "zsh-autosuggestions"
+            "zsh-syntax-highlighting"
             "zbar"
           ];
           casks = [
@@ -109,6 +93,7 @@
             "claude-code"
             "codex"
             "drawio"
+            "font-symbols-only-nerd-font"
             "ghostty"
             "google-chrome@beta"
             "homerow"
@@ -134,6 +119,7 @@
             "spotify"
             "stats"
             "supercmd"
+            "visual-studio-code"
             "whatsapp"
             "yaak"
             "zed"
@@ -144,6 +130,7 @@
             "kostyay/tap"
             "nikitabobko/tap"
             "oven-sh/bun"
+            "simplydanny/pass-extensions"
             "supercmdlabs/supercmd"
           ];
           onActivation.cleanup = "zap";
@@ -151,29 +138,6 @@
           onActivation.upgrade = true;
         };
 
-        system.activationScripts.applications.text =
-          let
-            env = pkgs.buildEnv {
-              name = "system-applications";
-              paths = config.environment.systemPackages;
-              pathsToLink = [
-                "/Applications"
-                "/share/fish"
-              ];
-            };
-          in
-          pkgs.lib.mkForce ''
-            # Set up applications.
-            echo "setting up /Applications..." >&2
-            rm -rf /Applications/Nix\ Apps
-            mkdir -p /Applications/Nix\ Apps
-            find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-            while read -r src; do
-              app_name=$(basename "$src")
-                echo "copying $src" >&2
-                ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-                done
-          '';
         system.primaryUser = "camilo";
 
         # system.activationScripts.postUserActivation.text = ''
@@ -311,16 +275,16 @@
 
         # Create /etc/zshrc that loads the nix-darwin environment.
         programs.zsh.enable = true; # default shell on catalina
-        programs.fish = {
-          enable = true;
-          shellInit = ''
-            for p in $HOME/.nix-profile /etc/profiles/per-user/$USER /run/current-system/sw /nix/var/nix/profiles/default
-              if test -d "$p/bin"
-                fish_add_path "$p/bin"
-              end
-            end
-          '';
-        };
+        # programs.fish = {
+        #   enable = true;
+        #   shellInit = ''
+        #     for p in $HOME/.nix-profile /etc/profiles/per-user/$USER /run/current-system/sw /nix/var/nix/profiles/default
+        #       if test -d "$p/bin"
+        #         fish_add_path "$p/bin"
+        #       end
+        #     end
+        #   '';
+        # };
 
         # Ensure login shells get Nix paths too (zsh, bash, etc.)
         environment.loginShellInit = ''
