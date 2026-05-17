@@ -69,10 +69,13 @@
             "pass-otp"
             "pass-update"
             "pinentry-mac"
+            "poppler"
             "postgresql"
+            "resvg"
             "ripgrep"
             "rustup"
             "rift"
+            "sevenzip"
             "silicon"
             "sqlcmd"
             "starship"
@@ -123,7 +126,7 @@
             "whatsapp"
             "yaak"
             "zed"
-            "zen@twilight"
+            "zen"
           ];
           taps = [
             "acsandmann/tap"
