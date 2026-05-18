@@ -1,7 +1,6 @@
 tap "acsandmann/tap"
 tap "azure/kubelogin"
 tap "gromgit/brewtils"
-tap "homebrew/core"
 tap "kostyay/tap"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
