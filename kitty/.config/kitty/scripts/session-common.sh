@@ -29,14 +29,13 @@ fi
 
 sock=""
 shopt -s nullglob
-kitty_sockets=(/tmp/kitty-*)
-shopt -u nullglob
-for candidate_socket in "${kitty_sockets[@]}"; do
+for candidate_socket in /tmp/kitty-*; do
   if [[ -S "$candidate_socket" ]]; then
     sock="$candidate_socket"
     break
   fi
 done
+shopt -u nullglob
 
 run_kitty_rc() {
   local output=""
