@@ -48,7 +48,7 @@
   "terminal": {
     "shell": {
       "with_arguments": {
-        "program": "/run/current-system/sw/bin/fish",
+        "program": "/opt/homebrew/bin/fish",
         "args": ["-l"],
       },
     },
