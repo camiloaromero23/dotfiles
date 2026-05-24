@@ -29,6 +29,7 @@ fish_add_path $BUN_INSTALL/bin
 # Keep the nix-homebrew launcher ahead of the architecture-specific prefixes.
 fish_add_path --move --prepend /opt/homebrew/bin
 fish_add_path --move --prepend /run/current-system/sw/bin
+fish_add_path --move --prepend /opt/homebrew/opt/libpq/bin
 
 set -gx XDG_CONFIG_HOME $HOME/.config
 
