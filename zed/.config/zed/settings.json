@@ -8,6 +8,7 @@
 // from the command palette or from `Zed` application menu.
 {
   "code_lens": "menu",
+  "completion_menu_item_kind": "symbol",
   "edit_predictions": {},
   "on_last_window_closed": "quit_app",
   "colorize_brackets": true,
@@ -20,6 +21,9 @@
     },
   },
   "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    },
     "codex-acp": {
       "type": "registry",
     },
