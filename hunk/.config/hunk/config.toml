@@ -1,0 +1,23 @@
+mode = "split"
+vcs = "git"
+watch = false
+exclude_untracked = false
+line_numbers = true
+wrap_lines = false
+agent_notes = true
+transparent_background = false
+theme = "custom"
+
+
+[custom_theme]
+base = "catppuccin-mocha"
+label = "My Theme"
+panel = "#1E1E2E"
+border = "#89B4FB"
+noteBorder = "#C49BFF"
+panelAlt = "#1E1E2E"
+lineNumberFg = "#45475B"
+text = "#89B4FB"
+muted = "#45475B"
+selectedHunk = "#45475B"
+badgeNeutral = "#89B4FB"
