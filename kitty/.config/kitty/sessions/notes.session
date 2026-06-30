@@ -3,5 +3,5 @@ cd ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes
 launch --title "nvim" fish -ic 'nvim; exec fish'
 
 new_tab nvim
-cd ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes
-launch --title "nvim"
+cd /Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki
+launch --title "nvim" fish -ic 'nvim; exec fish'
