@@ -72,6 +72,7 @@ kanban_group_by = "priority"  # status | priority | folder
 # Binding syntax: "Mod+P" = Cmd/Ctrl+P, "Shift+Mod+K", "Ctrl+W", "Space",
 # or a two-key sequence like "g g". Uncomment a reference line to remap it.
 [keymaps]
+"vim.leaderToggleSidebar" = "-"
 
 # --- All actions (defaults shown; uncomment + edit to override) ---
 # Global
@@ -107,7 +108,6 @@ kanban_group_by = "priority"  # status | priority | folder
 # "vim.leaderSearchNotes" = "f"  # Leader: search notes
 # "vim.leaderSearchGroup" = "s"  # Leader: search…
 # "vim.leaderSearchVaultText" = "t"  # Leader search: vault text
-# "vim.leaderToggleSidebar" = "e"  # Leader: toggle sidebar
 # "vim.leaderNoteOutline" = "p"  # Leader: note outline
 # "vim.leaderSwitchVault" = "v"  # Leader: switch vault
 # "vim.leaderNoteActions" = "l"  # Leader: note actions
