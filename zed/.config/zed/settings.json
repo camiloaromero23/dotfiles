@@ -7,6 +7,23 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "preview_tabs": {
+    "enable_preview_from_file_finder": false
+  },
+  "title_bar": {
+    "show_menus": false,
+    "show_user_picture": false,
+    "show_sign_in": true,
+    "show_branch_status_icon": false
+  },
+  "close_on_file_delete": false,
+  "seed_search_query_from_cursor": "selection",
+  "show_whitespaces": "trailing",
+  "which_key": {
+    "delay_ms": 500,
+    "enabled": true
+  },
+  "base_keymap": "VSCode",
   "code_lens": "menu",
   "completion_menu_item_kind": "symbol",
   "edit_predictions": {},
@@ -44,7 +61,6 @@
   "experimental.theme_overrides": {
     // "hint": "#FF0000"
   },
-  "base_keymap": "SublimeText",
   "vim_mode": true,
   "ui_font_size": 19,
   "ui_font_family": "Dank Mono",
@@ -60,12 +76,16 @@
     // "line_height": "comfortable",
   },
   "tabs": {
+    "show_diagnostics": "all",
+    "git_status": false,
     "file_icons": true,
   },
   "buffer_font_size": 19,
   "buffer_font_family": "Dank Mono",
   "relative_line_numbers": "enabled",
   "vim": {
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true,
     "use_system_clipboard": "always",
   },
   "cursor_blink": false,

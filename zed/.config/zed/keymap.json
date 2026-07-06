@@ -3,6 +3,8 @@
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
       "j k": "vim::NormalBefore",
+      "j j": "vim::NormalBefore",
+      "k k": "vim::NormalBefore",
       "k j": "vim::NormalBefore"
     }
   },
@@ -39,7 +41,7 @@
     "bindings": {
       "H": "pane::ActivatePreviousItem",
       "L": "pane::ActivateNextItem",
-      "space e": "project_panel::ToggleFocus",
+      "space -": "project_panel::Toggle",
       "space w": "workspace::Save",
       "space l f": "editor::Format",
       "space l r": "editor::Rename",
@@ -47,10 +49,11 @@
       "space l k": "editor::GoToPreviousDiagnostic",
       "space l a": "editor::ToggleCodeActions",
       "space s f": "file_finder::Toggle",
+      "space s t": "text_finder::Toggle",
       "space c": "pane::CloseActiveItem",
       "space b h": "pane::CloseItemsToTheLeft",
       "space b l": "pane::CloseItemsToTheRight",
-      "space b w": "pane::CloseInactiveItems",
+      "space b w": "pane::CloseOtherItems",
       "K": "editor::Hover"
     }
   },
@@ -73,7 +76,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "space e": "workspace::CloseAllDocks",
+     "space -": "workspace::CloseAllDocks",
       "d": "project_panel::Delete",
       "r": "project_panel::Rename",
       "a": "project_panel::NewFile",
