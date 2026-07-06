@@ -43,7 +43,8 @@ preview_smooth_scroll = false  # animate half-page scroll in the preview
 pdf_embed_in_edit_mode = "compact"  # compact | full
 
 [appearance]
-theme_family = "catppuccin"  # apple | gruvbox | catppuccin | github | solarized | one | nord | tokyo-night | kanagawa | black-metal
+pdf_export_use_theme = false  # true | false — export PDFs using the current theme instead of a clean light print theme
+theme_family = "catppuccin"  # apple | gruvbox | catppuccin | github | solarized | one | nord | tokyo-night | kanagawa | black-metal | custom
 theme_mode = "dark"  # light | dark | auto
 theme_id = "catppuccin-mocha"  # resolved theme id; normally set automatically from family + mode
 dark_sidebar = true  # tint the sidebar darker than the canvas
@@ -59,6 +60,7 @@ mono_font = "Dank Mono"  # code / monospace font; empty = system default
 [view]
 note_sort_order = "none"  # none | manual | updated-desc | updated-asc | created-desc | created-asc | name-asc | name-desc
 group_by_kind = true  # group notes by kind in the list
+view_settings_scope = "global"  # apply note/list view settings globally or per vault (global | vault)
 auto_reveal = true  # auto-expand the sidebar to the active note
 quick_note_date_title = true  # title quick notes by date instead of a timestamp
 quick_note_title_prefix = ""  # prefix for new quick-note titles; empty = bare timestamp
@@ -95,6 +97,7 @@ kanban_group_by = "priority"  # status | priority | folder
 # "global.modePreview" = "Mod+6"  # Switch to preview mode
 # "global.toggleZenMode" = "Mod+."  # Toggle Zen mode
 # "global.closeActiveTab" = "Mod+W"  # Close active tab
+# "global.reopenClosedTab" = "Shift+Mod+T"  # Reopen closed tab
 # "global.toggleWordWrap" = "Alt+Z"  # Toggle word wrap
 # "global.exportNotePdf" = "Shift+Mod+E"  # Export note as PDF
 # "global.zoomIn" = "Mod+="  # Zoom in
@@ -175,3 +178,12 @@ kanban_group_by = "priority"  # status | priority | folder
 # Example: "status:todo" = "To Do"
 [kanban_column_titles]
 "priority:none" = "No priority"
+
+# Enabled CSS overrides — list the filenames you want active.
+# Example: "focus.css" = "on"
+[overrides]
+
+# Visual color tweaks from Settings → Appearance (token slug = color).
+# Example: "accent" = "#ff3b30"
+[tweaks]
+accent = "#cba6f7"
