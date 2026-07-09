@@ -34,6 +34,8 @@ tabs_enabled = true  # enable tab-based editing
 wrap_tabs = false  # wrap the tab strip instead of scrolling it
 font_size = 19  # editor + preview font size (px)
 line_height = 1.7  # line-height multiplier
+scroll_off = 8  # vim scrolloff — lines kept above/below the cursor (0 = off)
+time_format = "24h"  # clock format for the @time macro (12h or 24h)
 preview_max_width = 920  # max reading width for the preview (px)
 editor_max_width = 920  # max width of the editor column (px)
 line_number_mode = "relative"  # off | absolute | relative
@@ -122,6 +124,7 @@ kanban_group_by = "priority"  # status | priority | folder
 # "vim.leaderInsertTemplate" = "i"  # Leader: insert template into note
 # "vim.leaderDailyNote" = "d"  # Leader: today's daily note
 # "vim.leaderWeeklyNote" = "w"  # Leader: this week's note
+# "vim.leaderMonthlyNote" = "m"  # Leader: this month's note
 # "vim.leaderCalendar" = "c"  # Leader: toggle calendar
 # "vim.panePrefix" = "Ctrl+W"  # Pane command prefix
 # "vim.paneFocusLeft" = "h"  # Pane: focus left
