@@ -125,6 +125,7 @@ prefix = "ctrl+a"
 
 # Minimum sidebar width when expanded (columns)
 # sidebar_min_width = 18
+sidebar_collapsed_mode = "hidden"
 
 # Maximum sidebar width when expanded (columns)
 sidebar_max_width = 18
@@ -169,6 +170,7 @@ prompt_new_tab_name = false
 
 # Background notification popup delivery
 show_agent_labels_on_pane_borders = true
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
