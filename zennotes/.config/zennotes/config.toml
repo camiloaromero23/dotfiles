@@ -15,7 +15,7 @@ config_version = 1
 [vim]
 enabled = true  # true | false — CodeMirror Vim bindings
 insert_escape = "jk"  # key sequence to leave insert mode, e.g. "jk"; empty disables
-yank_to_clipboard = true  # also copy Vim yank/delete/change to the system clipboard
+yank_to_clipboard = true  # sync the system clipboard with Vim yank/delete/change and p/P paste
 which_key_hints = true  # show the leader-key hint overlay (Vim only)
 which_key_hint_mode = "sticky"  # timed | sticky
 which_key_hint_timeout_ms = 900  # how long timed hints stay visible (ms)
@@ -29,6 +29,8 @@ fzf_path = ""  # absolute path to fzf; empty = look on $PATH
 live_preview = true  # hide markdown syntax on inactive lines
 render_tables = true  # render tables as widgets in live preview; off keeps them as plain text
 markdown_snippets = true  # auto-close markdown delimiters while typing
+auto_pairs = true  # auto-insert matching [] () and {} while typing
+auto_pair_quotes_in_prose = false  # also auto-insert matching quotes outside Markdown code
 hide_builtin_templates = false  # hide the shipped templates from the pickers
 tabs_enabled = true  # enable tab-based editing
 wrap_tabs = false  # wrap the tab strip instead of scrolling it
@@ -38,6 +40,9 @@ scroll_off = 8  # vim scrolloff — lines kept above/below the cursor (0 = off)
 time_format = "24h"  # clock format for the @time macro (12h or 24h)
 preview_max_width = 920  # max reading width for the preview (px)
 editor_max_width = 920  # max width of the editor column (px)
+completed_task_style = "none"  # none | strikethrough | gray | gray-strikethrough — style checked-task text
+math_renderer = "katex"  # katex | typst: typesetter for $…$ / $$…$$ math
+loose_math_delimiters = false  # render $$…$$ display math even with text before/after the fences
 line_number_mode = "relative"  # off | absolute | relative
 line_number_position = "text"  # text | edge
 word_wrap = true  # wrap long lines vs. scroll horizontally
@@ -60,8 +65,10 @@ text_font = "Dank Mono"  # editor + preview font; empty = system default
 mono_font = "Dank Mono"  # code / monospace font; empty = system default
 
 [view]
+asset_sort_order = "name-asc"  # Assets view sort: name | used | type | size | modified, each -asc or -desc
 note_sort_order = "none"  # none | manual | updated-desc | updated-asc | created-desc | created-asc | name-asc | name-desc
 group_by_kind = true  # group notes by kind in the list
+nested_tags = true  # show /-separated tags as a collapsible tree (sidebar + Tags view)
 view_settings_scope = "global"  # apply note/list view settings globally or per vault (global | vault)
 auto_reveal = true  # auto-expand the sidebar to the active note
 quick_note_date_title = true  # title quick notes by date instead of a timestamp
@@ -71,6 +78,7 @@ calendar_week_start = "monday"  # monday | sunday | locale
 calendar_show_week_numbers = true  # show ISO week numbers in the calendar
 tasks_view_mode = "kanban"  # list | calendar | kanban
 kanban_group_by = "priority"  # status | priority | folder
+kanban_statuses = []  # custom-status Kanban columns, in order — e.g. ["backlog", "in_progress", "review", "done"]
 
 # Keymap overrides. Add or uncomment "<action.id>" = "<binding>" lines.
 # Binding syntax: "Mod+P" = Cmd/Ctrl+P, "Shift+Mod+K", "Ctrl+W", "Space",
