@@ -3,6 +3,7 @@ monitorDwindleOverrides = []
 monitorGapOverrides = []
 monitorNiriOverrides = []
 monitorOrientationOverrides = []
+monitorRoutingOverrides = []
 
 [appearance]
 mode = "dark"
@@ -26,7 +27,7 @@ maxTotalBytes = 67108864
 [dwindle]
 defaultSplitRatio = 1.0
 moveToRootStable = true
-singleWindowAspectRatio = "fill"
+singleWindowFit = "fill"
 smartSplit = false
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
@@ -82,10 +83,11 @@ margin = 1
 [niri]
 alwaysCenterSingleColumn = false
 centerFocusedColumn = "never"
-columnWidthPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
-infiniteLoop = true
-maxVisibleColumns = 2
-singleWindowAspectRatio = "fill"
+containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
+defaultContainerPrimarySpan = 1.0
+infiniteLoop = false
+singleWindowFit = "fill"
+visibleContainerCount = 2
 
 [overview]
 zoom = 1.0
@@ -154,54 +156,42 @@ windowLevel = "screensaver"
 xOffset = 0.0
 yOffset = 10.0
 
-[[appRules]]
-assignToWorkspace = "3"
-bundleId = "com.mitchellh.ghostty"
-id = "6337154D-47DF-412A-9F32-513AD73FC58E"
-
-[[appRules]]
-assignToWorkspace = "6"
-bundleId = "com.apple.mail"
-id = "6286282D-93DF-401A-913A-91FE46F1F0F1"
-
-[[appRules]]
-assignToWorkspace = "5"
-bundleId = "com.microsoft.teams2"
-id = "D792473B-77F1-4826-A2B1-E1131926C237"
-
-[[appRules]]
-assignToWorkspace = "1"
-bundleId = "app.zen-browser.zen"
-id = "1CA21A17-8EA6-479A-A0EF-EFEDDABEDD43"
+[workspaceBar.iconOverrides]
 
 [[appRules]]
 assignToWorkspace = "3"
 bundleId = "net.kovidgoyal.kitty"
-id = "AEB1F43F-EEF7-4871-9C18-5DD30456BEE5"
+id = "D45343D9-BC7E-4D03-A39E-DBBCE730F78A"
+
+[[appRules]]
+assignToWorkspace = "3"
+bundleId = "com.mitchellh.ghostty"
+id = "EBEB7FD8-3E8D-4FD1-A24D-28665460187D"
+
+[[appRules]]
+assignToWorkspace = "1"
+bundleId = "app.zen-browser.zen"
+id = "CC0E2EF5-755A-4CCF-87A9-A00CCBAD701E"
 
 [[appRules]]
 assignToWorkspace = "4"
 bundleId = "net.whatsapp.WhatsApp"
-id = "198AB07B-C826-4D98-95C3-345C3A7BA11D"
+id = "B992190F-8DA5-4C9C-8BAA-83116C523166"
+
+[[appRules]]
+assignToWorkspace = "5"
+bundleId = "com.microsoft.teams2"
+id = "6A5031C0-4AAA-4AB8-910C-BCE4EC0A0E38"
+
+[[appRules]]
+assignToWorkspace = "6"
+bundleId = "com.apple.mail"
+id = "7D50F800-C5E2-46B8-8BD1-9FBEF483203D"
 
 [[appRules]]
 assignToWorkspace = "8"
 bundleId = "com.apple.Music"
-id = "88C40D5B-F478-4C9F-BBDC-C5E5CB11961A"
-
-[[appRules]]
-assignToWorkspace = "1"
-axRole = "AXWindow"
-axSubrole = "AXStandardWindow"
-bundleId = "net.imput.helium"
-id = "517D0785-8355-4C17-BFE6-998AC4071F8D"
-
-[[appRules]]
-axRole = "AXWindow"
-axSubrole = "AXStandardWindow"
-bundleId = "com.apple.systempreferences"
-id = "B3329C3E-718D-4852-96D5-857FF36427C0"
-layout = "tile"
+id = "BF930878-DA88-4677-A8F1-F5778DA680CF"
 
 [[hotkeys]]
 binding = "Hyper+1"
@@ -613,63 +603,63 @@ id = "moveColumnToIndex.9"
 
 [[hotkeys]]
 binding = "Option+Period"
-id = "cycleColumnWidthForward"
+id = "cycleSizeForward"
 
 [[hotkeys]]
 binding = "Option+Comma"
-id = "cycleColumnWidthBackward"
+id = "cycleSizeBackward"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "cycleWindowWidthForward"
+id = "cycleWindowPrimarySpanForward"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "cycleWindowWidthBackward"
+id = "cycleWindowPrimarySpanBackward"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "cycleWindowHeightForward"
+id = "cycleWindowSecondarySpanForward"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "cycleWindowHeightBackward"
+id = "cycleWindowSecondarySpanBackward"
 
 [[hotkeys]]
 binding = "Hyper+F"
-id = "toggleColumnFullWidth"
+id = "toggleContainerFullPrimarySpan"
 
 [[hotkeys]]
 binding = "Control+Option+F"
-id = "expandColumnToAvailableWidth"
+id = "expandContainerToAvailablePrimarySpan"
 
 [[hotkeys]]
 binding = "Control+Option+R"
-id = "resetWindowHeight"
+id = "resetWindowSecondarySpan"
 
 [[hotkeys]]
 binding = "Option+Minus"
-id = "setColumnWidth.decrease10Percent"
+id = "setContainerPrimarySpan.decrease10Percent"
 
 [[hotkeys]]
 binding = "Option+Equal"
-id = "setColumnWidth.increase10Percent"
+id = "setContainerPrimarySpan.increase10Percent"
+
+[[hotkeys]]
+binding = "Hyper+Minus"
+id = "setWindowPrimarySpan.decrease10Percent"
+
+[[hotkeys]]
+binding = "Hyper+Equal"
+id = "setWindowPrimarySpan.increase10Percent"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowWidth.decrease10Percent"
+id = "setWindowSecondarySpan.decrease10Percent"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowWidth.increase10Percent"
-
-[[hotkeys]]
-binding = "Option+Shift+Minus"
-id = "setWindowHeight.decrease10Percent"
-
-[[hotkeys]]
-binding = "Option+Shift+Equal"
-id = "setWindowHeight.increase10Percent"
+id = "setWindowSecondarySpan.increase10Percent"
 
 [[hotkeys]]
 binding = "Option+Shift+B"
@@ -764,7 +754,7 @@ binding = "Hyper+Z"
 id = "toggleFocusedWindowFloating"
 
 [[hotkeys]]
-binding = "Hyper+P"
+binding = "Unassigned"
 id = "assignFocusedWindowToScratchpad"
 
 [[hotkeys]]
@@ -798,11 +788,6 @@ id = "toggleOverview"
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleSystemStats"
-
-[[monitorRoutingOverrides]]
-gridColumn = 0
-gridRow = 0
-monitorName = "Built-in Retina Display"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
@@ -850,7 +835,7 @@ layoutType = "default"
 name = "6"
 
 [workspaces.monitorAssignment]
-type = "secondary"
+type = "main"
 
 [[workspaces]]
 id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
@@ -858,7 +843,7 @@ layoutType = "default"
 name = "7"
 
 [workspaces.monitorAssignment]
-type = "secondary"
+type = "main"
 
 [[workspaces]]
 id = "F5817F2D-016A-4381-8E45-2FD38AB587D6"
