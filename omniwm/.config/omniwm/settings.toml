@@ -84,7 +84,6 @@ margin = 1
 alwaysCenterSingleColumn = false
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
-defaultContainerPrimarySpan = 1.0
 infiniteLoop = false
 singleWindowFit = "fill"
 visibleContainerCount = 2
@@ -192,6 +191,11 @@ id = "7D50F800-C5E2-46B8-8BD1-9FBEF483203D"
 assignToWorkspace = "8"
 bundleId = "com.apple.Music"
 id = "BF930878-DA88-4677-A8F1-F5778DA680CF"
+
+[[appRules]]
+assignToWorkspace = "1"
+bundleId = "company.thebrowser.dia"
+id = "D6224D25-90BA-455D-970E-C3FF39F039D0"
 
 [[hotkeys]]
 binding = "Hyper+1"
