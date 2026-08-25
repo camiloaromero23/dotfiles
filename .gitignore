@@ -9,3 +9,4 @@ zed/.config/zed/*
 !zed/.config/zed/settings.json
 karabiner/.config/karabiner/assets/
 karabiner/.config/karabiner/automatic_backups/
+.atl
