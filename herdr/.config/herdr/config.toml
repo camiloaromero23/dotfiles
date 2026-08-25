@@ -20,6 +20,7 @@ onboarding = false
 # green = "#a6e3a1"
 
 name = "catppuccin"
+auto_switch = false
 [terminal]
 # Executable used for new interactive panes.
 # Empty means $SHELL, then /bin/sh.
@@ -169,8 +170,8 @@ prompt_new_tab_name = false
 # accent = "cyan"
 
 # Background notification popup delivery
-show_agent_labels_on_pane_borders = true
-agent_panel_sort = "spaces"
+show_agent_labels_on_pane_borders = false
+agent_panel_sort = "priority"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts

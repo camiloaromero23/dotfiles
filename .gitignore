@@ -10,3 +10,5 @@ zed/.config/zed/*
 karabiner/.config/karabiner/assets/
 karabiner/.config/karabiner/automatic_backups/
 .atl
+herdr/.config/herdr/*
+!herdr/.config/herdr/config.toml
