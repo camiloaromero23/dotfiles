@@ -55,6 +55,8 @@ harper_enabled = false  # true | false: grammar and spelling with Harper, checke
 harper_dialect = "american"  # american | british | australian | canadian | indian
 loose_math_delimiters = false  # render $$…$$ display math even with text before/after the fences
 default_view_mode = "edit"  # edit | split | preview — the mode a note opens in before it has a remembered one
+keep_view_mode_across_notes = false  # true = stay in the current Edit / Split / Preview mode when opening another note; false = each note reopens in its own last mode
+persist_undo_history = false  # true = keep each note's undo history between launches, like Vim's undofile (stored with the app, never in the vault; holds deleted text; desktop only)
 line_number_mode = "relative"  # off | absolute | relative
 line_number_position = "text"  # text | edge
 word_wrap = true  # wrap long lines vs. scroll horizontally
@@ -91,6 +93,7 @@ auto_reveal = true  # auto-expand the sidebar to the active note
 quick_note_date_title = true  # title quick notes by date instead of a timestamp
 quick_note_title_prefix = ""  # prefix for new quick-note titles; empty = bare timestamp
 auto_calendar_panel = true  # auto-show the calendar for daily / weekly notes
+keep_panels_across_notes = true  # true = Connections / Outline / Comments / Calendar stay as set while you switch notes; false = each note remembers its own panels (saved with the workspace, so they survive a restart)
 calendar_week_start = "monday"  # monday | sunday | locale
 calendar_show_week_numbers = true  # show ISO week numbers in the calendar
 tasks_view_mode = "kanban"  # list | calendar | kanban
