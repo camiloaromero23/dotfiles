@@ -1,0 +1,3 @@
+-- Rex configuration.
+-- No custom configuration existed when this file was added to dotfiles.
+-- Keep Rex's built-in defaults until custom settings are added here.
