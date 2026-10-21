@@ -3,10 +3,11 @@ monitorDwindleOverrides = []
 monitorGapOverrides = []
 monitorNiriOverrides = []
 monitorOrientationOverrides = []
-schemaVersion = 3
+schemaVersion = 4
 
 [appearance]
 mode = "dark"
+tabRailAppIcons = false
 
 [borders]
 enabled = false
@@ -20,6 +21,7 @@ red = 0.796078431372549
 
 [clipboard]
 historyEnabled = false
+ignoredTypes = []
 maxItemBytes = 8388608
 maxItems = 200
 maxTotalBytes = 67108864
@@ -52,6 +54,7 @@ right = 1.0
 top = 0.0
 
 [general]
+animationSpeed = 1.0
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
@@ -66,10 +69,17 @@ fingerCount = 3
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
+overviewGestureEnabled = false
+overviewGestureFingerCount = 4
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
+windowGestureSensitivity = 1.0
+windowMoveEnabled = false
+windowMoveFingerCount = 4
+windowResizeEnabled = false
+windowResizeFingerCount = 3
 workspaceSwipeAxis = "vertical"
 workspaceSwipeEnabled = false
 workspaceSwipeFingerCount = 3
@@ -89,11 +99,17 @@ alwaysCenterSingleColumn = false
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
 defaultContainerPrimarySpan = 0.5
+edgeGaps = true
 infiniteLoop = false
+resizeStepPercent = 5
 singleWindowFit = "fill"
 visibleContainerCount = 2
 
 [overview]
+enabled = true
+invertScrollDirection = false
+matchFocusBorder = true
+mouseScrollSpeed = 1.0
 zoom = 1.0
 
 [overview.backdrop]
@@ -144,10 +160,14 @@ mode = "macOS"
 
 [statusBar]
 showAppNames = false
+showIcon = true
 showWorkspaceName = false
 useWorkspaceId = false
 
 [workspaceBar]
+autoHide = false
+autoHideHideDelayMilliseconds = 0.0
+autoHideRevealDelayMilliseconds = 0.0
 backgroundOpacity = 0.0
 deduplicateAppIcons = true
 enabled = true
@@ -155,15 +175,22 @@ excludedBundleIDs = []
 height = 26.0
 hideEmptyWorkspaces = true
 hideInNativeFullscreen = false
+hoverPreviewsEnabled = true
 notchActiveZoneWidth = 100.0
 notchMode = "splitActiveLeft"
+notificationBadgeRefreshIntervalSeconds = 5.0
+notificationBadges = "off"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
 revealModifier = "off"
+showAccentHighlights = true
 showFloatingWindows = true
+showItemBackgrounds = true
 showLabels = true
+solidBlackBackground = false
 systemStatsButton = true
+transparentBackground = false
 windowLevel = "screensaver"
 xOffset = 0.0
 yOffset = 10.0
@@ -209,6 +236,11 @@ id = "BF930878-DA88-4677-A8F1-F5778DA680CF"
 assignToWorkspace = "1"
 bundleId = "company.thebrowser.dia"
 id = "D6224D25-90BA-455D-970E-C3FF39F039D0"
+
+[[appRules]]
+assignToWorkspace = "3"
+bundleId = "com.superlogical.rex"
+id = "CF7122AC-9803-4197-8D3C-390CFF32CC1E"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -361,6 +393,14 @@ id = "switchWorkspace.8"
 [[hotkeys]]
 binding = "Control+Option+Shift+9"
 id = "moveToWorkspace.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspace.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspace.9"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -557,6 +597,10 @@ id = "moveColumnToWorkspace.7"
 [[hotkeys]]
 binding = "Unassigned"
 id = "moveColumnToWorkspace.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToWorkspace.9"
 
 [[hotkeys]]
 binding = "Control+Option+Shift+H"
@@ -924,6 +968,10 @@ id = "raiseAllFloatingWindows"
 
 [[hotkeys]]
 binding = "Unassigned"
+id = "toggleFloatingFocus"
+
+[[hotkeys]]
+binding = "Unassigned"
 id = "rescueOffscreenWindows"
 
 [[hotkeys]]
@@ -937,6 +985,14 @@ id = "closeFocusedWindow"
 [[hotkeys]]
 binding = "Unassigned"
 id = "openMenuAnywhere"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "setWindowMark"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "removeWindowMark"
 
 [[hotkeys]]
 binding = "Hyper+B"
