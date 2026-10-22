@@ -260,33 +260,13 @@ for example, `q` opens `finaipro` rather than detaching.
 ## Verifying
 
 ```bash
-python3 -m unittest discover -s rex/.config/rex/tests -p 'test_*.py' -v
-rex config check ~/.config/rex/init.lua --json  # bindings, modes, actions, diagnostics
-bash -n rex/.config/rex/session_management.sh   # helper syntax
+rex config check rex/.config/rex/init.lua --json  # bindings, modes, actions, diagnostics
+bash -n rex/.config/rex/session_management.sh    # helper syntax
 ```
 
-The tests use `rex config check` to load temporary copies of `init.lua` and
-the two sibling modules, with `rex.bindings()`/`rex.modes()` assertions
-appended. They pin all 51 bindings, the native session-management keys, the
-project jumps, the fzf manager action, resize mode, and the absence of
-navigator actions or bare Ctrl+H interception. They also check that the native
-loader finds both modules from an unrelated working directory and reports a
-missing module as an error.
+The automated regression tests were removed by request. These checks validate
+configuration loading and shell syntax; they do not provide behavioral coverage.
 
-The project actions run through `rex do --action` against recording stubs, so
-no session is listed, created, or selected. The manager action receives a fake
-client/session context this way, and its test stubs check the floating-layer
-layout and helper command. `list_projects` runs without stubs and must return
-all nine sorted names.
-
-The helper tests run `session_management.sh` as a subprocess with fake `fzf`
-and `rex` executables. Those boundaries record public CLI arguments and return
-fixed JSON, so the tests cover selection, duplicate labels with identical ID
-suffixes, cancellation, confirmation, missing dependencies, and backend errors
-without listing, killing, or creating a real session. A bounded PTY test also
-pins the interactive `Press Enter to close.` acknowledgement and original exit
-status; non-TTY tests assert the unprompted output and status.
-
-Not automated: real keystrokes in the app, the rendered fzf UI, and the
-floating layer's visual placement. Run one menu against a disposable session
-after `rex config reload` to confirm those interactively.
+For a visual check, close the picker, reload with `Ctrl+A` then `Shift+R`, and
+reopen it. Check cancellation against disposable sessions; only test confirmed
+closing on a disposable session, because it terminates running programs.
