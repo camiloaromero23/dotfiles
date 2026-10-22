@@ -17,7 +17,8 @@ local HELPER = "session_management.sh"
 -- Rex owns the popup lifecycle and may close a quick failure before a later
 -- error is read; on a real terminal the helper waits for Enter on a nonzero
 -- exit so the message stays readable. Native fast-exit timing is unchanged.
-local BOUNDS = { 0.15, 0.15, 0.7, 0.7 }
+-- Full-window layer for visual testing; fzf fills this terminal.
+local BOUNDS = { 0, 0, 1, 1 }
 
 local MODES = {
   projects = true,

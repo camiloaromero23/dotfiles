@@ -77,6 +77,19 @@ FZF_BIN=${FZF_BIN:-/opt/homebrew/bin/fzf}
 JQ_BIN=${JQ_BIN:-/opt/homebrew/bin/jq}
 REX_BIN=${REX_BIN:-rex}
 
+# GUI-launched Rex may not inherit fish's exported fzf theme. Match the
+# Catppuccin Mocha colors in fish/config.fish only when no defaults are supplied.
+if [ -z "${FZF_DEFAULT_OPTS:-}" ] && [ -z "${FZF_DEFAULT_OPTS_FILE:-}" ]; then
+  FZF_DEFAULT_OPTS='
+    --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8
+    --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC
+    --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8
+    --color=selected-bg:#45475A
+    --color=border:#6C7086,label:#CDD6F4
+  '
+  export FZF_DEFAULT_OPTS
+fi
+
 check_bin() {
   local label=$1
   local path=$2
@@ -120,22 +133,24 @@ def safe: tostring | gsub("[[:cntrl:]]"; "?");
 
 # Run fzf over rows already produced from trusted JSON. Session rows keep the
 # ID in field one and hide it from the display; project rows are single names.
+# Rex sizes the floating terminal; keep fzf fullscreen with no extra spacing.
 choose() {
   local rows=$1
   local prompt=$2
-  local header=$3
+  local border_label=$3
   local fields=$4
   local status
   SELECTED=$(printf '%s\n' "$rows" | "$FZF_BIN" \
     --delimiter=$'\t' \
     --with-nth="$fields" \
     --prompt="$prompt" \
-    --header="$header" \
-    --height=100% \
-    --reverse \
+    --no-height \
+    --margin=0 \
+    --padding=0 \
     --border=rounded \
+    --border-label="$border_label" \
     --no-multi \
-    --no-info)
+    --no-clear)
   status=$?
   case "$status" in
     0) return 0 ;;
@@ -198,7 +213,7 @@ manager_projects() {
     exit 0
   fi
 
-  if ! choose "$rows" "Project> " "" "1.."; then
+  if ! choose "$rows" "> " "rex-session-manager" "1.."; then
     exit 0
   fi
   selected=$SELECTED
@@ -239,7 +254,7 @@ manager_active() {
     exit 0
   fi
 
-  if ! choose "$rows" "Session> " "Switch to a running session" "2.."; then
+  if ! choose "$rows" "> " "rex-session-manager (active-sessions)" "2.."; then
     exit 0
   fi
   selected=$SELECTED
@@ -280,7 +295,7 @@ manager_close() {
     exit 0
   fi
 
-  if ! choose "$rows" "Close> " "Close a running session" "2.."; then
+  if ! choose "$rows" "> " "rex-session-manager (kill-session)" "2.."; then
     exit 0
   fi
   selected=$SELECTED

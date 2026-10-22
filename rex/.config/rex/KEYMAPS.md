@@ -140,6 +140,30 @@ or app. This adds no tmux navigator and no global shortcuts.
 | `Ctrl+K` | Close session | Lists running sessions, then asks `Close session LABEL (ID)? [y/N]`. Only the exact answer `y` closes the selected ID with `rex kill`. |
 | `Ctrl+X` | Native picker | Unchanged Rex session picker. |
 
+**Presentation (Kitty-style)**
+
+All three pickers use Kitty's `> ` prompt, rounded titled border,
+`--no-multi` and `--no-clear`, with fzf's default layout and information line.
+The border titles are `rex-session-manager`,
+`rex-session-manager (active-sessions)` and
+`rex-session-manager (kill-session)`. Session IDs stay hidden in the first
+column; only the display label is shown.
+
+Popup size is controlled by `BOUNDS` in `session_management.lua`, currently
+`{0, 0, 1, 1}` to cover the entire Rex window for visual testing (not OS
+fullscreen). fzf fills that terminal and follows its resize using
+`--no-height --margin=0 --padding=0`; inherited fzf height, margin or padding
+settings cannot leave a smaller picker inside the layer. Color preferences
+remain unchanged.
+
+**Colors**
+
+When Rex starts without fish's exported fzf settings, the helper supplies the
+same Catppuccin Mocha palette: solid `#1E1E2E` background, `#CDD6F4` text,
+colored highlights and border. An explicit `FZF_DEFAULT_OPTS` or
+`FZF_DEFAULT_OPTS_FILE` takes precedence; the fallback does not replace either.
+No fish initialization is needed to style the floating picker.
+
 **Cancel and confirmation**
 
 - `Esc` or no match in fzf closes the menu without creating, selecting, or closing anything.

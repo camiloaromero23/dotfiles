@@ -120,7 +120,7 @@ def layer_step(
         "method": "session.new_layer",
         "args": {
             "session_id": session_id,
-            "bounds": [0.15, 0.15, 0.7, 0.7],
+            "bounds": [0, 0, 1, 1],
             "focus": True,
             "layout": {
                 "block": {
@@ -322,7 +322,9 @@ data = sys.stdin.read()
 log = os.environ.get("FAKE_FZF_LOG")
 if log:
     with open(log, "a", encoding="utf-8") as handle:
-        handle.write(json.dumps({"argv": sys.argv[1:], "stdin": data}) + "\\n")
+        handle.write(json.dumps({"argv": sys.argv[1:], "stdin": data,
+                                 "default_opts": os.environ.get("FZF_DEFAULT_OPTS"),
+                                 "opts_file": os.environ.get("FZF_DEFAULT_OPTS_FILE")}) + "\\n")
 
 mode = os.environ.get("FAKE_FZF_MODE", "select-first")
 lines = data.splitlines()
@@ -469,6 +471,80 @@ class HelperTest(unittest.TestCase):
             for line in self.fzf_log.read_text(encoding="utf-8").splitlines()
         ]
 
+    def test_fzf_has_mocha_colors_without_shell_defaults(self) -> None:
+        result = self.run_helper(
+            ["projects", CLIENT], FAKE_FZF_MODE="cancel",
+            FZF_DEFAULT_OPTS=None, FZF_DEFAULT_OPTS_FILE=None,
+        )
+        self.assertEqual((0, "", ""), (result.returncode, result.stdout, result.stderr))
+        options = self.fzf_calls()[0]["default_opts"]
+        self.assertIsInstance(options, str)
+        for color in ("bg:#1E1E2E", "fg:#CDD6F4", "border:#6C7086"):
+            self.assertIn(color, options)
+        self.assertEqual([BASE + ["do", "list_projects", "--json"]], self.rex_calls())
+
+    def test_fzf_preserves_supplied_defaults(self) -> None:
+        options = "--color=bg:#112233,fg:#abcdef"
+        result = self.run_helper(
+            ["projects", CLIENT], FAKE_FZF_MODE="cancel", FZF_DEFAULT_OPTS=options,
+        )
+        self.assertEqual((0, "", ""), (result.returncode, result.stdout, result.stderr))
+        self.assertEqual(options, self.fzf_calls()[0]["default_opts"])
+        self.assertEqual([BASE + ["do", "list_projects", "--json"]], self.rex_calls())
+
+    def test_fzf_preserves_options_file_without_injecting_a_theme(self) -> None:
+        options_file = self.directory / "fzf options"
+        options_file.write_text("--color=bg:#112233", encoding="utf-8")
+        result = self.run_helper(
+            ["projects", CLIENT], FAKE_FZF_MODE="cancel",
+            FZF_DEFAULT_OPTS=None, FZF_DEFAULT_OPTS_FILE=str(options_file),
+        )
+        self.assertEqual((0, "", ""), (result.returncode, result.stdout, result.stderr))
+        call = self.fzf_calls()[0]
+        self.assertIsNone(call["default_opts"])
+        self.assertEqual(str(options_file), call["opts_file"])
+        self.assertEqual([BASE + ["do", "list_projects", "--json"]], self.rex_calls())
+
+    def test_picker_fills_float_despite_inherited_geometry(self) -> None:
+        defaults = "--height=40% --margin=2 --padding=1 --color=bg:#1E1E2E"
+        for mode in ("projects", "active", "close"):
+            with self.subTest(mode=mode):
+                self.rex_log.unlink(missing_ok=True)
+                self.fzf_log.unlink(missing_ok=True)
+                result = self.run_helper(
+                    [mode, CLIENT], FAKE_FZF_MODE="cancel", FZF_DEFAULT_OPTS=defaults,
+                )
+                self.assertEqual((0, "", ""), (result.returncode, result.stdout, result.stderr))
+                call = self.fzf_calls()[0]
+                self.assertEqual(defaults, call["default_opts"])
+                for argument in ("--no-height", "--margin=0", "--padding=0"):
+                    self.assertIn(argument, call["argv"])
+                expected = ["do", "list_projects", "--json"] if mode == "projects" else ["ls", "--json"]
+                self.assertEqual([BASE + expected], self.rex_calls())
+
+    def test_picker_presentation_matches_kitty(self) -> None:
+        modes = {
+            "projects": ("rex-session-manager", "1.."),
+            "active": ("rex-session-manager (active-sessions)", "2.."),
+            "close": ("rex-session-manager (kill-session)", "2.."),
+        }
+        for mode, (title, fields) in modes.items():
+            with self.subTest(mode=mode):
+                self.rex_log.unlink(missing_ok=True)
+                self.fzf_log.unlink(missing_ok=True)
+                result = self.run_helper([mode, CLIENT], FAKE_FZF_MODE="cancel")
+                self.assertEqual((0, "", ""), (result.returncode, result.stdout, result.stderr))
+                argv = self.fzf_calls()[0]["argv"]
+                for argument in ("--prompt=> ", "--border=rounded",
+                                 "--border-label=" + title, "--no-multi",
+                                 "--no-clear", "--with-nth=" + fields):
+                    self.assertIn(argument, argv)
+                for argument in ("--height=100%", "--reverse", "--no-info"):
+                    self.assertNotIn(argument, argv)
+                self.assertFalse(any(argument.startswith("--header") for argument in argv))
+                expected = ["do", "list_projects", "--json"] if mode == "projects" else ["ls", "--json"]
+                self.assertEqual([BASE + expected], self.rex_calls())
+
     def test_projects_switches_with_exact_project_json(self) -> None:
         result = self.run_helper(["projects", CLIENT])
 
@@ -493,7 +569,7 @@ class HelperTest(unittest.TestCase):
         )
         fzf = self.fzf_calls()[0]
         self.assertEqual("centai\ndotfiles\nfinaipro\n", fzf["stdin"])
-        for argument in ("--prompt=Project> ", "--with-nth=1..", "--border=rounded", "--no-multi"):
+        for argument in ("--prompt=> ", "--with-nth=1..", "--border=rounded", "--no-multi"):
             self.assertIn(argument, fzf["argv"])
 
     def test_projects_cancel_and_no_match_are_noops(self) -> None:
