@@ -2,13 +2,15 @@
 """Regression tests for the Rex keymap migrated from Herdr and tmux.
 
 ``rex config check PATH --json`` loads a temporary copy of ``init.lua`` and its
-sibling module ``sessions.lua`` with Lua assertions appended. Structure is
-checked through the documented ``rex.bindings()`` and ``rex.modes()`` APIs
-without touching a live server.
+sibling modules ``sessions.lua`` and ``session_management.lua`` with Lua
+assertions appended. Structure is checked through the documented
+``rex.bindings()``, ``rex.modes()``, and action report APIs without touching a
+live server.
 
 ``rex do PATH --action jump_project`` runs the real custom action from a copy
-of the same two files whose ``rex.call`` and ``rex.client.queue`` are replaced
-by recording stubs. No session is listed, created, or selected.
+of the same files whose ``rex.call`` and ``rex.client.queue`` are replaced by
+recording stubs. ``list_projects`` runs without stubs because it only reads the
+private registry. No session is listed, created, or selected.
 
 Not covered: real keystrokes in the app, and app shortcuts that override this file.
 """
@@ -29,7 +31,9 @@ INIT_LUA = CONFIG_DIR / "init.lua"
 # init.lua loads this sibling module with `require("sessions")`, so every
 # temporary copy needs both files for the native loader to resolve it.
 SESSIONS_LUA = CONFIG_DIR / "sessions.lua"
-CONFIG_MODULES = (SESSIONS_LUA.name,)
+SESSION_MANAGEMENT_LUA = CONFIG_DIR / "session_management.lua"
+SESSION_MANAGEMENT_SH = CONFIG_DIR / "session_management.sh"
+CONFIG_MODULES = (SESSIONS_LUA.name, SESSION_MANAGEMENT_LUA.name)
 REX = shutil.which("rex")
 PREFIX = "ctrl+a>"
 FLAVOR = "com.superlogical.terminal.shell"
@@ -55,9 +59,10 @@ BINDINGS = [
     ("resize/right", "pane.resize", {"direction": "right"}),
     ("resize/esc", "client.mode.exit"),
     ("resize/enter", "client.mode.exit"),
-    # sessions: tmux session picker, then Herdr workspaces
-    (f"{PREFIX}s", "session.switch"),
-    (f"{PREFIX}ctrl+s", "session.switch"),
+    # sessions: fzf manager menus, the native picker, then Herdr workspaces
+    (f"{PREFIX}s", "session_manager", {"mode": "projects"}),
+    (f"{PREFIX}ctrl+s", "session_manager", {"mode": "active"}),
+    (f"{PREFIX}ctrl+k", "session_manager", {"mode": "close"}),
     (f"{PREFIX}ctrl+x", "session.switch"),
     (f"{PREFIX}shift+n", "session.new"),
     (f"{PREFIX}shift+w", "session.rename"),
@@ -99,7 +104,6 @@ UNSUPPORTED = [
     f"{PREFIX}o",  # notification target
     f"{PREFIX}shift+p",  # rename pane
     f"{PREFIX}shift+g",  # new worktree
-    f"{PREFIX}ctrl+k",  # tmux interactive kill picker
 ]
 
 LUA_HARNESS = """
@@ -297,12 +301,22 @@ def json_block(value) -> str:
     return f"rex.json.decode([=[{json.dumps(value)}]=])"
 
 
-def copy_config(scratch: Path, suffix: str = "", modules: tuple[str, ...] = CONFIG_MODULES) -> Path:
-    """Write an init.lua copy plus the sibling modules it loads."""
+def copy_config(
+    scratch: Path,
+    suffix: str = "",
+    modules: tuple[str, ...] = CONFIG_MODULES,
+    copy_helper: bool = True,
+    prefix: str = "",
+) -> Path:
+    """Write an init.lua copy plus the sibling modules and helper it loads."""
     config = scratch / "init.lua"
-    config.write_text(INIT_LUA.read_text(encoding="utf-8") + suffix, encoding="utf-8")
+    config.write_text(
+        prefix + INIT_LUA.read_text(encoding="utf-8") + suffix, encoding="utf-8"
+    )
     for module in modules:
         shutil.copy(CONFIG_DIR / module, scratch / module)
+    if copy_helper:
+        shutil.copy(SESSION_MANAGEMENT_SH, scratch / SESSION_MANAGEMENT_SH.name)
     return config
 
 
@@ -526,12 +540,22 @@ if __modes["resize"].exclusive ~= true then error("the resize mode is not exclus
         report = config_check()
         self.assertEqual(len(BINDINGS), report["bindings"], "unexpected binding count")
         self.assertEqual(0, report["removals"], "unexpected rex.unbind call")
+        actions = {action["name"]: action for action in report["actions"]}
         self.assertEqual(
-            ["jump_project"], [action["name"] for action in report["actions"]]
+            ["jump_project", "list_projects", "session_manager"],
+            sorted(actions),
         )
-        args = report["actions"][0]["args"]
-        self.assertEqual(["project"], args["required"])
-        self.assertEqual("string", args["properties"]["project"]["type"])
+        self.assertNotIn("args", actions["list_projects"])
+        jump_args = actions["jump_project"]["args"]
+        self.assertEqual(["project"], jump_args["required"])
+        self.assertEqual("string", jump_args["properties"]["project"]["type"])
+        manager_args = actions["session_manager"]["args"]
+        self.assertEqual(["mode"], manager_args["required"])
+        self.assertEqual(
+            ["projects", "active", "close"],
+            manager_args["properties"]["mode"]["enum"],
+        )
+        self.assertFalse(manager_args["additionalProperties"])
         self.assertEqual([], report["diagnostics"])
 
     def test_config_loads_sibling_module_from_any_cwd(self) -> None:
@@ -579,6 +603,63 @@ if __modes["resize"].exclusive ~= true then error("the resize mode is not exclus
             messages,
         )
 
+    def test_missing_manager_module_is_reported(self) -> None:
+        """Without session_management.lua the manager keys cannot load silently."""
+        if REX is None:
+            raise AssertionError("the rex CLI is not on PATH")
+
+        with tempfile.TemporaryDirectory(prefix="rex-keymap-missing-manager-") as scratch:
+            config = copy_config(Path(scratch), modules=(SESSIONS_LUA.name,))
+            result = subprocess.run(
+                [REX, "config", "check", str(config), "--json"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+
+        self.assertEqual(1, result.returncode, result.stdout)
+        report = json.loads(result.stdout)
+        messages = [item["message"] for item in report["diagnostics"]]
+        self.assertTrue(
+            any(
+                message.startswith(
+                    f"module {SESSION_MANAGEMENT_LUA.stem} not found"
+                )
+                for message in messages
+            ),
+            messages,
+        )
+
+    def test_list_projects_returns_every_sorted_preset(self) -> None:
+        """The manager browses all nine presets, not only the five bound keys."""
+        if REX is None:
+            raise AssertionError("the rex CLI is not on PATH")
+
+        with tempfile.TemporaryDirectory(prefix="rex-list-projects-") as scratch:
+            config = copy_config(Path(scratch))
+            result = subprocess.run(
+                [
+                    REX,
+                    "--autostart=false",
+                    "do",
+                    str(config),
+                    "--action",
+                    "list_projects",
+                    "--json",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                env=dict(os.environ, HOME=TEST_HOME),
+            )
+
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(
+            {"projects": sorted(PROJECT_TEMPLATES)}, json.loads(result.stdout)
+        )
+        self.assertEqual("", result.stderr)
+        self.assertEqual(9, len(PROJECT_TEMPLATES))
+
     def test_unsupported_keys_stay_unbound(self) -> None:
         self.assert_config_accepts(
             f"""
@@ -619,9 +700,9 @@ end
 """
         )
         self.assertEqual(
-            ["jump_project"],
-            [action["name"] for action in report["actions"]],
-            "the only custom action is the project jump",
+            ["jump_project", "list_projects", "session_manager"],
+            sorted(action["name"] for action in report["actions"]),
+            "the custom actions are the project jump and the session manager",
         )
 
     def test_action_reuses_labelled_session(self) -> None:

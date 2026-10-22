@@ -6,8 +6,9 @@
 -- Ctrl+A is the prefix, as in every source. Run `rex config reload` after
 -- editing.
 --
--- Session management and the project sessions live in sessions.lua, the module
--- beside this file; this file keeps the pane and tab shortcuts.
+-- Session management and the project sessions live in sessions.lua; the fzf
+-- manager lives in session_management.lua. Both are modules beside this file;
+-- this file keeps the pane and tab shortcuts.
 --
 -- No Cmd shortcut or bare Ctrl+H/J/K/L is bound here, so the client's own
 -- defaults stay reachable.
@@ -45,6 +46,10 @@ rex.bind(PREFIX .. ">" .. PREFIX, "pane.send_key", { key = PREFIX })
 -- share one prefix value; edit project tabs there and reload after either file.
 require("sessions").setup(PREFIX)
 
+-- The fzf session manager lives in session_management.lua. It browses the
+-- presets above and manages running sessions, using the same prefix.
+require("session_management").setup(PREFIX)
+
 -- Tabs.
 rex.bind(PREFIX .. ">c", "client.tab.new")
 rex.bind(PREFIX .. ">shift+t", "client.tab.rename")
@@ -77,7 +82,7 @@ rex.bind(PREFIX .. ">z", "pane.zoom")
 rex.bind(PREFIX .. ">b", "client.sidebar.toggle")
 
 -- ? opened help in Herdr; the command palette is the closest Rex client
--- surface. Settings moved from prefix+s (taken by the session picker) to
+-- surface. Settings moved from prefix+s (now the project browser) to
 -- prefix+Shift+S.
 rex.bind(PREFIX .. ">shift+/", "client.palette.toggle")
 rex.bind(PREFIX .. ">shift+s", "client.settings")

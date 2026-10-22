@@ -1,8 +1,9 @@
 -- Session management and project jumps for the Rex config beside this file.
 --
 -- `init.lua` keeps the prefix and calls `require("sessions").setup(PREFIX)`, so
--- both files use one prefix value. Everything else here is private: the tab
--- templates, the `jump_project` action, and the five project keys. Change a
+-- both files use one prefix value. This module keeps the project presets, the
+-- `jump_project` action, and the read-only `list_projects` action the fzf manager
+-- browses. `session_management.lua` owns the manager keys and menus. Change a
 -- project here, then run `rex config reload` (or reload from the palette).
 
 local SHELL_FLAVOR = "com.superlogical.terminal.shell"
@@ -97,17 +98,34 @@ end
 
 local M = {}
 
--- Register the session shortcuts, the `jump_project` action, and its keys.
--- Call once, with the prefix declared by init.lua.
+-- Register the native session shortcuts, the project actions, and the five
+-- project keys. Call once, with the prefix declared by init.lua.
 function M.setup(PREFIX)
-  -- Sessions (Herdr workspaces). s, Ctrl+S, and Ctrl+X keep their tmux
-  -- session-manager role by opening Rex's session picker.
-  rex.bind(PREFIX .. ">s", "session.switch")
-  rex.bind(PREFIX .. ">ctrl+s", "session.switch")
+  -- Sessions (Herdr workspaces). Prefix+Ctrl+X keeps tmux's session-manager
+  -- role by opening Rex's native picker. The fzf menus live in
+  -- session_management.lua. shift+n/w/d stay here.
   rex.bind(PREFIX .. ">ctrl+x", "session.switch")
   rex.bind(PREFIX .. ">shift+n", "session.new")
   rex.bind(PREFIX .. ">shift+w", "session.rename")
   rex.bind(PREFIX .. ">shift+d", "session.close")
+
+  -- The fzf manager browses all presets, including the four without a direct
+  -- key. Only names leave this module; the tabs stay private.
+  rex.action{
+    name = "list_projects",
+    title = "List Projects",
+    description = "Return the configured project names in sorted order.",
+    category = "Sessions",
+    keywords = "fzf manager presets",
+    run = function()
+      local names = {}
+      for name in pairs(PROJECT_TABS) do
+        names[#names + 1] = name
+      end
+      table.sort(names)
+      return { projects = names }
+    end,
+  }
 
   -- Reuse the session whose label matches the project, or create it from the
   -- template in one all-or-nothing session.create. The select is queued, so it
@@ -157,9 +175,10 @@ function M.setup(PREFIX)
     end,
   }
 
-  -- Current project shortcuts. Reload stays on Shift+R, session pickers remain
-  -- on s/Ctrl+S/Ctrl+X, and split-down stays on Shift+'. p still goes to the
-  -- previous tab. Other presets remain available through jump_project.
+  -- Current project shortcuts. Reload stays on Shift+R, the native session
+  -- picker remains on Ctrl+X, and split-down stays on Shift+'. p still goes to
+  -- the previous tab. Other presets remain available through jump_project and
+  -- the fzf project menu.
   rex.bind(PREFIX .. ">q", "jump_project", { project = "finaipro" })
   rex.bind(PREFIX .. ">w", "jump_project", { project = "sql-finaipro" })
   rex.bind(PREFIX .. ">,", "jump_project", { project = "dotfiles" })
