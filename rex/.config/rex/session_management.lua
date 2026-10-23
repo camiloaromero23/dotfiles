@@ -2,23 +2,25 @@
 --
 -- `sessions.lua` owns the project presets and the `jump_project` action. This
 -- module only browses them and manages running sessions. Each menu opens a
--- temporary floating terminal that runs `session_management.sh` with fzf; the
--- helper calls ordinary Rex CLI commands against the inherited REX_SERVER and
--- the client that pressed the key. Escape cancels without creating, selecting,
+-- temporary floating terminal that runs `session_picker.lua` with Rex's Lua
+-- runtime and fzf. Native calls use the inherited REX_SERVER and the pinned
+-- invoking client. Escape cancels without creating, selecting,
 -- or closing anything, and closing asks for an explicit confirmation.
 --
 -- `init.lua` keeps the prefix and calls `require("session_management").setup(PREFIX)`.
 
 local SHELL_FLAVOR = "com.superlogical.terminal.shell"
-local HELPER = "session_management.sh"
+local HELPER = "session_picker.lua"
 
 -- A floating layer in the moments after the key press. The helper closes the
 -- layer itself by exiting with status 0 through the terminal's exit option.
 -- Rex owns the popup lifecycle and may close a quick failure before a later
 -- error is read; on a real terminal the helper waits for Enter on a nonzero
 -- exit so the message stays readable. Native fast-exit timing is unchanged.
--- Full-window layer for visual testing; fzf fills this terminal.
-local BOUNDS = { 0, 0, 1, 1 }
+-- Current Rex Beta clips offset layers before their nominal right/bottom edges.
+-- These compensated bounds display a centered 70% x 60% panel. Its terminal is
+-- larger than the visible area; keep session_picker.lua's margins in sync.
+local BOUNDS = { 0.15, 0.20, 0.85, 0.80 }
 
 local MODES = {
   projects = true,
@@ -98,7 +100,11 @@ local function session_manager(ctx, args)
       flavor = SHELL_FLAVOR,
       options = {
         shell = "none",
-        command = { "/bin/bash", helper, mode, ctx.client_id },
+        command = {
+          "/usr/bin/env", "REX_CLIENT=" .. ctx.client_id,
+          "rex", "--autostart=false", "do", helper,
+          "mode=" .. mode, "interactive=true",
+        },
         exit = { on_completion = true },
       },
     },
