@@ -163,6 +163,8 @@ usage_count = true  # send an anonymous count when ZenNotes installs or updates:
 # "tabs.select7" = "Alt+7"  # Go to tab 7 (macOS: "Ctrl+7")
 # "tabs.select8" = "Alt+8"  # Go to tab 8 (macOS: "Ctrl+8")
 # "tabs.select9" = "Alt+9"  # Go to tab 9 (macOS: "Ctrl+9")
+# "tabs.next" = "Mod+PageDown"  # Next tab (macOS: "Alt+Mod+ArrowRight")
+# "tabs.previous" = "Mod+PageUp"  # Previous tab (macOS: "Alt+Mod+ArrowLeft")
 # Vim
 # "vim.leaderPrefix" = "Space"  # Leader key
 # "vim.leaderOpenBuffers" = "o"  # Leader: open buffers
@@ -180,6 +182,7 @@ usage_count = true  # send an anonymous count when ZenNotes installs or updates:
 # "vim.leaderToggleFavorite" = "s"  # Leader note action: toggle favorite
 # "vim.leaderTableToDatabase" = "d"  # Leader note action: convert table to database
 # "vim.leaderQuickCapture" = "q"  # Leader: open quick capture
+# "vim.leaderHideToTray" = "b"  # Leader: hide window to tray
 # "vim.leaderTemplatePicker" = "t"  # Leader: new from template
 # "vim.leaderInsertTemplate" = "i"  # Leader: insert template into note
 # "vim.leaderDailyNote" = "d"  # Leader: today's daily note
