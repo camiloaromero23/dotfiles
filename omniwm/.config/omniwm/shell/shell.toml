@@ -1,0 +1,52 @@
+
+[profiles]
+
+[profiles.default]
+center = ["workspaces", "system-stats"]
+leading = []
+scheme = "tonalSpot"
+theme = "catppuccin"
+trailing = []
+
+[profiles.default.widgets]
+
+[profiles.default.widgets.battery-details]
+percent = "inside"
+
+[profiles.default.widgets.clock]
+icon = true
+
+[profiles.default.widgets.omniwm]
+iconColor = "#cba6f7ff"
+
+[profiles.default.widgets.workspaces]
+compact = true
+indicator = "underline"
+occupiedBackground = false
+
+[profiles.default.workspaceBar]
+autoHide = false
+backgroundOpacity = 0.0
+fullWidth = false
+fullWidthNotchMode = "splitAroundNotch"
+height = 28.0
+hoverPreviewsEnabled = false
+inactiveIconOpacity = 0.5
+notchActiveZoneWidth = 100.0
+notchMode = "splitActiveLeft"
+notificationBadges = "dot"
+position = "overlappingMenuBar"
+reserveLayoutSpace = false
+showAccentHighlights = true
+showItemBackgrounds = false
+showLabels = true
+solidBlackBackground = false
+systemStatsButton = true
+transparentBackground = false
+windowLevel = "status"
+yOffset = 3.0
+
+[weather]
+city = "Bogotá"
+refresh = 15.0
+units = "celsius"
