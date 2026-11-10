@@ -102,3 +102,4 @@ set --export BAT_THEME "Catppuccin Mocha"
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+mise activate fish | source
