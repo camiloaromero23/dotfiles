@@ -199,6 +199,11 @@ yOffset = 10.0
 
 [[appRules]]
 assignToWorkspace = "3"
+bundleId = "com.superlogical.rex"
+id = "CF7122AC-9803-4197-8D3C-390CFF32CC1E"
+
+[[appRules]]
+assignToWorkspace = "3"
 bundleId = "net.kovidgoyal.kitty"
 id = "D45343D9-BC7E-4D03-A39E-DBBCE730F78A"
 
@@ -238,9 +243,9 @@ bundleId = "company.thebrowser.dia"
 id = "D6224D25-90BA-455D-970E-C3FF39F039D0"
 
 [[appRules]]
-assignToWorkspace = "3"
-bundleId = "com.superlogical.rex"
-id = "CF7122AC-9803-4197-8D3C-390CFF32CC1E"
+assignToWorkspace = "9"
+bundleId = "com.tinyspeck.slackmacgap"
+id = "4ABA58D7-025A-43AA-8D73-B9D250A4C068"
 
 [[hotkeys]]
 binding = "Unassigned"
