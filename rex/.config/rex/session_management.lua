@@ -5,7 +5,7 @@
 -- temporary floating terminal that runs `session_picker.lua` with Rex's Lua
 -- runtime and fzf. Native calls use the inherited REX_SERVER and the pinned
 -- invoking client. Escape cancels without creating, selecting,
--- or closing anything, and closing asks for an explicit confirmation.
+-- or closing anything; closing destroys the chosen session at once.
 --
 -- `init.lua` keeps the prefix and calls `require("session_management").setup(PREFIX)`.
 
@@ -124,7 +124,7 @@ function M.setup(PREFIX)
   rex.action{
     name = "session_manager",
     title = "Session Manager",
-    description = "Browse projects, switch running sessions by ID, or close one after confirmation.",
+    description = "Browse projects, switch running sessions by ID, or close one at once.",
     category = "Sessions",
     keywords = "fzf projects active close",
     args = ARGS,
@@ -132,7 +132,7 @@ function M.setup(PREFIX)
   }
 
   -- Prefix+s browses every project preset; Prefix+Ctrl+S switches to a running
-  -- session; Prefix+Ctrl+K closes one only after confirmation. The native Rex
+  -- session; Prefix+Ctrl+K closes the chosen session at once. The native Rex
   -- picker stays on Prefix+Ctrl+X.
   rex.bind(PREFIX .. ">s", "session_manager", { mode = "projects" })
   rex.bind(PREFIX .. ">ctrl+s", "session_manager", { mode = "active" })

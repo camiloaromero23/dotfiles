@@ -16,7 +16,7 @@ mappings are listed below.
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
 | `sessions.lua` | Native session picker (`Ctrl+X`), new/rename/close keys, the project tab templates, the `jump_project` and `list_projects` actions, and the five project keys. |
 | `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` bindings. It opens a temporary floating terminal and returns its layer and block IDs. |
-| `session_picker.lua` | The interactive fzf menus, run locally by `rex do` inside the popup. Uses native Rex Lua calls for projects, session selection and confirmed closing. |
+| `session_picker.lua` | The interactive fzf menus, run locally by `rex do` inside the popup. Uses native Rex Lua calls for projects, session selection and unconfirmed closing. |
 
 `init.lua` passes the prefix to both modules, so `PREFIX` stays declared in
 one place. Project directories and tabs are defined only in `sessions.lua`;
@@ -44,7 +44,7 @@ the focused program.
 | `Shift+R` | Reload config | User override |
 | `s` | fzf project browser | Kitty project menu, tmux session picker |
 | `Ctrl+S` | fzf running-session switcher by ID | tmux session-manager |
-| `Ctrl+K` | fzf close with an explicit confirmation | tmux session-manager `-k` |
+| `Ctrl+K` | fzf close with no confirmation | tmux session-manager `-k` |
 | `Ctrl+X` | Native Rex session picker | tmux session-manager |
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
 | `q` `w` `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
@@ -148,7 +148,7 @@ is added. fzf remains an external program.
 | --- | --- | --- |
 | `s` | Projects | Lists all nine configured project names, sorted. Choosing one runs `jump_project`, which reuses the session with that exact label or creates it from the template and focuses its first tab. |
 | `Ctrl+S` | Active sessions | Lists running sessions with the full ID hidden in each row. Choosing a row selects that ID in the invoking client. |
-| `Ctrl+K` | Close session | Lists running sessions, then asks `Close session LABEL (ID)? [y/N]`. Only the exact answer `y` attaches this script to the selected ID and calls `session.destroy` for that same ID. |
+| `Ctrl+K` | Close session | Lists running sessions and closes the chosen row at once, with no confirmation prompt. It attaches this script to the selected ID and calls `session.destroy` for that same ID. |
 | `Ctrl+X` | Native picker | Unchanged Rex session picker. |
 
 **Presentation (Kitty-style)**
@@ -184,10 +184,10 @@ colored highlights and border. An explicit `FZF_DEFAULT_OPTS` or
 `FZF_DEFAULT_OPTS_FILE` takes precedence; the fallback does not replace either.
 No fish initialization is needed to style the floating picker.
 
-**Cancel and confirmation**
+**Cancel and closing**
 
 - `Esc` or no match in fzf closes the menu without creating, selecting, or closing anything.
-- In the close confirmation, empty input, `Esc`, `Y`, `yes`, or any other answer keeps the session. The default is keep.
+- Choosing a row in the close menu destroys that session immediately. There is no confirmation prompt, so `Ctrl+K` is destructive on whichever row you accept.
 - An empty project list or an empty session list is also a no-op.
 - A successful or cancelled menu exits 0 and closes the floating terminal. Rex owns the popup lifecycle: its fast-exit policy can close a nonzero exit before a later error is read. The launcher passes `interactive=true`, so the helper prints `Press Enter to close.` and waits on a nonzero exit. Direct script callers omit that argument for noninteractive use; they keep the error status without waiting. Session actions are never retried, polled, or replaced with fallback actions.
 
@@ -196,7 +196,7 @@ No fish initialization is needed to style the floating picker.
 - Rows are data, never code. Project names and labels are passed as CLI arguments and are never evaluated or interpolated into a shell command.
 - Session rows keep the full ID in a hidden first field and show the label in the second. Control characters are sanitized for display. Duplicate labels remain separately selectable and gain the full native session ID in brackets, such as `dotfiles [session:01a15ebd-b25a-735b-111111]`.
 - The chosen row must exactly match one generated from the current listing. A label cannot substitute for an ID. If a selected session disappears, selection or attachment/destruction fails for that ID; nothing falls back to another session.
-- Closing targets only the selected ID. The confirmation never defaults to close, and multi-selection is disabled.
+- Closing targets only the selected ID. Multi-selection is disabled, so one accepted row is exactly one session.
 
 **Files, dependencies, and failures**
 
@@ -205,6 +205,7 @@ No fish initialization is needed to style the floating picker.
 | Helper location | `session_picker.lua` beside the loaded `init.lua`. The action gets that absolute directory from `client.keymap`, so copied configs and paths with spaces work. |
 | Executables | `rex` from the server-provided PATH runs the Lua helper; fzf defaults to `/opt/homebrew/bin/fzf` and can be overridden with `FZF_BIN`. No `jq`, Bash helper or separate Lua runtime is required. |
 | Server and client | The launcher uses `--autostart=false`, the inherited `REX_SERVER`, and an explicitly pinned `REX_CLIENT`. `rex.invoke` and `rex.client.queue` use that bound context, never a guessed client. Only fzf's child environment clears `REX_CLIENT`. |
+| Client actions | Showing a session in the app is a client action, so Rex.app must accept actions: turn on Remote Control in its Settings, under Rex Server. With it off, the server answers `client.perform` with status 403 and the selection reports `Rex.app is not accepting actions`. Creating the session still succeeds server-side, but nothing appears in the app. |
 | Missing input | A missing `REX_SERVER`, client ID, helper, or executable reports an error and stops before any selection, switch, or close. A local script run has no client ID, so the action refuses instead of guessing one. |
 | Backend errors | A failed project action, session listing, selection, attachment or destruction reports the native error and exits 3. Local failures exit 1, bad arguments exit 2, and fzf failures preserve its exit status. Cancellation is distinct from a successful but empty selection. |
 
@@ -269,7 +270,7 @@ for example, `q` opens `finaipro` rather than detaching.
 | --- | --- | --- | --- |
 | `r` | Reload | Resize mode | Unbound; reload is `Shift+R`, resize uses the mode action |
 | `s` | Session picker | Settings | fzf project browser; `Ctrl+S` switches sessions, `Ctrl+K` closes one, `Ctrl+X` keeps the native picker, and settings moved to `Shift+S` |
-| `Ctrl+K` | Interactive kill picker | — | fzf close after an explicit `y` confirmation |
+| `Ctrl+K` | Interactive kill picker | — | fzf close with no confirmation prompt |
 | `?` | — | Help | Command palette |
 | `e` | — | Scrollback editor (no client action) | Unbound; Herdr's editor had no client action |
 | `w` | — | Workspace picker | Kitty jump to `sql-finaipro`; session menus stay on `Ctrl+S`, `Ctrl+K`, `Ctrl+X` |

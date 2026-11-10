@@ -1,8 +1,9 @@
 -- Interactive session picker, run locally by `rex do` inside the popup.
 -- The launcher pins REX_CLIENT; REX_SERVER selects the inherited server.
 -- Usage: REX_CLIENT=CLIENT rex --autostart=false do ./session_picker.lua mode=projects
--- Modes: projects | active | close. The launcher also passes interactive=true
--- so errors wait for Enter; direct/noninteractive callers do not wait.
+-- Modes: projects | active | close. Close destroys the chosen session with no
+-- confirmation prompt. The launcher also passes interactive=true so errors wait
+-- for Enter; direct/noninteractive callers do not wait.
 -- No standalone Lua, Bash, jq, or shell interpolation is involved.
 
 local TITLES = {
@@ -172,14 +173,9 @@ local function main()
     return
   end
 
-  io.write("Close session " .. session.display .. " (" .. session.id .. ")? [y/N] ")
-  io.flush()
-  if io.read("*l") ~= "y" then
-    io.write("Keeping session " .. session.display .. ".\n")
-    return
-  end
+  -- Choosing the row is the whole decision: this mode asks for no confirmation.
   -- Attach authorizes this connection for the same exact ID; it does not select
-  -- a session in the app. Never destroy before confirmation or substitute an ID.
+  -- a session in the app. Never substitute an ID.
   call("session.attach", { session_id = session.id })
   call("session.destroy", { session_id = session.id })
 end
