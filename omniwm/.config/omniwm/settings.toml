@@ -1,9 +1,4 @@
-monitorBarOverrides = []
-monitorDwindleOverrides = []
-monitorGapOverrides = []
-monitorNiriOverrides = []
-monitorOrientationOverrides = []
-schemaVersion = 4
+schemaVersion = 5
 
 [appearance]
 mode = "dark"
@@ -36,7 +31,9 @@ useGlobalGaps = true
 
 [focus]
 crossesMonitorAtEdge = false
+edgeNavigationInterval = 1.5
 followsMouse = false
+followsMouseOnlyFullyVisible = false
 followsWindowToMonitor = false
 lockModifier = "off"
 moveCrossesMonitorAtEdge = false
@@ -63,14 +60,20 @@ ipcEnabled = false
 preventSleepEnabled = false
 systemHyperTrigger = "None"
 updateChecksEnabled = true
+workspaceAutoBackAndForth = false
 
 [gestures]
+adoptNativeMoveAcrossDisplays = false
+adoptNativeResize = false
+dwindleGroupDragAcrossDisplays = "group"
 fingerCount = 3
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
+mouseWheelSensitivity = 1.0
 overviewGestureEnabled = false
 overviewGestureFingerCount = 4
+resizePreviewStyle = "live"
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
@@ -81,6 +84,7 @@ windowMoveFingerCount = 4
 windowResizeEnabled = false
 windowResizeFingerCount = 3
 workspaceSwipeAxis = "vertical"
+workspaceSwipeEdgeBehavior = "cycle"
 workspaceSwipeEnabled = false
 workspaceSwipeFingerCount = 3
 
@@ -89,18 +93,34 @@ enabled = true
 hiddenBundleIDs = []
 rehideIntervalSeconds = 5.0
 
+[island]
+enabled = false
+
+[keyboardModes]
+
+[launcher]
+appFolders = []
+cliFolders = []
+entries = []
+shell = "fish"
+shellExecutable = ""
+terminal = "terminal"
+
 [mouseWarp]
 constrainToArrangement = false
 enabled = true
 margin = 1
 
 [niri]
+allowOverscroll = false
 alwaysCenterSingleColumn = false
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
 defaultContainerPrimarySpan = 0.5
 edgeGaps = true
 infiniteLoop = false
+moveWindowStacksIntoColumn = true
+overscrollVisibleStripPercent = 5
 resizeStepPercent = 5
 singleWindowFit = "fill"
 visibleContainerCount = 2
@@ -148,6 +168,7 @@ heightPercent = 50.0
 monitorMode = "focusedWindow"
 opacity = 1.0
 position = "top"
+provider = "ghostty"
 widthPercent = 50.0
 
 [routing]
@@ -158,11 +179,34 @@ mode = "macOS"
 
 [scratchpads.labels]
 
+[shellPermissions]
+programs = []
+widgets = []
+
+[shellPermissions.services]
+lyrics = false
+weather = true
+
 [statusBar]
 showAppNames = false
-showIcon = true
+showIcon = false
 showWorkspaceName = false
 useWorkspaceId = false
+
+[statusMenu]
+hiddenControls = []
+hiddenMenuItems = []
+showControlHelp = false
+showControls = false
+showMenuItems = false
+
+[windowSwitcher]
+commandTab = "activeWorkspace"
+enabled = false
+optionTab = "allWorkspaces"
+order = "omniLayout"
+scope = "allWorkspaces"
+showFooter = true
 
 [workspaceBar]
 autoHide = false
@@ -172,6 +216,8 @@ backgroundOpacity = 0.0
 deduplicateAppIcons = true
 enabled = true
 excludedBundleIDs = []
+fullWidth = false
+fullWidthNotchMode = "rightOfNotch"
 height = 26.0
 hideEmptyWorkspaces = true
 hideInNativeFullscreen = false
@@ -400,11 +446,11 @@ binding = "Control+Option+Shift+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Hyper+0"
 id = "switchWorkspace.9"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Option+Shift+0"
 id = "moveToWorkspace.9"
 
 [[hotkeys]]
@@ -881,27 +927,27 @@ id = "resetWindowSecondarySpan"
 
 [[hotkeys]]
 binding = "Option+Minus"
-id = "setContainerPrimarySpan.decrease10Percent"
+id = "resizeContainerPrimarySpan.shrink"
 
 [[hotkeys]]
 binding = "Option+Equal"
-id = "setContainerPrimarySpan.increase10Percent"
+id = "resizeContainerPrimarySpan.grow"
 
 [[hotkeys]]
 binding = "Hyper+Minus"
-id = "setWindowPrimarySpan.decrease10Percent"
+id = "resizeWindowPrimarySpan.shrink"
 
 [[hotkeys]]
 binding = "Hyper+Equal"
-id = "setWindowPrimarySpan.increase10Percent"
+id = "resizeWindowPrimarySpan.grow"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowSecondarySpan.decrease10Percent"
+id = "resizeWindowSecondarySpan.shrink"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "setWindowSecondarySpan.increase10Percent"
+id = "resizeWindowSecondarySpan.grow"
 
 [[hotkeys]]
 binding = "Option+Shift+B"
@@ -965,7 +1011,79 @@ id = "preselectClear"
 
 [[hotkeys]]
 binding = "Unassigned"
+id = "volumeUp"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "volumeDown"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "volumeMute"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaPlayPause"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaNext"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "mediaPrevious"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShortcutPause"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "beginPrefix"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleWindowMode"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "exitKeyboardMode"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openShellApp.example"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "newShellAppWindow.example"
+
+[[hotkeys]]
+binding = "Unassigned"
 id = "openCommandPalette"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.windows"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.menu"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.clipboard"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.commands"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.applications"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "openCommandPalette.files"
 
 [[hotkeys]]
 binding = "Option+Shift+R"
@@ -1022,6 +1140,18 @@ id = "toggleOverview"
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleSystemStats"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.hidden-bar"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.system-stats"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.workspaces"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
