@@ -160,21 +160,20 @@ The border titles are `rex-session-manager`,
 `rex-session-manager (kill-session)`. Session IDs stay hidden in the first
 column; only the display label is shown.
 
-The visible panel remains a genuine centered floating terminal, about 70% of
-the Rex window's width and 60% of its height; underlying panes stay visible.
-Current Rex Beta clips an offset layer before its nominal right/bottom edges,
-so `BOUNDS` uses the compensated `{0.15, 0.20, 0.85, 0.80}` rectangle. A plain
-120×20 corner-marker grid in its 146×27 terminal was visually confirmed to fit
-and look correctly centered. The public API still documents `[x,y,w,h]`; this
-is a workaround for the observed client rendering, not a different API contract.
+The visible panel is a genuine centered floating terminal, about 70% of the
+Rex window's width and 60% of its height; underlying panes stay visible.
+`BOUNDS` is the documented `[x, y, w, h]` rectangle, so the panel centers
+itself at any window, font, or padding size. Rex sizes a floating layer's
+terminal to that rectangle minus one column and two rows (measured on a 162×37
+window, where a 70% × 60% request became a 112×20 terminal), which leaves the
+pane within one cell of the center. No margins or offsets compensate for
+clipping; recheck the GUI only if a future Rex renderer changes that inset.
 
-fzf uses `--no-height --margin=0,18%,26%,0 --padding=0` to reserve the hidden
-right/bottom bands. At the confirmed dimensions its rounded border occupies
-that same 120×20 area. Keep the bounds and margins together, and recheck the
-GUI after Rex renderer updates or window/font changes: percentage margins round
-to terminal cells. These flags override inherited geometry; color preferences
-are unchanged. There are no manual TTY-size queries, `stty` writes, size retries,
-or background watchers; Rex remains the only owner of terminal sizing.
+fzf uses `--no-height --padding=0` and fills the whole terminal, so its rounded
+border is the pane's visible edge. These flags override inherited geometry;
+color preferences are unchanged. There are no manual TTY-size queries, `stty`
+writes, size retries, or background watchers; Rex remains the only owner of
+terminal sizing.
 
 **Colors**
 

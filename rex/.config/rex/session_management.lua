@@ -17,10 +17,12 @@ local HELPER = "session_picker.lua"
 -- Rex owns the popup lifecycle and may close a quick failure before a later
 -- error is read; on a real terminal the helper waits for Enter on a nonzero
 -- exit so the message stays readable. Native fast-exit timing is unchanged.
--- Current Rex Beta clips offset layers before their nominal right/bottom edges.
--- These compensated bounds display a centered 70% x 60% panel. Its terminal is
--- larger than the visible area; keep session_picker.lua's margins in sync.
-local BOUNDS = { 0.15, 0.20, 0.85, 0.80 }
+-- The bounds are the documented [x, y, w, h] rectangle: a centered 70% x 60%
+-- panel. Rex gives a floating layer's terminal one column and two rows less
+-- than that rectangle, so the pane lands within a cell of the window's center
+-- at any window, font, or padding size. session_picker.lua fills that whole
+-- terminal; no margins reserve or hide any part of it.
+local BOUNDS = { 0.15, 0.20, 0.70, 0.60 }
 
 local MODES = {
   projects = true,

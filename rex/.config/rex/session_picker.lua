@@ -82,7 +82,6 @@ local function choose(rows, mode, fields)
     "--with-nth=" .. fields,
     "--prompt=> ",
     "--no-height",
-    "--margin=0,18%,26%,0",
     "--padding=0",
     "--border=rounded",
     "--border-label=" .. TITLES[mode],
