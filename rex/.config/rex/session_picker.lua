@@ -7,9 +7,9 @@
 -- No standalone Lua, Bash, jq, or shell interpolation is involved.
 
 local TITLES = {
-  projects = "rex-session-manager",
-  active = "rex-session-manager (active-sessions)",
-  close = "rex-session-manager (kill-session)",
+  projects = " 🦖 rex-session-manager 🦖 ",
+  active = " 🦖 rex-session-manager (active-sessions 🟢) 🦖 ",
+  close = " 🦖 rex-session-manager (kill-session 💀) 🦖 ",
 }
 
 local THEME = [[

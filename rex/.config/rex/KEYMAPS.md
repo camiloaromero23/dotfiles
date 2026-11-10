@@ -155,9 +155,9 @@ is added. fzf remains an external program.
 
 All three pickers use Kitty's `> ` prompt, rounded titled border,
 `--no-multi` and `--no-clear`, with fzf's default layout and information line.
-The border titles are `rex-session-manager`,
-`rex-session-manager (active-sessions)` and
-`rex-session-manager (kill-session)`. Session IDs stay hidden in the first
+The border titles follow the fzf layout of `tmux-session-manager`:
+` 🦖 rex-session-manager 🦖 `, ` 🦖 rex-session-manager (active-sessions 🟢) 🦖 `
+and ` 🦖 rex-session-manager (kill-session 💀) 🦖 `. Session IDs stay hidden in the first
 column; only the display label is shown.
 
 The visible panel is a genuine centered floating terminal, about 70% of the
