@@ -50,9 +50,10 @@ require("sessions").setup(PREFIX)
 -- presets above and manages running sessions, using the same prefix.
 require("session_management").setup(PREFIX)
 
--- Tabs.
+-- Tabs. Titles come from Rex's generated naming (Workspace.prefersGeneratedTitles
+-- in preferences.plist), so tab rename is not bound and sessions.lua sets no
+-- window_label.
 rex.bind(PREFIX .. ">c", "client.tab.new")
-rex.bind(PREFIX .. ">shift+t", "client.tab.rename")
 rex.bind(PREFIX .. ">p", "client.tab.previous")
 rex.bind(PREFIX .. ">shift+x", "client.tab.close")
 for index = 1, 9 do

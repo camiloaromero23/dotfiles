@@ -48,7 +48,7 @@ the focused program.
 | `Ctrl+X` | Native Rex session picker | tmux session-manager |
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
 | `q` `w` `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
-| `c` / `Shift+T` / `Shift+X` | New / rename / close tab | Herdr tab actions |
+| `c` / `Shift+X` | New / close tab | Herdr tab actions |
 | `p` | Previous tab | Herdr `previous_tab` |
 | `1`…`9` | Go to tab 1…9 | Herdr `switch_tab` |
 | `h` `j` `k` `l` | Focus pane left / down / up / right | Herdr `focus_pane_*`, tmux `select-pane` |
@@ -73,6 +73,12 @@ unbound.
 `x` uses Rex’s native `client.close`: focused pane, otherwise selected tab,
 otherwise the app window if neither exists. `Shift+X` closes the whole tab directly.
 
+This config never names a tab. `Shift+T` (`client.tab.rename`) is not bound, and
+`sessions.lua` creates no window with a `window_label`. Rex titles each tab from
+the program running in it, following `Workspace.prefersGeneratedTitles` in
+`preferences.plist`. Renaming is still reachable from the app's own UI, but no
+keymap or preset here sets a title.
+
 Pane focus wraps at the edge, the way tmux `select-pane` does: with two panes,
 `prefix h` from the left pane lands on the right one.
 
@@ -88,12 +94,12 @@ and state. A missing session is created from the tabs below in one
 all-or-nothing call, then opened on its first tab. A creation failure leaves
 no partial session or window behind.
 
-| Key | Session | Tabs that start | Directory |
+| Key | Session | Tabs (program each runs) | Directory |
 | --- | --- | --- | --- |
-| `q` | `finaipro` | `nvim`, `server` = `bun run dev:local`, `pi` | `~/documents/work/finaipro/Web-Finaipro` |
+| `q` | `finaipro` | `nvim`, `bun run dev:local`, `pi` | `~/documents/work/finaipro/Web-Finaipro` |
 | `w` | `sql-finaipro` | `nvim` | `~/Documents/work/finaipro/SQLDB-parameters-FinAIPro` |
-| `,` | `dotfiles` | `nvim`, `shell` | `~/dotfiles` |
-| `n` | `nvim` | `nvim`, `shell` | `~/.config/nvim` |
+| `,` | `dotfiles` | `nvim`, plain shell | `~/dotfiles` |
+| `n` | `nvim` | `nvim`, plain shell | `~/.config/nvim` |
 | `-` | `notes` | `nvim`, `nvim` | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes` and `/Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki` |
 
 The config still defines four more project templates that no direct key opens:
@@ -103,9 +109,10 @@ lists all nine presets, and `rex do jump_project project=<name>` still works
 bound ones. The templates and both project actions are in `sessions.lua`.
 
 Every project tab uses `/opt/homebrew/bin/fish --login --interactive`,
-including plain shell tabs and the untitled second `dotfiles` tab. The absolute
-path avoids Rex.app's restricted PATH, which does not include Homebrew's bin
-directory. A leading `~/` expands with `HOME`; paths with spaces stay literal.
+including plain shell tabs. No tab carries a title: Rex names each one from its
+foreground program. The absolute path avoids Rex.app's restricted PATH, which
+does not include Homebrew's bin directory. A leading `~/` expands with `HOME`;
+paths with spaces stay literal.
 
 A program tab does not run its command through `fish -c`. Instead it passes the
 command as the tab's startup input: Rex types `'<command>\n'` into the

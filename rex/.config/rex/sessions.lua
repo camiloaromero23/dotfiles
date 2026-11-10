@@ -9,56 +9,56 @@
 local SHELL_FLAVOR = "com.superlogical.terminal.shell"
 local FISH = "/opt/homebrew/bin/fish"
 
--- Project jumps. Each project lists its tabs: the tab title, the working
--- directory, and the program to run. Every tab starts the same interactive
--- fish; a tab with `run` types that command into it as startup input, so the
--- original shell returns when the program exits. A tab without `run` is a plain
--- shell tab. No Kitty file is read at runtime.
+-- Project jumps. Each project lists its tabs: the working directory and the
+-- program to run. Tabs are deliberately unnamed: Rex generates their titles
+-- (`Workspace.prefersGeneratedTitles` in preferences.plist), so nothing here
+-- names a tab. Every tab starts the same interactive fish; a tab with `run`
+-- types that command into it as startup input, so the original shell returns
+-- when the program exits. A tab without `run` is a plain shell tab. No Kitty
+-- file is read at runtime.
 local PROJECT_TABS = {
   finaipro = {
-    { label = "nvim", cwd = "~/documents/work/finaipro/Web-Finaipro", run = "nvim" },
-    { label = "server", cwd = "~/documents/work/finaipro/Web-Finaipro", run = "bun run dev:local" },
-    { label = "pi", cwd = "~/documents/work/finaipro/Web-Finaipro", run = "pi" },
+    { cwd = "~/documents/work/finaipro/Web-Finaipro", run = "nvim" },
+    { cwd = "~/documents/work/finaipro/Web-Finaipro", run = "bun run dev:local" },
+    { cwd = "~/documents/work/finaipro/Web-Finaipro", run = "pi" },
   },
   centai = {
-    { label = "nvim", cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "nvim" },
-    { label = "server", cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "bun run dev" },
-    { label = "pi", cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "pi" },
+    { cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "nvim" },
+    { cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "bun run dev" },
+    { cwd = "~/documents/work/finaipro/Web-CentAI-Manager/", run = "pi" },
   },
   ["sql-finaipro"] = {
-    { label = "nvim", cwd = "~/Documents/work/finaipro/SQLDB-parameters-FinAIPro/", run = "nvim" },
+    { cwd = "~/Documents/work/finaipro/SQLDB-parameters-FinAIPro/", run = "nvim" },
   },
   sergio = {
-    { label = "nvim", cwd = "~/documents/personal/sergio", run = "nvim" },
-    { label = "server", cwd = "~/documents/personal/sergio", run = "bun run dev" },
-    { label = "pi", cwd = "~/documents/personal/sergio", run = "pi" },
+    { cwd = "~/documents/personal/sergio", run = "nvim" },
+    { cwd = "~/documents/personal/sergio", run = "bun run dev" },
+    { cwd = "~/documents/personal/sergio", run = "pi" },
   },
   ["conectea-web"] = {
-    { label = "nvim", cwd = "~/documents/work/finaipro/conectea-web/", run = "nvim" },
-    { label = "server", cwd = "~/documents/work/finaipro/conectea-web/", run = "pnpm run dev" },
-    { label = "shell", cwd = "~/documents/work/finaipro/conectea-web/" },
+    { cwd = "~/documents/work/finaipro/conectea-web/", run = "nvim" },
+    { cwd = "~/documents/work/finaipro/conectea-web/", run = "pnpm run dev" },
+    { cwd = "~/documents/work/finaipro/conectea-web/" },
   },
   ["conectea-jea"] = {
-    { label = "nvim", cwd = "~/documents/work/finaipro/conectea-jea/", run = "nvim" },
-    { label = "server", cwd = "~/documents/work/finaipro/conectea-jea/", run = "pnpm run dev" },
-    { label = "shell", cwd = "~/documents/work/finaipro/conectea-jea/" },
+    { cwd = "~/documents/work/finaipro/conectea-jea/", run = "nvim" },
+    { cwd = "~/documents/work/finaipro/conectea-jea/", run = "pnpm run dev" },
+    { cwd = "~/documents/work/finaipro/conectea-jea/" },
   },
   dotfiles = {
-    { label = "nvim", cwd = "~/dotfiles", run = "nvim" },
+    { cwd = "~/dotfiles", run = "nvim" },
     { cwd = "~/dotfiles" },
   },
   nvim = {
-    { label = "nvim", cwd = "~/.config/nvim", run = "nvim" },
-    { label = "shell", cwd = "~/.config/nvim" },
+    { cwd = "~/.config/nvim", run = "nvim" },
+    { cwd = "~/.config/nvim" },
   },
   notes = {
     {
-      label = "nvim",
       cwd = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes",
       run = "nvim",
     },
     {
-      label = "nvim",
       cwd = "/Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki",
       run = "nvim",
     },
@@ -89,9 +89,6 @@ local function project_windows(tabs)
       options.initial_input = tab.run .. "\n"
     end
     windows[index] = { layout = rex.layout.block{ flavor = SHELL_FLAVOR, options = options } }
-    if tab.label then
-      windows[index].window_label = tab.label
-    end
   end
   return windows
 end
