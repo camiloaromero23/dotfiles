@@ -9,6 +9,35 @@
                 "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
                 "rules": [
                     {
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 625,
+                                                "vendor_id": 13364
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Change right_command to <C-a> (Keychron only)",
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change caps_lock key to Hyper and double tap caps_lock key to Meh",
                         "manipulators": [
                             {
@@ -152,6 +181,16 @@
                         "vendor_id": 12951
                     },
                     "ignore": true
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 625,
+                        "vendor_id": 13364
+                    },
+                    "ignore": false,
+                    "swap_grave_accent_and_non_us_backslash": true
                 }
             ],
             "name": "Default profile",
