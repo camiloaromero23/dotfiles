@@ -293,6 +293,16 @@ assignToWorkspace = "9"
 bundleId = "com.tinyspeck.slackmacgap"
 id = "4ABA58D7-025A-43AA-8D73-B9D250A4C068"
 
+[[appRules]]
+assignToWorkspace = "2"
+bundleId = "com.anthropic.claudefordesktop"
+id = "184CC813-7BCD-4B7A-A15A-E971A57559A7"
+
+[[appRules]]
+assignToWorkspace = "10"
+bundleId = "com.apple.Safari"
+id = "66FE3E63-3FDE-4496-A57D-AA5EE41DDAA6"
+
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleScratchpad.1"
@@ -1140,6 +1150,10 @@ id = "toggleOverview"
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleSystemStats"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleShellWidget.hidden-bar"
 
 [[hotkeys]]
 binding = "Unassigned"
