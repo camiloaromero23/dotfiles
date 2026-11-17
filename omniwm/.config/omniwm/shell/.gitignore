@@ -1,0 +1,10 @@
+# Managed by OmniWM: replaced on each release, and kept as <file>.edited-<date>.
+default/
+
+# Shipped by the app, not authored: editor type definitions and lint stub.
+omniwm.d.luau
+.luaurc
+
+# Install/update artifacts.
+.backups/
+*.edited-*
