@@ -196,9 +196,9 @@ useWorkspaceId = false
 [statusMenu]
 hiddenControls = []
 hiddenMenuItems = []
-showControlHelp = false
+showControlHelp = true
 showControls = false
-showMenuItems = false
+showMenuItems = true
 
 [windowSwitcher]
 commandTab = "activeWorkspace"
