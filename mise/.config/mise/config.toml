@@ -1,0 +1,10 @@
+[tools]
+ansible-core = "latest"
+bun = "latest"
+go = "latest"
+neovim = "nightly"
+node = "lts"
+opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
+pi = "latest"
+rust = "latest"
+uv = "latest"

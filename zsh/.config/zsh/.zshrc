@@ -46,3 +46,6 @@ source $ZDOTDIR/plugins.zsh
 
 # Keybindings
 source $ZDOTDIR/keybindings.zsh
+
+# mise: toolchains declared in ~/.config/mise/config.toml
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"

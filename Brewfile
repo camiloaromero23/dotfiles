@@ -161,6 +161,4 @@ cask "whatsapp"
 cask "zed"
 # Gecko based web browser
 cask "zen"
-go "cmd/go"
-go "cmd/gofmt"
 npm "@colbymchenry/codegraph"

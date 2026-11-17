@@ -1,4 +1,8 @@
 ZDOTDIR=$HOME/.config/zsh
+
+# mise-managed toolchains (go, node, rust, bun, uv, pi).
+# Shims are used here so non-interactive shells (zsh -c, scripts) resolve them too.
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 # TODO: check if can be deleted due to already appending to path in .zshrc
 . "$HOME/.cargo/bin"
 # TODO: check if exports can be added to .zshrc
