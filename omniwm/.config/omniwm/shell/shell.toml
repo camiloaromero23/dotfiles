@@ -2,11 +2,14 @@
 [profiles]
 
 [profiles.default]
-center = ["workspaces", "system-stats"]
+center = ["workspaces", "system-stats", "omniwm"]
 leading = []
 scheme = "tonalSpot"
 theme = "catppuccin"
 trailing = []
+
+[profiles.default.hiddenBar]
+enabled = false
 
 [profiles.default.widgets]
 
@@ -30,6 +33,7 @@ backgroundOpacity = 0.0
 fullWidth = false
 fullWidthNotchMode = "splitAroundNotch"
 height = 28.0
+hideEmptyWorkspaces = true
 hoverPreviewsEnabled = false
 inactiveIconOpacity = 0.5
 notchActiveZoneWidth = 100.0
@@ -37,6 +41,8 @@ notchMode = "splitActiveLeft"
 notificationBadges = "dot"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
+revealHoldMilliseconds = 0.0
+revealModifier = "off"
 showAccentHighlights = true
 showItemBackgrounds = false
 showLabels = true
@@ -45,6 +51,12 @@ systemStatsButton = true
 transparentBackground = false
 windowLevel = "status"
 yOffset = 3.0
+
+[[profiles.default.monitorBarOverrides]]
+id = "D63C9479-8A7D-4546-9610-0A9F57F3A6B0"
+monitorDisplayUUID = "3BFA3999-B471-43D8-951F-4206CB0A2B78"
+monitorName = "DELL P2723QE"
+notchMode = "off"
 
 [weather]
 city = "Bogotá"
