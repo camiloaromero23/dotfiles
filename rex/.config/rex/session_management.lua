@@ -117,10 +117,84 @@ local function session_manager(ctx, args)
   return {}
 end
 
+-- Prefix+h then a: mark the session this key press names. When the press names
+-- none, ask which running session to mark first, over the same live list the
+-- save menu shows. Marking is silent, because Rex's Lua has no notification
+-- API; a failure raises the binary's own message instead. The binary writes the
+-- preset first when the session has none, and never duplicates a mark.
+local function mark_session(ctx)
+  local session_id = ctx.session_id
+  if session_id == nil or session_id == "" then
+    if ctx.client_id == nil or ctx.client_id == "" then
+      fail(
+        "mark_session needs the invoking client to ask which session to mark;"
+          .. " run it from a Rex shortcut or pass -C"
+      )
+    end
+    local menu = manager.run("menu", "save")
+    if menu.items == nil or #menu.items == 0 then
+      return {}
+    end
+    session_id = ask("mark", menu)
+    if session_id == nil then
+      return {}
+    end
+  end
+  manager.run("mark", "--", session_id)
+  return {}
+end
+
+-- Prefix+h then m: the marks menu. Choosing a mark jumps to it, and the
+-- binary's last row opens a second prompt that removes the chosen mark; that
+-- row's id is the binary's `unmark_id`, which never equals a mark's name. There
+-- is no separate unmark key, so this menu is the only way to remove a mark.
+-- Escape at either prompt changes nothing.
+local function marks_menu(ctx)
+  if ctx.client_id == nil or ctx.client_id == "" then
+    fail("marks_menu needs the invoking client; run it from a Rex shortcut or pass -C")
+  end
+
+  local menu = manager.run("menu", "marks")
+  if menu.items == nil or #menu.items == 0 then
+    return {}
+  end
+  local choice = ask("marks", menu)
+  if choice == nil then
+    return {}
+  end
+
+  if choice == menu.unmark_id then
+    -- The first prompt removed nothing: the second one names the mark to
+    -- remove, and only an accepted row removes it.
+    local marked = manager.run("menu", "unmark")
+    if marked.items == nil or #marked.items == 0 then
+      return {}
+    end
+    local name = ask("unmark", marked)
+    if name == nil then
+      return {}
+    end
+    manager.run("unmark", "--", name)
+    return {}
+  end
+
+  -- A mark with no running session and no preset fails inside the binary with
+  -- an error naming the mark and saying to unmark it.
+  manager.jump_mark("--", choice)
+  return {}
+end
+
+-- Prefix+q/w/e/r: jump to mark 1-4 by position, the way a project jump works
+-- by preset name. Positions past 4 have no key; the marks menu reaches them.
+local function jump_mark(_, args)
+  local target = manager.jump_mark("--position", args.position)
+  return { session_id = target.session_id }
+end
+
 local M = {}
 
--- Register the `session_manager` action and its five keys. Call once, with
--- the prefix declared by init.lua.
+-- Register the `session_manager` action and its keys. Call once, with the
+-- prefix declared by init.lua.
 function M.setup(PREFIX)
   rex.action{
     name = "session_manager",
@@ -141,6 +215,48 @@ function M.setup(PREFIX)
   rex.bind(PREFIX .. ">ctrl+k", "session_manager", { mode = "close" })
   rex.bind(PREFIX .. ">ctrl+w", "session_manager", { mode = "save" })
   rex.bind(PREFIX .. ">ctrl+d", "session_manager", { mode = "delete" })
+
+  -- Marks. The binary keeps the ordered list in <MARKS_PATH>/marks.json and
+  -- computes each mark's key from its position, so the menu shows the same
+  -- letters these keys use.
+  rex.action{
+    name = "mark_session",
+    title = "Mark Session",
+    description = "Mark the current session as one of q, w, e, r, saving it as a preset first when it has none. When the key press names no session, asks which running session to mark.",
+    category = "Sessions",
+    keywords = "mark harpoon add pin q w e r",
+    run = mark_session,
+  }
+  rex.action{
+    name = "marks_menu",
+    title = "Marks Menu",
+    description = "Jump to a mark saved in "
+      .. manager.MARKS_PATH
+      .. "/marks.json, or remove one from the same menu.",
+    category = "Sessions",
+    keywords = "marks harpoon jump unmark remove",
+    run = marks_menu,
+  }
+  rex.action{
+    name = "jump_mark",
+    title = "Jump to Mark",
+    description = "Jump to the mark at a position: its running session, its preset, or a new session from that preset.",
+    category = "Sessions",
+    keywords = "marks harpoon position q w e r",
+    args = { position = "string" },
+    run = jump_mark,
+  }
+
+  -- Prefix+h also focuses the left pane (init.lua), so these mark keys extend
+  -- that sequence instead of taking it over; the user chose h then a / h then m.
+  rex.bind(PREFIX .. ">h>a", "mark_session")
+  rex.bind(PREFIX .. ">h>m", "marks_menu")
+
+  -- q, w, e, r are marks 1-4, not project presets. The position travels as a
+  -- string, like every other action argument.
+  for position, key in ipairs({ "q", "w", "e", "r" }) do
+    rex.bind(PREFIX .. ">" .. key, "jump_mark", { position = tostring(position) })
+  end
 end
 
 return M

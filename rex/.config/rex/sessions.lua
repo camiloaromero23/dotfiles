@@ -47,13 +47,10 @@ function M.setup(PREFIX)
     end,
   }
 
-  -- Project keys for presets that exist right now. `q` and `w` stay commented
-  -- out because `finaipro` and `sql-finaipro` are no longer in `sessions/`; a
-  -- binding to a missing preset fails with "unknown project". Uncomment one
-  -- after restoring its JSON file. Plain `s` is the project browser and always
-  -- reaches every preset, so no key is needed for a preset to be usable.
-  -- rex.bind(PREFIX .. ">q", "jump_project", { project = "finaipro" })
-  -- rex.bind(PREFIX .. ">w", "jump_project", { project = "sql-finaipro" })
+  -- Project keys for presets that exist right now. Plain `s` is the project
+  -- browser and always reaches every preset, so no key is needed for a preset
+  -- to be usable. `q`, `w`, `e`, and `r` are not project keys: they jump to
+  -- marks 1-4 (session_management.lua), and the marks menu reaches the rest.
   rex.bind(PREFIX .. ">,", "jump_project", { project = "dotfiles" })
   rex.bind(PREFIX .. ">n", "jump_project", { project = "nvim" })
   rex.bind(PREFIX .. ">-", "jump_project", { project = "notes" })

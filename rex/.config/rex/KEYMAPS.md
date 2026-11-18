@@ -6,7 +6,8 @@ the project jumps and `~/.config/rex/session_management.lua` for the session
 manager. The project presets are `~/.config/rex/sessions/*.json`. Both hand the
 session work to the `rex-session-manager` binary through
 `~/.config/rex/rex_session_manager.lua`. Ctrl+A is the prefix, with tmux-first defaults, overridden by
-Kitty's named-project keys, the session manager, and the pane-first close shortcut.
+Kitty's named-project keys, the session manager, the marks list, and the
+pane-first close shortcut.
 This config contains only keymaps and session management: no tmux-navigator
 integration, process detection, or bare Ctrl+H/J/K/L bindings. Unsupported
 mappings are listed below.
@@ -18,17 +19,18 @@ mappings are listed below.
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
 | `sessions.lua` | The native session picker (`Ctrl+X`), the new/rename/close keys, the `jump_project` action, and the project keys. |
 | `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
-| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` / `Ctrl+W` / `Ctrl+D` bindings. It asks with `rex.ui.pick` and acts on the answer. |
-| `rex_session_manager.lua` | The bridge to the `rex-session-manager` binary: runs it with `rex.exec`, always passing `--sessions-dir <this directory>/sessions`, decodes its JSON, and queues `session.select` after a jump. |
+| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` / `Ctrl+W` / `Ctrl+D` bindings, plus the mark actions and the `h` `a` / `h` `m` / `q` `w` `e` `r` bindings. It asks with `rex.ui.pick` and acts on the answer. |
+| `rex_session_manager.lua` | The bridge to the `rex-session-manager` binary: runs it with `rex.exec`, always passing `--sessions-dir <this directory>/sessions` and `--marks-dir <HOME>/.local/state/rex-session-manager`, decodes its JSON, and queues `session.select` after a jump or a mark jump. |
 
 The binary (source in `~/personal/rex-session-manager`, installed with
 `cargo install --path .` into `~/.cargo/bin`) reads, validates, writes, and
 deletes the presets, builds the menus, and lists, creates, reads, and destroys
 sessions through `rex api call`. Lua keeps only what the binary cannot do: the
 `rex.ui.pick` prompt and the client-side `session.select`. Its subcommands are
-`menu projects|active|close|save|delete`, `jump PROJECT`, `kill SESSION_ID`,
-`save [--overwrite NAME] SESSION_ID`, and `delete [--confirmed] NAME`; see
-`rex-session-manager --help`.
+`menu projects|active|close|save|delete|marks|unmark`, `jump PROJECT`, `kill
+SESSION_ID`, `save [--overwrite NAME] SESSION_ID`, `delete [--confirmed] NAME`,
+`mark SESSION_ID`, `unmark NAME`, and `jump-mark --position N` or `jump-mark
+NAME`; see `rex-session-manager --help`.
 
 Actions run with the Rex server's bare environment
 (`PATH=/usr/bin:/bin:/usr/sbin:/sbin`, no `REX_BIN_DIR`). So the bridge calls
@@ -81,7 +83,10 @@ the focused program.
 | `Ctrl+D` | Delete a preset, after a confirmation | User override of Rex's own `Ctrl+D` |
 | `Ctrl+X` | Native Rex session picker | tmux session-manager |
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
-| `q` `w` `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
+| `q` `w` `e` `r` | Jump to mark 1, 2, 3, 4 | User addition |
+| `h` then `a` | Mark the session on screen | User addition |
+| `h` then `m` | Marks menu: jump to a mark, or unmark one | User addition |
+| `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
 | `c` / `Shift+X` | New / close tab | Herdr tab actions |
 | `p` | Previous tab | Herdr `previous_tab` |
 | `1`…`9` | Go to tab 1…9 | Herdr `switch_tab` |
@@ -95,16 +100,16 @@ the focused program.
 | `Shift+/` (`?`) | Command palette | Herdr `help` (closest client action) |
 | `Shift+S` | Settings | Herdr `settings` (moved) |
 
-Only three project keys are bound: `,`, `n`, and `-`. `q` and `w` stay commented
-out in `sessions.lua` because `finaipro` and `sql-finaipro` are no longer presets;
-uncomment a line after restoring its JSON file. The manager's
-`s` menu reaches every preset regardless of keys, while `Ctrl+S` and `Ctrl+K` handle
-running sessions. The Kitty keys they replaced keep their other homes: `w` no
-longer opens the session picker (now `Ctrl+X`), `n` no longer moves to the next
-tab (`p` still goes to the previous tab), and `-` no longer splits down (still
-on `Shift+'`). `r` (reload, now on `Shift+R`, the palette, and `rex config
-reload`) and `e` (Herdr's scrollback editor, which had no client action) are now
-unbound.
+Only three project keys are bound: `,`, `n`, and `-`. `q`, `w`, `e`, and `r`
+are marks keys 1-4, not project jumps, so `finaipro` and `sql-finaipro` (whose
+project keys they once were) are reached from the `s` menu when their JSON files
+come back. The manager's `s` menu reaches every preset regardless of keys, while
+`Ctrl+S` and `Ctrl+K` handle running sessions. The Kitty keys they replaced keep
+their other homes: `w` no longer opens the session picker (now `Ctrl+X`), `n` no
+longer moves to the next tab (`p` still goes to the previous tab), and `-` no
+longer splits down (still on `Shift+'`). `r` (reload, now on `Shift+R`, the
+palette, and `rex config reload`) and `e` (Herdr's scrollback editor, which had
+no client action) are now marks keys.
 
 `x` uses Rex’s native `client.close`: focused pane, otherwise selected tab,
 otherwise the app window if neither exists. `Shift+X` closes the whole tab directly.
@@ -136,8 +141,9 @@ no partial session or window behind.
 | `n` | `nvim` | `nvim`, plain shell | `~/.config/nvim` |
 | `-` | `notes` | `nvim`, `nvim` | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes` and `/Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki` |
 
-`q` (`finaipro`) and `w` (`sql-finaipro`) are commented out in `sessions.lua`
-until those presets come back. The `sessions/` directory holds every preset,
+`q` (`finaipro`) and `w` (`sql-finaipro`) were project keys; those letters are
+marks 1-4 now, so both presets are reached from the `s` menu once their JSON
+files come back. The `sessions/` directory holds every preset,
 including ones no key opens, such as `ansible`: the manager's `s` menu lists all
 of them, and `rex do jump_project project=<name>` works for any of them (or bind
 another key), with the same directory and tab behavior as the bound ones. The
@@ -203,11 +209,12 @@ of asking, which is easy to mistake for a cancel.
 **Presentation**
 
 Rex draws the prompt: title `Select Session`, `Active Sessions 🟢`,
-`Kill Session 💀`, `Save Session 💾`, or `Delete Preset 🗑`; a filter field with
+`Kill Session 💀`, `Save Session 💾`, `Delete Preset 🗑`, `Marks ⚓`, or
+`Unmark ⚓`; a filter field with
 no placeholder; the `code` icon on every row of every menu (`ROW_ICON` in the
 binary's `src/menu.rs`, one value for all of them); and a committing row
-labelled `Open Session`, `Switch Session`, `Close Session`, `Save Preset`, or
-`Delete Preset`. The overwrite and delete confirmations are titled
+labelled `Open Session`, `Switch Session`, `Close Session`, `Save Preset`,
+`Delete Preset`, `Jump`, or `Unmark`. The overwrite and delete confirmations are titled
 `Overwrite NAME?` and `Delete NAME?`, with a `Confirm` row. Selection is
 single: `multiple` and `allow_other` are off.
 
@@ -244,11 +251,41 @@ is destructive on the answer it receives.
 | Client actions | Showing a session in the app is a client action, so Rex.app must accept actions: turn on Remote Control in its Settings, under Rex Server. With it off, the server answers `client.perform` with status 403 and the selection reports `Rex.app is not accepting actions`. |
 | Backend errors | A failed binary call raises `rex-session-manager exited <code>: <its stderr>`, which carries the native Rex error; a failed selection raises the native error. Nothing is retried. |
 
-Messages raised by this action:
+Messages raised by these actions:
 
 - `session_manager needs the invoking client; run it from a Rex shortcut or pass -C`
+- `mark_session needs the invoking client to ask which session to mark; run it from a Rex shortcut or pass -C`
+- `marks_menu needs the invoking client; run it from a Rex shortcut or pass -C`
 - `unknown session manager mode: <mode>`
 - `session_manager could not show the <mode> menu: <reason>` with the detail appended after `—` when Rex supplies one
+
+## Marks
+
+`session_management.lua` also binds a small ordered list of marks: presets one
+chord away instead of a picker. `rex-session-manager` owns the list, the keys it
+shows, and its file: one global `marks.json` in
+`~/.local/state/rex-session-manager`, the path the bridge passes as
+`--marks-dir`, so the list is the same from every session. New marks are
+appended with no maximum; a mark's key comes from its 1-based position, so `q`,
+`w`, `e`, `r` are positions 1-4 and nothing addresses the rest except the menu.
+There is no separate unmark key: marks are removed inside the menu.
+
+| Key | Action | What it does |
+| --- | --- | --- |
+| `h` then `a` | Mark session | Marks the session the key press names, or asks which running session to mark (over the same list `Ctrl+W` shows) when the press names none. The binary saves the session as a preset first when it has none, refusing an unlabelled session exactly as `Ctrl+W` does, then appends the mark. A preset that is already marked keeps its position and records this session instead of being marked twice. Silent on success, because Rex's Lua has no notification API. |
+| `h` then `m` | Marks | The marks menu: the marks in position order, each row showing the key that reaches it, then an `Unmark…` row. Choosing a mark jumps to it; the unmark row opens a second prompt listing the same marks, and the chosen one is removed while the marks after it move up one position. `Esc` at either prompt removes and jumps to nothing, and no marks means no prompt at all. |
+| `q` `w` `e` `r` | Mark 1-4 | Jumps to that position: its recorded session while it runs, else the session labelled with the mark's name, else a new session from its preset, exactly as `Ctrl+A ,` does for a project. The session it lands on is recorded in the mark. |
+
+`Prefix+h` is also pane focus left, from `init.lua`. The mark keys extend that
+sequence instead of taking it over; `h` then `a` and `h` then `m` were the
+user's choice.
+
+A mark whose session is gone and whose preset no longer exists fails with
+`mark NAME has no running session and no preset; unmark it` and selects nothing.
+Closing a session from the close menu (`Ctrl+K`) or deleting its preset (`Ctrl+D`,
+confirmed) removes every mark holding it; closing a session inside Rex itself
+(`Shift+D` or the native picker) leaves the mark in place, and the next jump
+recreates the session from its preset and records the new ID.
 
 ## Resize mode
 
@@ -268,8 +305,8 @@ mode on its own.
 ## No Rex client equivalent
 
 These source actions are not ported: the installed client's action list has
-no matching action. Their original keys may serve a project jump instead;
-for example, `q` opens `finaipro` rather than detaching.
+no matching action. Their original keys serve something else here, or nothing
+at all.
 
 | Source binding | Installed client actions |
 | --- | --- |
@@ -286,13 +323,13 @@ for example, `q` opens `finaipro` rather than detaching.
 
 | Key | tmux | Herdr | Here |
 | --- | --- | --- | --- |
-| `r` | Reload | Resize mode | Unbound; reload is `Shift+R`, resize uses the mode action |
+| `r` | Reload | Resize mode | Mark 4; reload is `Shift+R`, resize uses the mode action |
 | `s` | Session picker | Settings | Project preset picker; `Ctrl+S` switches sessions, `Ctrl+K` closes one, `Ctrl+X` keeps the native picker, and settings moved to `Shift+S` |
 | `Ctrl+K` | Interactive kill picker | — | Close with no confirmation prompt |
 | `Ctrl+D` | — | — | Rex's own `Ctrl+D` is replaced by the preset delete menu |
 | `?` | — | Help | Command palette |
-| `e` | — | Scrollback editor (no client action) | Unbound; Herdr's editor had no client action |
-| `w` | — | Workspace picker | Kitty jump to `sql-finaipro`; session menus stay on `Ctrl+S`, `Ctrl+K`, `Ctrl+X` |
+| `e` | — | Scrollback editor (no client action) | Mark 3; Herdr's editor had no client action |
+| `w` | — | Workspace picker | Mark 2; session menus stay on `Ctrl+S`, `Ctrl+K`, `Ctrl+X` |
 | `n`, `-` | — | Next tab, split down | Kitty jumps to `nvim` and `notes`; split down stays on `Shift+'` |
 
 ## Notes

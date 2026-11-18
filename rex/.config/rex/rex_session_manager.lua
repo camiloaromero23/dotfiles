@@ -11,9 +11,11 @@
 -- * `rex.client.queue("session.select", ...)`, which shows a session in the
 --   invoking app after the action returns.
 --
--- Every binary call passes `--sessions-dir` explicitly, so the presets are the
--- ones beside this config even when the config is copied elsewhere. The binary
--- reads them on every call: a preset change needs no `rex config reload`.
+-- Every binary call passes `--sessions-dir` and `--marks-dir` explicitly, so
+-- the presets are the ones beside this config even when the config is copied
+-- elsewhere, and the marks land in the same state directory every time. The
+-- binary reads both on every call: a preset change needs no
+-- `rex config reload`.
 
 -- An absolute path: actions run with Rex.app's restricted PATH, which does not
 -- include ~/.cargo/bin (`rex do -e` uses the CLI's PATH, so it hides this).
@@ -22,6 +24,10 @@ local NAME = "rex-session-manager"
 -- "did not run" error when an action runs.
 local BINARY = (os.getenv("HOME") or "") .. "/.cargo/bin/" .. NAME
 local SESSIONS_DIRECTORY = "sessions"
+-- The marks live in state, not in the config: `marks.json` in the binary's own
+-- default directory. Actions run without XDG_STATE_HOME, so the path is named
+-- here instead of left to the binary's environment.
+local MARKS_PATH = (os.getenv("HOME") or "") .. "/.local/state/rex-session-manager"
 
 -- Rex prepends the loaded config's directory to package.path, so the first
 -- entry names the directory holding this module.
@@ -41,11 +47,20 @@ local M = {}
 
 M.SESSIONS_PATH = SESSIONS_PATH
 
+M.MARKS_PATH = MARKS_PATH
+
 -- Run the binary with the given arguments and decode its JSON output. A
 -- command that prints nothing (`kill`) returns an empty table. Any failure
 -- raises the binary's own message plus its exit status.
 function M.run(...)
-  local result, exec_error = rex.exec{ BINARY, "--sessions-dir", SESSIONS_PATH, ... }
+  local result, exec_error = rex.exec{
+    BINARY,
+    "--sessions-dir",
+    SESSIONS_PATH,
+    "--marks-dir",
+    MARKS_PATH,
+    ...
+  }
   if type(result) ~= "table" then
     error(NAME .. " did not run: " .. tostring(exec_error or result), 0)
   end
@@ -80,6 +95,20 @@ end
 -- The select is queued, so it runs after the calling action returns.
 function M.jump(project)
   local target = M.run("jump", "--", project)
+  rex.client.queue("session.select", {
+    session_id = target.session_id,
+    window_id = target.window_id,
+  })
+  return target
+end
+
+-- Go to a mark: its recorded session while it runs, else the session labelled
+-- with its name, else a new session from its preset. The extra arguments are
+-- the binary's own selector: `--position N` from the q/w/e/r keys, or `--` and
+-- the name the marks menu returned. The select is queued exactly like
+-- `jump`'s, so it runs after the calling action returns.
+function M.jump_mark(...)
+  local target = M.run("jump-mark", ...)
   rex.client.queue("session.select", {
     session_id = target.session_id,
     window_id = target.window_id,
