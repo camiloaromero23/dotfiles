@@ -7,7 +7,7 @@
 -- editing.
 --
 -- Session management lives in sessions.lua, which loads the project presets
--- from the sessions/ directory beside this file; the fzf manager lives in
+-- from the sessions/ directory beside this file; the session manager lives in
 -- session_management.lua. Both are modules beside this file; this file keeps
 -- the pane and tab shortcuts.
 --
@@ -49,8 +49,9 @@ rex.bind(PREFIX .. ">" .. PREFIX, "pane.send_key", { key = PREFIX })
 -- reload; a reload is only for a change to this file or to the keymap above.
 require("sessions").setup(PREFIX)
 
--- The fzf session manager lives in session_management.lua. It browses the
--- presets from sessions/ and manages running sessions, using the same prefix.
+-- The session manager lives in session_management.lua. It asks with
+-- rex.ui.pick to browse the presets from sessions/ and to manage running
+-- sessions, using the same prefix.
 require("session_management").setup(PREFIX)
 
 -- Tabs. Titles come from Rex's generated naming (Workspace.prefersGeneratedTitles

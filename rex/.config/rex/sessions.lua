@@ -3,7 +3,7 @@
 -- `init.lua` keeps the prefix and calls `require("sessions").setup(PREFIX)`, so
 -- both files use one prefix value. This module loads the project presets from
 -- the `sessions/` directory beside it, keeps the `jump_project` action, and
--- exposes the read-only `list_projects` action the fzf manager browses.
+-- exposes the read-only `list_projects` action the session manager browses.
 -- `session_management.lua` owns the manager keys and menus. The presets are
 -- read from disk on every `list_projects` and `jump_project` call, so creating,
 -- editing, or deleting a preset file takes effect the next time a menu opens or
@@ -173,7 +173,7 @@ local function sessions_directory()
 end
 
 -- Read every `*.json` file in the sessions directory, in file-name order so the
--- fzf menu is deterministic. The extension match ignores case, so a file named
+-- picker menu is deterministic. The extension match ignores case, so a file named
 -- `FINAIPRO.JSON` still loads instead of disappearing; other entries (README,
 -- .DS_Store) and hidden files (`ls -1` omits them) are ignored.
 --
@@ -261,15 +261,15 @@ local M = {}
 -- project keys. Call once, with the prefix declared by init.lua.
 function M.setup(PREFIX)
   -- Sessions (Herdr workspaces). Prefix+Ctrl+X keeps tmux's session-manager
-  -- role by opening Rex's native picker. The fzf menus live in
+  -- role by opening Rex's native picker. The session menus live in
   -- session_management.lua. shift+n/w/d stay here.
   rex.bind(PREFIX .. ">ctrl+x", "session.switch")
   rex.bind(PREFIX .. ">shift+n", "session.new")
   rex.bind(PREFIX .. ">shift+w", "session.rename")
   rex.bind(PREFIX .. ">shift+d", "session.close")
 
-  -- The fzf manager browses every loaded preset, including the four without a
-  -- direct key. Only names leave this module; the tabs stay private.
+  -- The session manager browses every loaded preset, including the ones without
+  -- a direct key. Only names leave this module; the tabs stay private.
   rex.action{
     name = "list_projects",
     title = "List Projects",
@@ -277,7 +277,7 @@ function M.setup(PREFIX)
       .. SESSIONS_PATH
       .. ", sorted. Reads the directory on every call, so no reload is needed.",
     category = "Sessions",
-    keywords = "fzf manager presets",
+    keywords = "manager presets projects",
     run = function()
       local projects = load_projects()
       local names = {}

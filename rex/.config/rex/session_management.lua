@@ -2,33 +2,38 @@
 --
 -- `sessions.lua` owns the project presets (loaded from the JSON files in
 -- `sessions/`) and the `jump_project` action. This module only browses them and
--- manages running sessions. Each menu opens a
--- temporary floating terminal that runs `session_picker.lua` with Rex's Lua
--- runtime and fzf. Native calls use the inherited REX_SERVER and the pinned
--- invoking client. Escape cancels without creating, selecting,
--- or closing anything; closing destroys the chosen session at once.
+-- manages running sessions, asking in the command palette through the native
+-- `rex.ui.pick` prompt. Escape cancels without creating, selecting, or closing
+-- anything; closing destroys the chosen session at once.
+--
+-- `rex.ui.pick` only asks from inside an action's `run` function and the
+-- functions it calls directly. A key-bound closure, a `pcall`/`xpcall` wrapper,
+-- a handler registered with `rex.on`, or a function reached through
+-- `rex.invoke` gets `nil, "failed"` instead of a prompt. Every path below stays
+-- on this call stack for that reason; do not wrap the `ask` call in `pcall`,
+-- and keep the keys bound to this action's name.
 --
 -- `init.lua` keeps the prefix and calls `require("session_management").setup(PREFIX)`.
 
-local SHELL_FLAVOR = "com.superlogical.terminal.shell"
-local HELPER = "session_picker.lua"
-
--- A floating layer in the moments after the key press. The helper closes the
--- layer itself by exiting with status 0 through the terminal's exit option.
--- Rex owns the popup lifecycle and may close a quick failure before a later
--- error is read; on a real terminal the helper waits for Enter on a nonzero
--- exit so the message stays readable. Native fast-exit timing is unchanged.
--- The bounds are the documented [x, y, w, h] rectangle: a centered 70% x 60%
--- panel. Rex gives a floating layer's terminal one column and two rows less
--- than that rectangle, so the pane lands within a cell of the window's center
--- at any window, font, or padding size. session_picker.lua fills that whole
--- terminal; no margins reserve or hide any part of it.
-local BOUNDS = { 0.15, 0.20, 0.70, 0.60 }
+-- Every row of every menu uses this icon. The app styles each name itself, so
+-- change this one value to restyle all three menus at once.
+local ROW_ICON = "code"
 
 local MODES = {
-  projects = true,
-  active = true,
-  close = true,
+  projects = {
+    title = "Select Session",
+    confirm = "Open Session",
+  },
+  active = {
+    title = "Active Sessions 🟢",
+    confirm = "Switch Session",
+  },
+  close = {
+    title = "Kill Session 💀",
+    -- The choice itself is the whole decision, so the row that commits it says
+    -- what it does.
+    confirm = "Close Session",
+  },
 }
 
 local ARGS = {
@@ -43,80 +48,133 @@ local ARGS = {
   additionalProperties = false,
 }
 
--- The loaded init.lua path from client.keymap. The helper sits beside it, so a
--- copied config or a path with spaces needs no extra setup.
-local function config_directory(path)
-  local directory = path:match("^(.*)/[^/]*$")
-  if directory == nil or directory == "" then
-    return nil
-  end
-  return directory
+local function fail(message)
+  error(message, 0)
 end
 
-local function require_helper(directory)
-  local helper = directory .. "/" .. HELPER
-  local file = io.open(helper, "r")
-  if file == nil then
-    error("session manager helper is missing or unreadable: " .. helper, 0)
+local function checked(result, err)
+  if result == nil then
+    fail(tostring(err))
   end
-  file:close()
-  return helper
+  return result
+end
+
+-- Match the old display sanitization without damaging UTF-8 continuation bytes:
+-- a raw control character in a label would corrupt the palette row.
+local function safe_label(value)
+  return tostring(value or ""):gsub("[%z\1-\31\127]", "?"):gsub("\194[\128-\159]", "?")
+end
+
+local function project_items(listed)
+  local items = {}
+  for _, project in ipairs(listed.projects or {}) do
+    if type(project) == "string" and project ~= "" then
+      items[#items + 1] = { id = project, title = project, icon = ROW_ICON }
+    end
+  end
+  return items
+end
+
+local function session_items(sessions)
+  local counts = {}
+  for _, session in ipairs(sessions) do
+    local label = safe_label(session and session.label)
+    counts[label] = (counts[label] or 0) + 1
+  end
+
+  local items = {}
+  for _, session in ipairs(sessions) do
+    local id = tostring(session and session.session_id or "")
+    if id ~= "" then
+      local label = safe_label(session.label)
+      local item = {
+        id = id,
+        title = label == "" and "(unlabelled)" or label,
+        icon = ROW_ICON,
+      }
+      -- Labels are neither unique nor stable, and the prompt requires unique
+      -- ids. The id in the subtitle keeps a repeated label readable without
+      -- rewriting the title.
+      if counts[label] > 1 then
+        item.subtitle = id
+      end
+      items[#items + 1] = item
+    end
+  end
+  return items
+end
+
+-- The only call that asks the person. It must run on the action's own stack:
+-- see the note at the top of this file before moving it behind an `invoke` or
+-- a `pcall`.
+local function ask(mode, items)
+  local menu = MODES[mode]
+  local id, why, detail = rex.ui.pick{
+    title = menu.title,
+    confirm = menu.confirm,
+    items = items,
+  }
+  if id ~= nil then
+    return id
+  end
+  if why == "cancelled" then
+    return nil
+  end
+  fail(
+    "session_manager could not show the " .. mode .. " menu: "
+      .. tostring(why or "unknown")
+      .. (detail and (" — " .. detail) or "")
+  )
 end
 
 local function session_manager(ctx, args)
   local mode = args.mode
   if not MODES[mode] then
-    error("unknown session manager mode: " .. tostring(mode), 0)
+    fail("unknown session manager mode: " .. tostring(mode))
   end
 
-  -- A local script action has no client, and guessing one could act on another
-  -- app or server. Refuse before opening a picker.
+  -- The prompt is delivered through this client, and both jump_project and
+  -- session.select act on it. Guessing a client could act on another app.
   if ctx.client_id == nil or ctx.client_id == "" then
-    error(
-      "session_manager needs the invoking client; run it from a Rex shortcut or pass -C",
-      0
-    )
-  end
-  if ctx.session_id == nil or ctx.session_id == "" then
-    error("session_manager needs the invoking session", 0)
+    fail("session_manager needs the invoking client; run it from a Rex shortcut or pass -C")
   end
 
-  local keymap, keymap_error = rex.call("client.keymap", {})
-  if keymap == nil then
-    error("client.keymap failed: " .. tostring(keymap_error), 0)
-  end
-  local config = keymap.config
-  if type(config) ~= "table" or type(config.path) ~= "string" or config.path == "" then
-    error("client.keymap returned no configuration path", 0)
-  end
-  local directory = config_directory(config.path)
-  if directory == nil then
-    error("client.keymap returned an unusable configuration path: " .. config.path, 0)
-  end
-  local helper = require_helper(directory)
-
-  local layer, layer_error = rex.session.new_layer({
-    session_id = ctx.session_id,
-    bounds = BOUNDS,
-    focus = true,
-    layout = rex.layout.block{
-      flavor = SHELL_FLAVOR,
-      options = {
-        shell = "none",
-        command = {
-          "/usr/bin/env", "REX_CLIENT=" .. ctx.client_id,
-          "rex", "--autostart=false", "do", helper,
-          "mode=" .. mode, "interactive=true",
-        },
-        exit = { on_completion = true },
-      },
-    },
-  })
-  if layer == nil then
-    error("session.new_layer failed: " .. tostring(layer_error), 0)
+  if mode == "projects" then
+    local items = project_items(checked(rex.invoke("list_projects")))
+    if #items == 0 then
+      return {}
+    end
+    local project = ask(mode, items)
+    if project == nil then
+      return {}
+    end
+    checked(rex.invoke("jump_project", { project = project }))
+    return {}
   end
 
-  return { layer_id = layer.layer_id, block_ids = layer.block_ids }
+  local items = session_items(checked(rex.call("session.list", {})).sessions or {})
+  if #items == 0 then
+    return {}
+  end
+  local session_id = ask(mode, items)
+  if session_id == nil then
+    return {}
+  end
+
+  if mode == "active" then
+    local ok, err = pcall(rex.client.queue, "session.select", { session_id = session_id })
+    if not ok then
+      fail(tostring(err))
+    end
+    return {}
+  end
+
+  -- Choosing the row is the whole decision: this mode asks for no confirmation.
+  -- Attach authorizes this connection for the same exact ID; it does not select
+  -- a session in the app. Never substitute an ID.
+  checked(rex.call("session.attach", { session_id = session_id }))
+  checked(rex.call("session.destroy", { session_id = session_id }))
+  return {}
 end
 
 local M = {}
@@ -127,9 +185,9 @@ function M.setup(PREFIX)
   rex.action{
     name = "session_manager",
     title = "Session Manager",
-    description = "Browse projects, switch running sessions by ID, or close one at once.",
+    description = "Browse project presets, switch running sessions by ID, or close one at once.",
     category = "Sessions",
-    keywords = "fzf projects active close",
+    keywords = "projects presets active close picker",
     args = ARGS,
     run = session_manager,
   }
