@@ -44,9 +44,9 @@ rex.bind(PREFIX .. ">" .. PREFIX, "pane.send_key", { key = PREFIX })
 
 -- Sessions (Herdr workspaces) and the project jumps live in sessions.lua, the
 -- module beside this file. It receives the prefix declared above, so both files
--- share one prefix value. It reads the project presets from sessions/*.json on
--- every action, so adding, editing, or deleting one needs no Lua edit and no
--- reload; a reload is only for a change to this file or to the keymap above.
+-- share one prefix value. The rex-session-manager binary reads the project
+-- presets from sessions/*.json on every action, so adding, editing, or deleting
+-- one needs no Lua edit and no reload; a reload is only for a Lua change.
 require("sessions").setup(PREFIX)
 
 -- The session manager lives in session_management.lua. It asks with

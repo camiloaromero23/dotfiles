@@ -1,9 +1,11 @@
 # Rex keymap from Herdr, tmux, and Kitty
 
 `~/.config/rex/init.lua` carries the keymap from `~/.config/herdr/config.toml`
-and `~/.config/tmux/tmux.conf`, and it loads `~/.config/rex/sessions.lua`, which
-reads the project presets from `~/.config/rex/sessions/*.json`, and
-`~/.config/rex/session_management.lua` for the session manager. Ctrl+A is the prefix, with tmux-first defaults, overridden by
+and `~/.config/tmux/tmux.conf`, and it loads `~/.config/rex/sessions.lua` for
+the project jumps and `~/.config/rex/session_management.lua` for the session
+manager. The project presets are `~/.config/rex/sessions/*.json`. Both hand the
+session work to the `rex-session-manager` binary through
+`~/.config/rex/rex_session_manager.lua`. Ctrl+A is the prefix, with tmux-first defaults, overridden by
 Kitty's named-project keys, the session manager, and the pane-first close shortcut.
 This config contains only keymaps and session management: no tmux-navigator
 integration, process detection, or bare Ctrl+H/J/K/L bindings. Unsupported
@@ -14,9 +16,25 @@ mappings are listed below.
 | File | Holds |
 | --- | --- |
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
-| `sessions.lua` | Reads and validates the project presets from `sessions/` on every `list_projects` and `jump_project` call, and holds the native session picker (`Ctrl+X`), the new/rename/close keys, the two project actions, and the project keys. |
+| `sessions.lua` | The native session picker (`Ctrl+X`), the new/rename/close keys, the `jump_project` action, and the project keys. |
 | `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
 | `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` bindings. It asks with `rex.ui.pick` and acts on the answer. |
+| `rex_session_manager.lua` | The bridge to the `rex-session-manager` binary: runs it with `rex.exec`, always passing `--sessions-dir <this directory>/sessions`, decodes its JSON, and queues `session.select` after a jump. |
+
+The binary (source in `~/personal/rex-session-manager`, installed with
+`cargo install --path .` into `~/.cargo/bin`) reads and validates the presets, builds the three menus, and lists,
+creates, and destroys sessions through `rex api call`. Lua keeps only what the
+binary cannot do: the `rex.ui.pick` prompt and the client-side
+`session.select`. Its subcommands are `menu projects|active|close`,
+`jump PROJECT`, and `kill SESSION_ID`; see `rex-session-manager --help`.
+
+Actions run with the Rex server's bare environment
+(`PATH=/usr/bin:/bin:/usr/sbin:/sbin`, no `REX_BIN_DIR`). So the bridge calls
+the binary by absolute path, `$HOME/.cargo/bin/rex-session-manager`, and the
+binary finds `rex` through `$REX_BIN`, `$REX_BIN_DIR`, `PATH`, and then the
+Rex server's macOS install location. `rex do -e` runs with the CLI's own
+environment, so it cannot reproduce this; check with a real action such as
+`rex do jump_project project=<running project>`.
 
 `init.lua` passes the prefix to both modules, so `PREFIX` stays declared in
 one place. Project directories and tabs are defined only in `sessions/`, and the
@@ -29,19 +47,21 @@ never used silently: opening the menu or running a jump fails with an error
 naming the file. Unparseable JSON, a
 missing or empty `name`, an unknown key such as `command` instead of `run`, a
 duplicate `name`, an empty `tabs` array, or a missing `cwd` all fail that way,
-while the rest of the config still loads. Rex resolves both modules beside
-`init.lua`, and the action finds the helper in that same
-directory, so no other path setup is needed. Helper edits apply on the next
-menu launch and need no reload. After adding the new helper, restow the Rex
-package if your deployment uses individual file links rather than a directory link.
+while the rest of the config still loads. Rex resolves the modules beside
+`init.lua`, so no other path setup is needed. A rebuilt binary applies on the
+next menu or jump and needs no reload. After adding a new Lua module, restow
+the Rex package if your deployment uses individual file links rather than a
+directory link.
 
 ## Quick path
 
-1. `stow --target=$HOME rex` to place `init.lua`, `sessions.lua`,
-   `session_management.lua`, and the `sessions/` directory at `~/.config/rex/`.
-2. `rex config reload` (or the command palette) to make the running server read the Lua files.
-3. `rex config check ~/.config/rex/init.lua` to confirm the Lua files load clean,
-   and `rex do list_projects` to list the presets currently on disk.
+1. `cargo install --path ~/personal/rex-session-manager` to install the binary.
+2. `stow --target=$HOME rex` to place `init.lua`, `sessions.lua`,
+   `session_management.lua`, `rex_session_manager.lua`, and the `sessions/`
+   directory at `~/.config/rex/`.
+3. `rex config reload` (or the command palette) to make the running server read the Lua files.
+4. `rex config check ~/.config/rex/init.lua` to confirm the Lua files load clean,
+   and `rex-session-manager menu projects` to list the presets currently on disk.
 
 ## Prefix keys (Ctrl+A)
 
@@ -86,7 +106,7 @@ unbound.
 otherwise the app window if neither exists. `Shift+X` closes the whole tab directly.
 
 This config never names a tab. `Shift+T` (`client.tab.rename`) is not bound, and
-`sessions.lua` creates no window with a `window_label`. Rex titles each tab from
+`rex-session-manager` creates no window with a `window_label`. Rex titles each tab from
 the program running in it, following `Workspace.prefersGeneratedTitles` in
 `preferences.plist`. Renaming is still reachable from the app's own UI, but no
 keymap or preset here sets a title.
@@ -117,8 +137,8 @@ until those presets come back. The `sessions/` directory holds every preset,
 including ones no key opens, such as `ansible`: the manager's `s` menu lists all
 of them, and `rex do jump_project project=<name>` works for any of them (or bind
 another key), with the same directory and tab behavior as the bound ones. The
-presets are the JSON files in `sessions/`; both project actions are in
-`sessions.lua`.
+presets are the JSON files in `sessions/`; `jump_project` is in `sessions.lua`
+and the jump itself is `rex-session-manager jump`.
 
 Every project tab uses `/opt/homebrew/bin/fish --login --interactive`,
 including plain shell tabs. No tab carries a title: Rex names each one from its
@@ -142,21 +162,23 @@ session is switched to and keeps its running tabs.
 | Match | Case-sensitive, exact session label. Rex does not enforce unique labels, so if two sessions share one, the jump fails with an error instead of choosing one. Rename or close the extra session first. Two presses before the first create lands can produce such a pair. |
 | Kitty dependency | None at runtime. The tabs live in `sessions/*.json`; Kitty's session files are never read. |
 | Failures | An unknown project, a failed session list, or a failed create reports an error and selects nothing. |
-| Activation | Reload the config (palette or `rex config reload`) after editing `init.lua` or `sessions.lua`; a newly started client picks them up on its own. A preset in `sessions/` needs no reload. |
+| Activation | Reload the config (palette or `rex config reload`) after editing a Lua file; a newly started client picks them up on its own. A preset in `sessions/` or a reinstalled binary needs no reload. |
 | Missing key | Kitty's `ctrl+a>p` went to the previous session; `p` stays the previous tab here. |
 
 ## Session manager (`rex.ui.pick`)
 
 `session_management.lua` registers one `session_manager` action that asks in the
-command palette with the native `rex.ui.pick` prompt. Rex draws the list in the
-invoking app: there is no popup terminal, no helper script, no `client.keymap`
-round trip, and no external picker. It needs a Rex build that ships prompts.
+command palette with the native `rex.ui.pick` prompt. `rex-session-manager menu
+<mode>` builds the prompt's `{title, confirm, items}` and the action passes it
+through unchanged. Rex draws the list in the invoking app: there is no popup
+terminal, no `client.keymap` round trip, and no external picker. It needs a Rex
+build that ships prompts.
 
 | Key | Menu | What it does |
 | --- | --- | --- |
-| `s` | Projects | Lists every project preset name, sorted. Choosing one runs `jump_project`, which reuses the session with that exact label or creates it from the template and focuses its first tab. |
+| `s` | Projects | Lists every project preset name, sorted. Choosing one runs `rex-session-manager jump`, which reuses the session with that exact label or creates it from the template and focuses its first tab. |
 | `Ctrl+S` | Active sessions | Lists running sessions. Choosing a row selects that ID in the invoking client. |
-| `Ctrl+K` | Close session | Lists running sessions and closes the chosen row at once. The committing row is labelled `Close session`; there is no second confirmation. It attaches this connection to the selected ID and calls `session.destroy` for that same ID. |
+| `Ctrl+K` | Close session | Lists running sessions and closes the chosen row at once. The committing row is labelled `Close Session`; there is no second confirmation. `rex-session-manager kill` calls `session.destroy` through `rex api call`, which attaches to that same ID first. |
 | `Ctrl+X` | Native picker | Unchanged Rex session picker. |
 
 **Why the code is shaped this way**
@@ -169,14 +191,15 @@ of asking, which is easy to mistake for a cancel.
 | --- | --- |
 | Only on the action's own call stack | The keys bind the action's name. A `rex.bind(key, function() … end)` closure could never show the menu. |
 | Not through `pcall`/`xpcall` | `ask` is never wrapped; a prompt failure propagates instead of turning into a silent `failed`. |
-| Not through `rex.invoke` | `jump_project` runs after the answer is known, so it never needs to ask. |
+| Not through `rex.invoke` | The binary runs after the answer is known, so it never needs to ask. |
 | Not from `rex.on` handlers, the config top level, or library callbacks | Nothing here asks from those places. |
 
 **Presentation**
 
 Rex draws the prompt: title `Select Session`, `Active Sessions 🟢`, or
 `Kill Session 💀`; a filter field with no placeholder; the `code` icon on
-every row of every menu (`ROW_ICON`, one value for all three); and a committing
+every row of every menu (`ROW_ICON` in the binary's `src/menu.rs`, one value
+for all three); and a committing
 row labelled `Open Session`, `Switch Session`, or `Close Session`. Selection is
 single: `multiple` and `allow_other` are off.
 
@@ -197,7 +220,7 @@ is destructive on the answer it receives.
 
 **Selection safety**
 
-- Rows are data, never code. Project names and session IDs are passed to native Rex calls and are never evaluated or interpolated into a shell command.
+- Rows are data, never code. Project names and session IDs are passed as separate process arguments (after `--`) and JSON fields, and are never evaluated or interpolated into a shell command.
 - Each row's `id` is the exact thing acted on: the preset name for projects, the full native session ID for sessions. A label cannot substitute for an ID.
 - Control characters in a label are replaced with `?` for display. A repeated label keeps its bare title and gains the full session ID as a subtitle, so duplicates stay separately selectable.
 - If a selected session disappears, selection or attachment/destruction fails for that ID; nothing falls back to another session.
@@ -207,11 +230,11 @@ is destructive on the answer it receives.
 
 | Topic | Decision |
 | --- | --- |
-| Helper | None. The action, the menus, and the failure handling all live in `session_management.lua`. |
-| Executables | None beyond Rex itself. No fzf, no `jq`, no Bash helper, no standalone Lua installation, no `REX_CLIENT`/`REX_SERVER` plumbing. |
+| Helper | `rex-session-manager` builds the menus and performs jumps and closes; `session_management.lua` asks and dispatches. |
+| Executables | Rex and `rex-session-manager`. No fzf, no `jq`, no Bash helper, no standalone Lua installation, no `REX_CLIENT`/`REX_SERVER` plumbing. |
 | Client | The invoking client is required; the prompt and `rex.client.queue` both go through it, so the action refuses instead of guessing one. |
 | Client actions | Showing a session in the app is a client action, so Rex.app must accept actions: turn on Remote Control in its Settings, under Rex Server. With it off, the server answers `client.perform` with status 403 and the selection reports `Rex.app is not accepting actions`. |
-| Backend errors | A failed project action, session listing, selection, attachment or destruction raises the native error. Nothing is retried. |
+| Backend errors | A failed binary call raises `rex-session-manager exited <code>: <its stderr>`, which carries the native Rex error; a failed selection raises the native error. Nothing is retried. |
 
 Messages raised by this action:
 
@@ -276,10 +299,12 @@ for example, `q` opens `finaipro` rather than detaching.
 
 ```bash
 rex config check rex/.config/rex/init.lua --json   # bindings, modes, actions, diagnostics
+rex-session-manager menu projects                   # presets the binary sees
+(cd ~/personal/rex-session-manager && cargo test)  # preset, menu, and jump logic
 ```
 
-The automated regression tests were removed by request. This check validates
-configuration loading only; it does not provide behavioral coverage.
+The Lua tests were removed by request; the binary's unit and CLI tests
+(`cargo test`) cover the session logic. The config check validates loading only.
 
 For a visual check, close the picker, reload with `Ctrl+A` then `Shift+R`, and
 reopen it. Check cancellation against disposable sessions; only test confirmed
