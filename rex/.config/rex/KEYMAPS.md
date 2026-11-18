@@ -85,7 +85,7 @@ the focused program.
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
 | `q` `w` `e` `r` | Jump to mark 1, 2, 3, 4 | User addition |
 | `Ctrl+H` then `a` | Mark the session on screen | User addition |
-| `Ctrl+H` then `m` | Marks menu: jump to a mark, move one, or unmark one | User addition |
+| `Ctrl+H` then `m` or `Ctrl+M` | Marks menu: jump to a mark, move one, or unmark one | User addition |
 | `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
 | `c` / `Shift+X` | New / close tab | Herdr tab actions |
 | `p` | Previous tab | Herdr `previous_tab` |
@@ -273,7 +273,7 @@ There is no separate unmark key: marks are removed inside the menu.
 | Key | Action | What it does |
 | --- | --- | --- |
 | `Ctrl+H` then `a` | Mark session | Marks the session the key press names, or asks which running session to mark (over the same list `Ctrl+W` shows) when the press names none. The binary saves the session as a preset first when it has none, refusing an unlabelled session exactly as `Ctrl+W` does, then appends the mark. A preset that is already marked keeps its position and records this session instead of being marked twice. Silent on success, because Rex's Lua has no notification API. |
-| `Ctrl+H` then `m` | Marks | The marks menu: the marks in position order, each row showing the key that reaches it, then a `Move…` row (with two or more marks) and an `Unmark…` row. Choosing a mark jumps to it. `Move…` asks which mark, then its new position (each row shows the position, its key, and the mark there now); the marks in between shift by one. `Unmark…` opens a prompt listing the same marks, and the chosen one is removed while the marks after it move up one position. `Esc` at any prompt moves, removes, and jumps to nothing, and no marks means no prompt at all. |
+| `Ctrl+H` then `m` or `Ctrl+M` | Marks | The marks menu (both keys open it): the marks in position order, each row showing the key that reaches it, then a `Move…` row (with two or more marks) and an `Unmark…` row. Choosing a mark jumps to it. `Move…` asks which mark, then its new position (each row shows the position, its key, and the mark there now); the marks in between shift by one. `Unmark…` opens a prompt listing the same marks, and the chosen one is removed while the marks after it move up one position. `Esc` at any prompt moves, removes, and jumps to nothing, and no marks means no prompt at all. |
 | `q` `w` `e` `r` | Mark 1-4 | Jumps to that position: its recorded session while it runs, else the session labelled with the mark's name, else a new session from its preset, exactly as `Ctrl+A ,` does for a project. The session it lands on is recorded in the mark. |
 
 The mark keys start with `Ctrl+H`, the user's choice, so they never share a

@@ -273,6 +273,8 @@ function M.setup(PREFIX)
   -- else, so plain Prefix+h keeps focusing the left pane without waiting.
   rex.bind(PREFIX .. ">ctrl+h>a", "mark_session")
   rex.bind(PREFIX .. ">ctrl+h>m", "marks_menu")
+  -- Ctrl+M too, so the menu opens without letting go of Ctrl.
+  rex.bind(PREFIX .. ">ctrl+h>ctrl+m", "marks_menu")
 
   -- q, w, e, r are marks 1-4, not project presets. The position travels as a
   -- string, like every other action argument.
