@@ -19,7 +19,7 @@ mappings are listed below.
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
 | `sessions.lua` | The native session picker (`Ctrl+X`), the new/rename/close keys, the `jump_project` action, and the project keys. |
 | `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
-| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` / `Ctrl+W` / `Ctrl+D` bindings, plus the mark actions and the `h` `a` / `h` `m` / `q` `w` `e` `r` bindings. It asks with `rex.ui.pick` and acts on the answer. |
+| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` / `Ctrl+W` / `Ctrl+D` bindings, plus the mark actions and the `Ctrl+H` `a` / `Ctrl+H` `m` / `q` `w` `e` `r` bindings. It asks with `rex.ui.pick` and acts on the answer. |
 | `rex_session_manager.lua` | The bridge to the `rex-session-manager` binary: runs it with `rex.exec`, always passing `--sessions-dir <this directory>/sessions` and `--marks-dir <HOME>/.local/state/rex-session-manager`, decodes its JSON, and queues `session.select` after a jump or a mark jump. |
 
 The binary (source in `~/personal/rex-session-manager`, installed with
@@ -84,8 +84,8 @@ the focused program.
 | `Ctrl+X` | Native Rex session picker | tmux session-manager |
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
 | `q` `w` `e` `r` | Jump to mark 1, 2, 3, 4 | User addition |
-| `h` then `a` | Mark the session on screen | User addition |
-| `h` then `m` | Marks menu: jump to a mark, or unmark one | User addition |
+| `Ctrl+H` then `a` | Mark the session on screen | User addition |
+| `Ctrl+H` then `m` | Marks menu: jump to a mark, or unmark one | User addition |
 | `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
 | `c` / `Shift+X` | New / close tab | Herdr tab actions |
 | `p` | Previous tab | Herdr `previous_tab` |
@@ -272,13 +272,13 @@ There is no separate unmark key: marks are removed inside the menu.
 
 | Key | Action | What it does |
 | --- | --- | --- |
-| `h` then `a` | Mark session | Marks the session the key press names, or asks which running session to mark (over the same list `Ctrl+W` shows) when the press names none. The binary saves the session as a preset first when it has none, refusing an unlabelled session exactly as `Ctrl+W` does, then appends the mark. A preset that is already marked keeps its position and records this session instead of being marked twice. Silent on success, because Rex's Lua has no notification API. |
-| `h` then `m` | Marks | The marks menu: the marks in position order, each row showing the key that reaches it, then an `Unmark…` row. Choosing a mark jumps to it; the unmark row opens a second prompt listing the same marks, and the chosen one is removed while the marks after it move up one position. `Esc` at either prompt removes and jumps to nothing, and no marks means no prompt at all. |
+| `Ctrl+H` then `a` | Mark session | Marks the session the key press names, or asks which running session to mark (over the same list `Ctrl+W` shows) when the press names none. The binary saves the session as a preset first when it has none, refusing an unlabelled session exactly as `Ctrl+W` does, then appends the mark. A preset that is already marked keeps its position and records this session instead of being marked twice. Silent on success, because Rex's Lua has no notification API. |
+| `Ctrl+H` then `m` | Marks | The marks menu: the marks in position order, each row showing the key that reaches it, then an `Unmark…` row. Choosing a mark jumps to it; the unmark row opens a second prompt listing the same marks, and the chosen one is removed while the marks after it move up one position. `Esc` at either prompt removes and jumps to nothing, and no marks means no prompt at all. |
 | `q` `w` `e` `r` | Mark 1-4 | Jumps to that position: its recorded session while it runs, else the session labelled with the mark's name, else a new session from its preset, exactly as `Ctrl+A ,` does for a project. The session it lands on is recorded in the mark. |
 
-`Prefix+h` is also pane focus left, from `init.lua`. The mark keys extend that
-sequence instead of taking it over; `h` then `a` and `h` then `m` were the
-user's choice.
+The mark keys start with `Ctrl+H`, the user's choice, so they never share a
+sequence with `Prefix+h` (pane focus left, from `init.lua`). Only the prefixed
+`Ctrl+H` is bound; bare `Ctrl+H` stays the client's own.
 
 A mark whose session is gone and whose preset no longer exists fails with
 `mark NAME has no running session and no preset; unmark it` and selects nothing.

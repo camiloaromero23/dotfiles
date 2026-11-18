@@ -117,7 +117,7 @@ local function session_manager(ctx, args)
   return {}
 end
 
--- Prefix+h then a: mark the session this key press names. When the press names
+-- Prefix+Ctrl+H then a: mark the session this key press names. When the press names
 -- none, ask which running session to mark first, over the same live list the
 -- save menu shows. Marking is silent, because Rex's Lua has no notification
 -- API; a failure raises the binary's own message instead. The binary writes the
@@ -144,7 +144,7 @@ local function mark_session(ctx)
   return {}
 end
 
--- Prefix+h then m: the marks menu. Choosing a mark jumps to it, and the
+-- Prefix+Ctrl+H then m: the marks menu. Choosing a mark jumps to it, and the
 -- binary's last row opens a second prompt that removes the chosen mark; that
 -- row's id is the binary's `unmark_id`, which never equals a mark's name. There
 -- is no separate unmark key, so this menu is the only way to remove a mark.
@@ -247,10 +247,10 @@ function M.setup(PREFIX)
     run = jump_mark,
   }
 
-  -- Prefix+h also focuses the left pane (init.lua), so these mark keys extend
-  -- that sequence instead of taking it over; the user chose h then a / h then m.
-  rex.bind(PREFIX .. ">h>a", "mark_session")
-  rex.bind(PREFIX .. ">h>m", "marks_menu")
+  -- Ctrl+H then a / m, chosen by the user. Prefix+Ctrl+H is bound to nothing
+  -- else, so plain Prefix+h keeps focusing the left pane without waiting.
+  rex.bind(PREFIX .. ">ctrl+h>a", "mark_session")
+  rex.bind(PREFIX .. ">ctrl+h>m", "marks_menu")
 
   -- q, w, e, r are marks 1-4, not project presets. The position travels as a
   -- string, like every other action argument.
