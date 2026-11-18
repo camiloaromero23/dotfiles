@@ -18,15 +18,17 @@ mappings are listed below.
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
 | `sessions.lua` | The native session picker (`Ctrl+X`), the new/rename/close keys, the `jump_project` action, and the project keys. |
 | `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
-| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` bindings. It asks with `rex.ui.pick` and acts on the answer. |
+| `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` / `Ctrl+W` / `Ctrl+D` bindings. It asks with `rex.ui.pick` and acts on the answer. |
 | `rex_session_manager.lua` | The bridge to the `rex-session-manager` binary: runs it with `rex.exec`, always passing `--sessions-dir <this directory>/sessions`, decodes its JSON, and queues `session.select` after a jump. |
 
 The binary (source in `~/personal/rex-session-manager`, installed with
-`cargo install --path .` into `~/.cargo/bin`) reads and validates the presets, builds the three menus, and lists,
-creates, and destroys sessions through `rex api call`. Lua keeps only what the
-binary cannot do: the `rex.ui.pick` prompt and the client-side
-`session.select`. Its subcommands are `menu projects|active|close`,
-`jump PROJECT`, and `kill SESSION_ID`; see `rex-session-manager --help`.
+`cargo install --path .` into `~/.cargo/bin`) reads, validates, writes, and
+deletes the presets, builds the menus, and lists, creates, reads, and destroys
+sessions through `rex api call`. Lua keeps only what the binary cannot do: the
+`rex.ui.pick` prompt and the client-side `session.select`. Its subcommands are
+`menu projects|active|close|save|delete`, `jump PROJECT`, `kill SESSION_ID`,
+`save [--overwrite NAME] SESSION_ID`, and `delete [--confirmed] NAME`; see
+`rex-session-manager --help`.
 
 Actions run with the Rex server's bare environment
 (`PATH=/usr/bin:/bin:/usr/sbin:/sbin`, no `REX_BIN_DIR`). So the bridge calls
@@ -75,6 +77,8 @@ the focused program.
 | `s` | Project preset picker | Kitty project menu, tmux session picker |
 | `Ctrl+S` | Running-session switcher by ID | tmux session-manager |
 | `Ctrl+K` | Close a session, no confirmation | tmux session-manager `-k` |
+| `Ctrl+W` | Save a running session as a preset | User addition |
+| `Ctrl+D` | Delete a preset, after a confirmation | User override of Rex's own `Ctrl+D` |
 | `Ctrl+X` | Native Rex session picker | tmux session-manager |
 | `Shift+N` / `Shift+W` / `Shift+D` | New / rename / close session | Herdr workspace actions |
 | `q` `w` `,` `n` `-` | Jump to a named project | Kitty `keymaps.conf` |
@@ -179,6 +183,8 @@ build that ships prompts.
 | `s` | Projects | Lists every project preset name, sorted. Choosing one runs `rex-session-manager jump`, which reuses the session with that exact label or creates it from the template and focuses its first tab. |
 | `Ctrl+S` | Active sessions | Lists running sessions. Choosing a row selects that ID in the invoking client. |
 | `Ctrl+K` | Close session | Lists running sessions and closes the chosen row at once. The committing row is labelled `Close Session`; there is no second confirmation. `rex-session-manager kill` calls `session.destroy` through `rex api call`, which attaches to that same ID first. |
+| `Ctrl+W` | Save session | Lists running sessions and saves the chosen one as a preset named after its label: one tab per window, from its focused terminal pane (directory, plus the foreground program unless it is the shell). A new preset is written at once as `<label>.json`. If a preset with that name exists, a second prompt, `Overwrite NAME?`, asks first; `Overwrite` replaces that preset's own file, and `Cancel` or `Esc` writes nothing. An unlabelled session is refused. |
+| `Ctrl+D` | Delete preset | Lists every preset, then always asks `Delete NAME?` with the file path as subtitle. Only `Delete` removes that file; `Cancel` or `Esc` keeps it. Running sessions are never touched. This binding replaces Rex's own `Ctrl+D`. |
 | `Ctrl+X` | Native picker | Unchanged Rex session picker. |
 
 **Why the code is shaped this way**
@@ -196,11 +202,13 @@ of asking, which is easy to mistake for a cancel.
 
 **Presentation**
 
-Rex draws the prompt: title `Select Session`, `Active Sessions 🟢`, or
-`Kill Session 💀`; a filter field with no placeholder; the `code` icon on
-every row of every menu (`ROW_ICON` in the binary's `src/menu.rs`, one value
-for all three); and a committing
-row labelled `Open Session`, `Switch Session`, or `Close Session`. Selection is
+Rex draws the prompt: title `Select Session`, `Active Sessions 🟢`,
+`Kill Session 💀`, `Save Session 💾`, or `Delete Preset 🗑`; a filter field with
+no placeholder; the `code` icon on every row of every menu (`ROW_ICON` in the
+binary's `src/menu.rs`, one value for all of them); and a committing row
+labelled `Open Session`, `Switch Session`, `Close Session`, `Save Preset`, or
+`Delete Preset`. The overwrite and delete confirmations are titled
+`Overwrite NAME?` and `Delete NAME?`, with a `Confirm` row. Selection is
 single: `multiple` and `allow_other` are off.
 
 **Prompts reach every connected app**
@@ -212,7 +220,7 @@ is destructive on the answer it receives.
 
 **Cancel and failures**
 
-- `Esc` closes the menu without creating, selecting, or closing anything.
+- `Esc` closes the menu without creating, selecting, closing, saving, or deleting anything.
 - An empty project list or an empty session list opens no prompt at all.
 - Choosing a row in the close menu destroys that session immediately. There is no confirmation prompt, so `Ctrl+K` is destructive on whichever row you accept.
 - Any other outcome — `timeout`, `no_client`, `unsupported`, `busy`, `failed` — raises an error naming the reason and acts on nothing. `unsupported` means the connected app is older than the server, which needs control API revision 17 for prompts.
@@ -281,6 +289,7 @@ for example, `q` opens `finaipro` rather than detaching.
 | `r` | Reload | Resize mode | Unbound; reload is `Shift+R`, resize uses the mode action |
 | `s` | Session picker | Settings | Project preset picker; `Ctrl+S` switches sessions, `Ctrl+K` closes one, `Ctrl+X` keeps the native picker, and settings moved to `Shift+S` |
 | `Ctrl+K` | Interactive kill picker | — | Close with no confirmation prompt |
+| `Ctrl+D` | — | — | Rex's own `Ctrl+D` is replaced by the preset delete menu |
 | `?` | — | Help | Command palette |
 | `e` | — | Scrollback editor (no client action) | Unbound; Herdr's editor had no client action |
 | `w` | — | Workspace picker | Kitty jump to `sql-finaipro`; session menus stay on `Ctrl+S`, `Ctrl+K`, `Ctrl+X` |
