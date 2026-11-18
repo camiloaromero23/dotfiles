@@ -14,7 +14,7 @@ mappings are listed below.
 | File | Holds |
 | --- | --- |
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
-| `sessions.lua` | Reads and validates the project presets from `sessions/` on every `list_projects` and `jump_project` call, and holds the native session picker (`Ctrl+X`), the new/rename/close keys, the two project actions, and the five project keys. |
+| `sessions.lua` | Reads and validates the project presets from `sessions/` on every `list_projects` and `jump_project` call, and holds the native session picker (`Ctrl+X`), the new/rename/close keys, the two project actions, and the project keys. |
 | `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
 | `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` bindings. It opens a temporary floating terminal and returns its layer and block IDs. |
 | `session_picker.lua` | The interactive fzf menus, run locally by `rex do` inside the popup. Uses native Rex Lua calls for projects, session selection and unconfirmed closing. |
@@ -73,8 +73,10 @@ the focused program.
 | `Shift+/` (`?`) | Command palette | Herdr `help` (closest client action) |
 | `Shift+S` | Settings | Herdr `settings` (moved) |
 
-Only five project keys are bound: `q`, `w`, `,`, `n`, and `-`. The manager's
-`s` menu reaches the other four presets, while `Ctrl+S` and `Ctrl+K` handle
+Only three project keys are bound: `,`, `n`, and `-`. `q` and `w` stay commented
+out in `sessions.lua` because `finaipro` and `sql-finaipro` are no longer presets;
+uncomment a line after restoring its JSON file. The manager's
+`s` menu reaches every preset regardless of keys, while `Ctrl+S` and `Ctrl+K` handle
 running sessions. The Kitty keys they replaced keep their other homes: `w` no
 longer opens the session picker (now `Ctrl+X`), `n` no longer moves to the next
 tab (`p` still goes to the previous tab), and `-` no longer splits down (still
@@ -108,17 +110,17 @@ no partial session or window behind.
 
 | Key | Session | Tabs (program each runs) | Directory |
 | --- | --- | --- | --- |
-| `q` | `finaipro` | `nvim`, `bun run dev:local`, `pi` | `~/documents/work/finaipro/Web-Finaipro` |
-| `w` | `sql-finaipro` | `nvim` | `~/Documents/work/finaipro/SQLDB-parameters-FinAIPro` |
 | `,` | `dotfiles` | `nvim`, plain shell | `~/dotfiles` |
 | `n` | `nvim` | `nvim`, plain shell | `~/.config/nvim` |
 | `-` | `notes` | `nvim`, `nvim` | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes` and `/Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki` |
 
-The `sessions/` directory holds every preset, including the ones no direct key
-opens: the manager's `s` menu lists all of them, and `rex do jump_project
-project=<name>` works for any of them (or bind another key). They keep the same
-directory and tab behavior as the bound ones. The presets are the JSON files in
-`sessions/`; both project actions are in `sessions.lua`.
+`q` (`finaipro`) and `w` (`sql-finaipro`) are commented out in `sessions.lua`
+until those presets come back. The `sessions/` directory holds every preset,
+including ones no key opens, such as `ansible`: the manager's `s` menu lists all
+of them, and `rex do jump_project project=<name>` works for any of them (or bind
+another key), with the same directory and tab behavior as the bound ones. The
+presets are the JSON files in `sessions/`; both project actions are in
+`sessions.lua`.
 
 Every project tab uses `/opt/homebrew/bin/fish --login --interactive`,
 including plain shell tabs. No tab carries a title: Rex names each one from its

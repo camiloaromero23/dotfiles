@@ -342,10 +342,14 @@ function M.setup(PREFIX)
 
   -- Current project shortcuts. Reload stays on Shift+R, the native session
   -- picker remains on Ctrl+X, and split-down stays on Shift+'. p still goes to
-  -- the previous tab. Other presets remain available through jump_project and
-  -- the fzf project menu.
-  rex.bind(PREFIX .. ">q", "jump_project", { project = "finaipro" })
-  rex.bind(PREFIX .. ">w", "jump_project", { project = "sql-finaipro" })
+  -- the previous tab.
+  -- Project keys for presets that exist right now. `q` and `w` stay commented
+  -- out because `finaipro` and `sql-finaipro` are no longer in `sessions/`; a
+  -- binding to a missing preset fails with "unknown project". Uncomment one
+  -- after restoring its JSON file. Plain `s` (below) is the project browser and
+  -- always reaches every preset, so no key is needed for a preset to be usable.
+  -- rex.bind(PREFIX .. ">q", "jump_project", { project = "finaipro" })
+  -- rex.bind(PREFIX .. ">w", "jump_project", { project = "sql-finaipro" })
   rex.bind(PREFIX .. ">,", "jump_project", { project = "dotfiles" })
   rex.bind(PREFIX .. ">n", "jump_project", { project = "nvim" })
   rex.bind(PREFIX .. ">-", "jump_project", { project = "notes" })
