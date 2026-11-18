@@ -144,11 +144,12 @@ local function mark_session(ctx)
   return {}
 end
 
--- Prefix+Ctrl+H then m: the marks menu. Choosing a mark jumps to it, and the
--- binary's last row opens a second prompt that removes the chosen mark; that
--- row's id is the binary's `unmark_id`, which never equals a mark's name. There
--- is no separate unmark key, so this menu is the only way to remove a mark.
--- Escape at either prompt changes nothing.
+-- Prefix+Ctrl+H then m: the marks menu. Choosing a mark jumps to it. The
+-- binary's `Move…` row (id `move_id`, shown with 2+ marks) asks which mark to
+-- move and then its new position; the `Unmark…` row (id `unmark_id`) asks
+-- which mark to remove. Neither id ever equals a mark's name. There are no
+-- separate move or unmark keys, so this menu is the only way to do either.
+-- Escape at any prompt changes nothing.
 local function marks_menu(ctx)
   if ctx.client_id == nil or ctx.client_id == "" then
     fail("marks_menu needs the invoking client; run it from a Rex shortcut or pass -C")
@@ -160,6 +161,27 @@ local function marks_menu(ctx)
   end
   local choice = ask("marks", menu)
   if choice == nil then
+    return {}
+  end
+
+  if choice == menu.move_id then
+    -- Two more prompts: the mark, then its new position. The binary builds
+    -- the position list (`move NAME` writes nothing), and only an accepted
+    -- position moves the mark; the others shift to make room.
+    local marked = manager.run("menu", "move")
+    if marked.items == nil or #marked.items == 0 then
+      return {}
+    end
+    local name = ask("move", marked)
+    if name == nil then
+      return {}
+    end
+    local choose = manager.run("move", "--", name)
+    local position = ask("move", choose.menu)
+    if position == nil then
+      return {}
+    end
+    manager.run("move", "--to", position, "--", name)
     return {}
   end
 
