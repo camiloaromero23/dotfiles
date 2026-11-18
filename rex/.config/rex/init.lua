@@ -6,9 +6,10 @@
 -- Ctrl+A is the prefix, as in every source. Run `rex config reload` after
 -- editing.
 --
--- Session management and the project sessions live in sessions.lua; the fzf
--- manager lives in session_management.lua. Both are modules beside this file;
--- this file keeps the pane and tab shortcuts.
+-- Session management lives in sessions.lua, which loads the project presets
+-- from the sessions/ directory beside this file; the fzf manager lives in
+-- session_management.lua. Both are modules beside this file; this file keeps
+-- the pane and tab shortcuts.
 --
 -- No Cmd shortcut or bare Ctrl+H/J/K/L is bound here, so the client's own
 -- defaults stay reachable.
@@ -43,11 +44,13 @@ rex.bind(PREFIX .. ">" .. PREFIX, "pane.send_key", { key = PREFIX })
 
 -- Sessions (Herdr workspaces) and the project jumps live in sessions.lua, the
 -- module beside this file. It receives the prefix declared above, so both files
--- share one prefix value; edit project tabs there and reload after either file.
+-- share one prefix value. It reads the project presets from sessions/*.json on
+-- every action, so adding, editing, or deleting one needs no Lua edit and no
+-- reload; a reload is only for a change to this file or to the keymap above.
 require("sessions").setup(PREFIX)
 
 -- The fzf session manager lives in session_management.lua. It browses the
--- presets above and manages running sessions, using the same prefix.
+-- presets from sessions/ and manages running sessions, using the same prefix.
 require("session_management").setup(PREFIX)
 
 -- Tabs. Titles come from Rex's generated naming (Workspace.prefersGeneratedTitles

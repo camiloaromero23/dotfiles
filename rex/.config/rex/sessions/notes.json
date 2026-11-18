@@ -1,0 +1,9 @@
+{
+  "name": "notes",
+  "tabs": [
+    {
+      "cwd": "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes",
+      "run": "nvim"
+    }
+  ]
+}

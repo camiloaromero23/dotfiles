@@ -1,9 +1,9 @@
 # Rex keymap from Herdr, tmux, and Kitty
 
 `~/.config/rex/init.lua` carries the keymap from `~/.config/herdr/config.toml`
-and `~/.config/tmux/tmux.conf`, and it loads `~/.config/rex/sessions.lua` for
-the project presets and `~/.config/rex/session_management.lua` for the fzf
-session manager. Ctrl+A is the prefix, with tmux-first defaults, overridden by
+and `~/.config/tmux/tmux.conf`, and it loads `~/.config/rex/sessions.lua`, which
+reads the project presets from `~/.config/rex/sessions/*.json`, and
+`~/.config/rex/session_management.lua` for the fzf session manager. Ctrl+A is the prefix, with tmux-first defaults, overridden by
 Kitty's named-project keys, the fzf manager, and the pane-first close shortcut.
 This config contains only keymaps and session management: no tmux-navigator
 integration, process detection, or bare Ctrl+H/J/K/L bindings. Unsupported
@@ -14,14 +14,24 @@ mappings are listed below.
 | File | Holds |
 | --- | --- |
 | `init.lua` | Prefix, resize mode, reload, tab, pane, split, panel, and palette keys. It ends its session section with `require("sessions").setup(PREFIX)` and `require("session_management").setup(PREFIX)`. |
-| `sessions.lua` | Native session picker (`Ctrl+X`), new/rename/close keys, the project tab templates, the `jump_project` and `list_projects` actions, and the five project keys. |
+| `sessions.lua` | Reads and validates the project presets from `sessions/` on every `list_projects` and `jump_project` call, and holds the native session picker (`Ctrl+X`), the new/rename/close keys, the two project actions, and the five project keys. |
+| `sessions/` | One JSON file per project preset: `{"name": ..., "tabs": [{"cwd": ..., "run": ...}]}`. `name` is what the keys and `jump_project` use, so it is unique across files; the file name is only for humans. |
 | `session_management.lua` | The `session_manager` action and the `s` / `Ctrl+S` / `Ctrl+K` bindings. It opens a temporary floating terminal and returns its layer and block IDs. |
 | `session_picker.lua` | The interactive fzf menus, run locally by `rex do` inside the popup. Uses native Rex Lua calls for projects, session selection and unconfirmed closing. |
 
 `init.lua` passes the prefix to both modules, so `PREFIX` stays declared in
-one place. Project directories and tabs are defined only in `sessions.lua`;
-edit them there, then reload after either Lua file changes. Rex resolves both
-modules beside `init.lua`, and the action finds the helper in that same
+one place. Project directories and tabs are defined only in `sessions/`, and the
+directory is read on every menu open and every jump: create, edit, or delete a
+`*.json` file there and the change is live immediately, with **no `rex config
+reload`** and no Lua edit. A reload is only for a change to a Lua file. The
+extension match ignores case (`FINAIPRO.JSON` loads), and hidden files and
+non-JSON entries (`README.md`, `.DS_Store`) are ignored. A broken preset is
+never used silently: opening the menu or running a jump fails with an error
+naming the file. Unparseable JSON, a
+missing or empty `name`, an unknown key such as `command` instead of `run`, a
+duplicate `name`, an empty `tabs` array, or a missing `cwd` all fail that way,
+while the rest of the config still loads. Rex resolves both modules beside
+`init.lua`, and the action finds the helper in that same
 directory, so no other path setup is needed. Helper edits apply on the next
 menu launch and need no reload. After adding the new helper, restow the Rex
 package if your deployment uses individual file links rather than a directory link.
@@ -29,9 +39,11 @@ package if your deployment uses individual file links rather than a directory li
 ## Quick path
 
 1. `stow --target=$HOME rex` to place `init.lua`, `sessions.lua`,
-   `session_management.lua`, and `session_picker.lua` at `~/.config/rex/`.
+   `session_management.lua`, `session_picker.lua`, and the `sessions/` directory
+   at `~/.config/rex/`.
 2. `rex config reload` (or the command palette) to make the running server read the Lua files.
-3. `rex config check ~/.config/rex/init.lua` to confirm every file loads clean.
+3. `rex config check ~/.config/rex/init.lua` to confirm the Lua files load clean,
+   and `rex do list_projects` to list the presets currently on disk.
 
 ## Prefix keys (Ctrl+A)
 
@@ -102,11 +114,11 @@ no partial session or window behind.
 | `n` | `nvim` | `nvim`, plain shell | `~/.config/nvim` |
 | `-` | `notes` | `nvim`, `nvim` | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes` and `/Users/camilo/Library/CloudStorage/OneDrive-FINAIPROTECHNOLOGIESSAS/Finaipro Web Wiki` |
 
-The config still defines four more project templates that no direct key opens:
-`centai`, `sergio`, `conectea-web`, and `conectea-jea`. The manager's `s` menu
-lists all nine presets, and `rex do jump_project project=<name>` still works
-(or bind another key). They keep the same directory and tab behavior as the
-bound ones. The templates and both project actions are in `sessions.lua`.
+The `sessions/` directory holds every preset, including the ones no direct key
+opens: the manager's `s` menu lists all of them, and `rex do jump_project
+project=<name>` works for any of them (or bind another key). They keep the same
+directory and tab behavior as the bound ones. The presets are the JSON files in
+`sessions/`; both project actions are in `sessions.lua`.
 
 Every project tab uses `/opt/homebrew/bin/fish --login --interactive`,
 including plain shell tabs. No tab carries a title: Rex names each one from its
@@ -128,9 +140,9 @@ session is switched to and keeps its running tabs.
 | Behavior | Decision |
 | --- | --- |
 | Match | Case-sensitive, exact session label. Rex does not enforce unique labels, so if two sessions share one, the jump fails with an error instead of choosing one. Rename or close the extra session first. Two presses before the first create lands can produce such a pair. |
-| Kitty dependency | None at runtime. The tabs live in `sessions.lua`; Kitty's session files are never read. |
+| Kitty dependency | None at runtime. The tabs live in `sessions/*.json`; Kitty's session files are never read. |
 | Failures | An unknown project, a failed session list, or a failed create reports an error and selects nothing. |
-| Activation | Reload the config (palette or `rex config reload`) after editing `init.lua` or `sessions.lua`; a newly started client picks them up on its own. |
+| Activation | Reload the config (palette or `rex config reload`) after editing `init.lua` or `sessions.lua`; a newly started client picks them up on its own. A preset in `sessions/` needs no reload. |
 | Missing key | Kitty's `ctrl+a>p` went to the previous session; `p` stays the previous tab here. |
 
 ## Session manager (fzf)

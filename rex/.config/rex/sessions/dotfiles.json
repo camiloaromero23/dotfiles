@@ -1,0 +1,7 @@
+{
+  "name": "dotfiles",
+  "tabs": [
+    { "cwd": "~/dotfiles", "run": "nvim" },
+    { "cwd": "~/dotfiles" }
+  ]
+}

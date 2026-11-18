@@ -1,7 +1,8 @@
 -- Session manager menus for the Rex config beside this file.
 --
--- `sessions.lua` owns the project presets and the `jump_project` action. This
--- module only browses them and manages running sessions. Each menu opens a
+-- `sessions.lua` owns the project presets (loaded from the JSON files in
+-- `sessions/`) and the `jump_project` action. This module only browses them and
+-- manages running sessions. Each menu opens a
 -- temporary floating terminal that runs `session_picker.lua` with Rex's Lua
 -- runtime and fzf. Native calls use the inherited REX_SERVER and the pinned
 -- invoking client. Escape cancels without creating, selecting,

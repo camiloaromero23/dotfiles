@@ -1,0 +1,7 @@
+{
+  "name": "nvim",
+  "tabs": [
+    { "cwd": "~/.config/nvim", "run": "nvim" },
+    { "cwd": "~/.config/nvim" }
+  ]
+}

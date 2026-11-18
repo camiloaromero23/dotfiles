@@ -1,0 +1,7 @@
+{
+  "name": "ansible",
+  "tabs": [
+    { "cwd": "~/ansible", "run": "nvim" },
+    { "cwd": "~/ansible" }
+  ]
+}
