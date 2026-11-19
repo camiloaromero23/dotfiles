@@ -1,5 +1,6 @@
 tap "anomalyco/tap"
 tap "barutsrb/tap", trusted: { casks: ["omniwm"] }
+tap "camiloaromero23/tap", trusted: true
 tap "gentleman-programming/tap", "https://github.com/Gentleman-Programming/homebrew-tap", trusted: true
 tap "lumarylabsllc/tap"
 tap "simplydanny/pass-extensions", trusted: true
@@ -105,6 +106,8 @@ brew "zoxide"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+# Project session manager for the Rex terminal multiplexer
+brew "camiloaromero23/tap/rex-session-manager", trusted: true
 # Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
 brew "gentleman-programming/tap/engram", trusted: true
 # Gentle-AI — Ecosystem, Frameworks, Workflows for AI coding agents.
