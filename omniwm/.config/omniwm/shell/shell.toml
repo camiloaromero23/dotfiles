@@ -53,9 +53,17 @@ windowLevel = "status"
 yOffset = 3.0
 
 [[profiles.default.monitorBarOverrides]]
+hideEmptyWorkspaces = false
 id = "D63C9479-8A7D-4546-9610-0A9F57F3A6B0"
 monitorDisplayUUID = "3BFA3999-B471-43D8-951F-4206CB0A2B78"
 monitorName = "DELL P2723QE"
+notchMode = "off"
+
+[[profiles.default.monitorBarOverrides]]
+hideEmptyWorkspaces = false
+id = "5CBE31DF-4E52-4CA0-8121-84D05A74807C"
+monitorDisplayUUID = "7370C475-5BF4-4A36-A5D6-08E38616E5C8"
+monitorName = "LG ULTRAGEAR+"
 notchMode = "off"
 
 [weather]
