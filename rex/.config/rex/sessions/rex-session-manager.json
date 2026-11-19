@@ -2,15 +2,12 @@
   "name": "rex-session-manager",
   "tabs": [
     {
-      "cwd": "~/dotfiles"
-    },
-    {
-      "cwd": "~/personal/rex-session-manager",
-      "run": "pi -r"
-    },
-    {
       "cwd": "~/personal/rex-session-manager",
       "run": "nvim"
+    },
+    {
+      "cwd": "~/personal/rex-session-manager",
+      "run": "pi"
     }
   ]
 }
