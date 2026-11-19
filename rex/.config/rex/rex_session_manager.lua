@@ -37,7 +37,7 @@ local NAME = "rex-session-manager"
 -- An absolute path: actions run with Rex's restricted PATH
 -- (/usr/bin:/bin:/usr/sbin:/sbin), which holds neither Homebrew, mise, nor
 -- ~/.cargo/bin.
-local BINARY = "/Users/camilo/.cargo/bin/rex-session-manager"
+local BINARY = "/opt/homebrew/bin/rex-session-manager"
 local SESSIONS_DIRECTORY = "sessions"
 -- The marks live in state, not in the config. Actions run without
 -- XDG_STATE_HOME, so the path is named here instead of left to the binary's
