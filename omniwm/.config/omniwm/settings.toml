@@ -303,6 +303,11 @@ assignToWorkspace = "10"
 bundleId = "com.apple.Safari"
 id = "66FE3E63-3FDE-4496-A57D-AA5EE41DDAA6"
 
+[[appRules]]
+assignToWorkspace = "7"
+bundleId = "com.openai.codex"
+id = "B1A34E66-0E9A-4C08-B6A1-B241E843B904"
+
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleScratchpad.1"
